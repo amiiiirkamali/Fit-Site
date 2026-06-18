@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌸 Fitsite — برنامه کاهش وزن و سلامتی برای خانم‌ها
 
-## Getting Started
+> **تبدیل سبک زندگی، نه فقط کاهش وزن.**  
+> برنامه‌های غذایی و تمرینی شخصی‌سازی‌شده، طراحی‌شده خصوصاً برای بدن و نیازهای زنان.
 
-First, run the development server:
+---
+
+## ✨ خدمات
+
+| خدمت | توضیح |
+|------|--------|
+| 🥗 **برنامه غذایی** | رژیم متناسب با هدف، سبک زندگی و ذائقه شما |
+| 🏋️‍♀️ **برنامه تمرینی** | تمرین‌های خانگی و باشگاهی مخصوص خانم‌ها |
+
+---
+
+## 🛠️ تکنولوژی‌ها
+
+- **Framework:** [Next.js 16](https://nextjs.org/) با App Router
+- **Language:** TypeScript
+- **Styling:** CSS Modules
+- **Linter:** ESLint
+- **Package Manager:** npm
+
+---
+
+## 🚀 راه‌اندازی پروژه
+
+### پیش‌نیازها
+
+- Node.js نسخه ۱۸ یا بالاتر
+- npm
+
+### نصب و اجرا
 
 ```bash
+# کلون کردن پروژه
+git clone https://github.com/your-username/fitsite.git
+cd fitsite
+
+# نصب پکیج‌ها
+npm install
+
+# اجرا در حالت development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+سایت روی [http://localhost:3000](http://localhost:3000) بالا میاد.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 ساختار پروژه
 
-## Learn More
+```
+fitsite/
+├── src/
+│   └── app/
+│       ├── layout.tsx          # Layout اصلی
+│       ├── page.tsx            # صفحه اصلی
+│       ├── about/              # درباره ما
+│       ├── services/
+│       │   ├── diet-plan/      # برنامه غذایی
+│       │   └── workout-plan/   # برنامه تمرینی
+│       ├── blog/               # مقالات
+│       ├── pricing/            # قیمت‌ها
+│       └── contact/            # تماس با ما
+│
+├── src/components/
+│   ├── layout/                 # Header, Footer, Navbar
+│   ├── home/                   # کامپوننت‌های صفحه اصلی
+│   ├── services/               # کامپوننت‌های خدمات
+│   └── ui/                     # کامپوننت‌های مشترک
+│
+├── public/                     # فایل‌های استاتیک
+├── .gitignore
+├── next.config.ts
+├── package.json
+└── tsconfig.json
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📜 اسکریپت‌ها
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev        # اجرای سرور توسعه
+npm run build      # بیلد برای production
+npm run start      # اجرای نسخه production
+npm run lint       # بررسی کد با ESLint
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌿 محیط‌های مختلف
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| فایل | کاربرد |
+|------|---------|
+| `.env.local` | متغیرهای محلی (گیت ایگنور شده) |
+| `.env.development` | تنظیمات development |
+| `.env.production` | تنظیمات production |
+
+---
+
+## 🤝 مشارکت در پروژه
+
+1. یه fork بگیر
+2. یه branch جدید بساز: `git checkout -b feature/feature-name`
+3. تغییراتت رو commit کن: `git commit -m 'feat: add new feature'`
+4. push کن: `git push origin feature/feature-name`
+5. یه Pull Request باز کن
+
+---
+
+## 📄 لایسنس
+
+این پروژه تحت لایسنس MIT منتشر شده — برای جزئیات فایل [LICENSE](LICENSE) رو ببین.
+
+---
+
+<div align="center">
+  ساخته شده با ❤️ برای سلامتی زنان ایران
+</div>
