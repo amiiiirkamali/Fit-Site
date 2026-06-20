@@ -1,0 +1,241 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.loadingContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-track);
+    border-top-color: var(--color-pink-600);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.emptyState {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--color-text-muted);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-pink-50);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.headerTitle {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.content {
+    flex: 1;
+    padding: 0 20px 40px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.splitCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(155deg, var(--color-pink-600), var(--color-pink-700));
+    color: #fff;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    gap: 6px;
+}
+
+.splitLabel {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.splitValue {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dayTabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dayTab {
+    padding: 10px 16px;
+    border: 1.5px solid var(--color-border);
+    background: #fff;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    min-width: 90px;
+}
+
+.dayTabActive {
+    background: var(--color-pink-600);
+    border-color: var(--color-pink-600);
+    color: #fff;
+}
+
+.dayTabName {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dayTabSplit {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.exercises {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.exerciseCard {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: var(--shadow-card);
+}
+
+.exerciseTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+.exerciseNumber {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-pink-50);
+    color: var(--color-pink-600);
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.exerciseInfo {
+    flex: 1;
+}
+
+.exerciseName {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 0 6px;
+}
+
+.exerciseMeta {
+    display: flex;
+    gap: 8px;
+}
+
+.metaTag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    background: var(--color-pink-50);
+    color: var(--color-pink-600);
+    border-radius: 999px;
+}
+
+.exerciseDesc {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin: 0 0 12px;
+    line-height: 1.6;
+}
+
+.setsReps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 0;
+    background: var(--color-pink-50);
+    border-radius: 12px;
+}
+
+.setRepItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.setRepValue {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-pink-600);
+}
+
+.setRepLabel {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.setRepDivider {
+    width: 1px;
+    height: 36px;
+    background: var(--color-border);
+}
+
+.gifContainer {
+    margin-top: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-pink-50);
+}
+
+.gif {
+    width: 100%;
+    height: auto;
+    display: block;
+}

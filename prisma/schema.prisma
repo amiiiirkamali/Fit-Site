@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  phone      String   @unique
+  isVerified Boolean  @default(false)
+  hasPaid    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  quizAnswers  QuizAnswer[]
+  payments     Payment[]
+  dietPlans    DietPlan[]
+  workoutPlans WorkoutPlan[]
+}
+
+model QuizAnswer {
+  id          String @id @default(cuid())
+  userId      String
+  questionKey String
+  answerValue String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionKey])
+}
+
+model Payment {
+  id                String   @id @default(cuid())
+  userId            String
+  amount            Int
+  zarinpalAuthority String?
+  zarinpalRefId     String?
+  status            String   @default("pending")
+  planType          String   @default("monthly")
+  createdAt         DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FoodItem {
+  id          String   @id @default(cuid())
+  name        String
+  calories    Int
+  protein     Float
+  carbs       Float
+  fat         Float
+  mealType    String
+  dietaryTags String[] @default([])
+  description String?
+  imageUrl    String?
+
+  dietPlanItems DietPlanItem[]
+}
+
+model ExerciseItem {
+  id          String  @id @default(cuid())
+  name        String
+  muscleGroup String
+  equipment   String
+  difficulty  String
+  gifUrl      String?
+  description String?
+  sets        Int     @default(3)
+  reps        String  @default("12")
+
+  workoutPlanItems WorkoutPlanItem[]
+}
+
+model DietPlan {
+  id                 String   @id @default(cuid())
+  userId             String
+  dailyCalorieTarget Int
+  createdAt          DateTime @default(now())
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items DietPlanItem[]
+}
+
+model DietPlanItem {
+  id         String @id @default(cuid())
+  dietPlanId String
+  foodItemId String
+  day        Int
+  mealSlot   String
+
+  dietPlan DietPlan @relation(fields: [dietPlanId], references: [id], onDelete: Cascade)
+  foodItem FoodItem @relation(fields: [foodItemId], references: [id])
+}
+
+model WorkoutPlan {
+  id          String   @id @default(cuid())
+  userId      String
+  weeklySplit String
+  createdAt   DateTime @default(now())
+
+  user  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items WorkoutPlanItem[]
+}
+
+model WorkoutPlanItem {
+  id            String @id @default(cuid())
+  workoutPlanId String
+  exerciseId    String
+  day           Int
+  sets          Int
+  reps          String
+
+  workoutPlan  WorkoutPlan  @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  exerciseItem ExerciseItem @relation(fields: [exerciseId], references: [id])
+}

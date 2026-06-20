@@ -1,0 +1,24 @@
+.wrapper {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.box {
+    width: 52px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-pink-50);
+    color: var(--color-text);
+    outline: none;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s ease;
+}
+
+.box:focus {
+    border-color: var(--color-pink-600);
+}

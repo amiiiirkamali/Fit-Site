@@ -1,142 +1,171 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+.loadingContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-track);
+    border-top-color: var(--color-pink-600);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+/* ---------- هدر ---------- */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.logo {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--color-pink-600);
+    letter-spacing: -0.5px;
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+.loginBtn {
+    background: transparent;
+    border: 1.5px solid var(--color-pink-600);
+    color: var(--color-pink-600);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+.loginBtn:hover {
+    background: var(--color-pink-600);
+    color: #fff;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+/* ---------- هیرو ---------- */
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px 20px 60px;
+    gap: 14px;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.eyebrow {
+    color: var(--color-pink-600);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.3px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.title {
+    font-size: clamp(30px, 6vw, 46px);
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0;
+    max-width: 680px;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
+.title span {
+    color: var(--color-pink-600);
+}
 
-  .intro {
+.subtitle {
+    color: var(--color-text-muted);
+    font-size: 16px;
+    max-width: 480px;
+    line-height: 1.9;
+    margin: 0 0 18px;
+}
+
+/* ---------- کارت شروع برنامه ---------- */
+.startCard {
+    width: 100%;
+    max-width: 380px;
+    background: linear-gradient(155deg, var(--color-pink-600), var(--color-pink-700));
+    border-radius: var(--radius-lg);
+    padding: 28px 26px;
+    color: #fff;
+    box-shadow: 0 14px 30px rgba(194, 24, 91, 0.28);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+    text-align: right;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+.startCardTag {
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+.startCardTitle {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0;
+}
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+.startCardDesc {
+    font-size: 14px;
+    opacity: 0.9;
+    line-height: 1.8;
+    margin: 0;
+}
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.startCardBtn {
+    width: 100%;
+    background: #fff;
+    color: var(--color-pink-600);
+    font-weight: 800;
+    font-size: 16px;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    margin-top: 6px;
+}
+
+.startCardBtn:hover {
+    background: var(--color-pink-50);
+}
+
+/* ---------- اعتماد ---------- */
+.trust {
+    display: flex;
+    gap: 28px;
+    margin-top: 36px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.trustItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.trustNumber {
+    color: var(--color-pink-600);
+    font-weight: 800;
+    font-size: 18px;
 }

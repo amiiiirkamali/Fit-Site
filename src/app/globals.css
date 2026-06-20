@@ -1,49 +1,92 @@
+@font-face {
+    font-family: 'Darvish';
+    src: url('/fonts/Darvish.woff2') format('woff2'),
+    url('/fonts/Darvish.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SekanX';
+    src: url('/fonts/SekanX.woff2') format('woff2'),
+    url('/fonts/SekanX.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* رنگ‌های پایه */
+    --color-bg: #ffffff;
+    --color-pink-50: #fdeef4;
+    --color-pink-100: #fbd9e6;
+    --color-pink-400: #e0568f;
+    --color-pink-600: #c2185b;
+    --color-pink-700: #9d1249;
+    --color-text: #221a1f;
+    --color-text-muted: #847680;
+    --color-border: #f1d9e4;
+    --color-track: #f6e9ee;
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --shadow-card: 0 4px 16px rgba(194, 24, 91, 0.08);
+    --font-heading: 'Darvish', 'Vazirmatn', sans-serif;
+    --font-sans: 'SekanX', 'Vazirmatn', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
+* {
+    box-sizing: border-box;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    direction: rtl;
 }
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+button {
+    font-family: var(--font-sans);
+    cursor: pointer;
+}
+
+/* Toast styles */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-text);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 9999;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }

@@ -1,0 +1,35 @@
+.option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--color-pink-50);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+    transition: all 0.15s ease;
+    text-align: right;
+}
+
+.option:hover {
+    border-color: var(--color-pink-400);
+    background: var(--color-pink-100);
+}
+
+.selected {
+    background: var(--color-pink-600) !important;
+    border-color: var(--color-pink-600) !important;
+    color: #fff !important;
+}
+
+.icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.label {
+    flex: 1;
+}

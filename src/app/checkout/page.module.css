@@ -1,0 +1,171 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-pink-50);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.headerTitle {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 40px;
+    gap: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.7;
+    margin: 0 0 8px;
+}
+
+.plans {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.planCard {
+    width: 100%;
+    padding: 24px;
+    background: var(--color-pink-50);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: right;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+}
+
+.planSelected {
+    border-color: var(--color-pink-600);
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(194, 24, 91, 0.15);
+}
+
+.planPopular {
+    /* Extra highlight if needed */
+}
+
+.badge {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    background: var(--color-pink-600);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+}
+
+.planName {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.planPrice {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.priceAmount {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-pink-600);
+}
+
+.priceCurrency {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+.planDuration {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.features li {
+    font-size: 13px;
+    color: var(--color-text);
+}
+
+.payBtn {
+    width: 100%;
+    padding: 18px;
+    background: var(--color-pink-600);
+    color: #fff;
+    font-weight: 800;
+    font-size: 17px;
+    border: none;
+    border-radius: var(--radius-md);
+    margin-top: 12px;
+    transition: background 0.15s ease;
+}
+
+.payBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.payBtn:hover:not(:disabled) {
+    background: var(--color-pink-700);
+}
+
+.guarantee {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0;
+}
