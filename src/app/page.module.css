@@ -1,171 +1,130 @@
 .page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .loadingContainer {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--color-track);
-    border-top-color: var(--color-pink-600);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* ---------- هدر ---------- */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-}
-
-.logo {
-    font-family: var(--font-heading);
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--color-pink-600);
-    letter-spacing: -0.5px;
-}
-
-.loginBtn {
-    background: transparent;
-    border: 1.5px solid var(--color-pink-600);
-    color: var(--color-pink-600);
-    font-weight: 600;
-    font-size: 14px;
-    padding: 9px 18px;
-    border-radius: 999px;
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-.loginBtn:hover {
-    background: var(--color-pink-600);
-    color: #fff;
-}
-
-/* ---------- هیرو ---------- */
 .hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 24px 20px 60px;
-    gap: 14px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 80px;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  gap: 20px;
 }
 
 .eyebrow {
-    color: var(--color-pink-600);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.3px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #c2185b;
+  letter-spacing: 0.5px;
+  padding: 6px 16px;
+  background: #fce4ec;
+  border-radius: 999px;
 }
 
 .title {
-    font-size: clamp(30px, 6vw, 46px);
-    font-weight: 800;
-    line-height: 1.25;
-    margin: 0;
-    max-width: 680px;
+  font-size: clamp(34px, 7vw, 52px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+  color: #1a1a1a;
 }
 
-.title span {
-    color: var(--color-pink-600);
+.accent {
+  color: #c2185b;
 }
 
 .subtitle {
-    color: var(--color-text-muted);
-    font-size: 16px;
-    max-width: 480px;
-    line-height: 1.9;
-    margin: 0 0 18px;
+  color: #6b7280;
+  font-size: 16px;
+  max-width: 480px;
+  line-height: 2;
+  margin: 0;
 }
 
-/* ---------- کارت شروع برنامه ---------- */
-.startCard {
-    width: 100%;
-    max-width: 380px;
-    background: linear-gradient(155deg, var(--color-pink-600), var(--color-pink-700));
-    border-radius: var(--radius-lg);
-    padding: 28px 26px;
-    color: #fff;
-    box-shadow: 0 14px 30px rgba(194, 24, 91, 0.28);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    text-align: right;
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 340px;
+  background: #c2185b;
+  color: #fff;
+  font-weight: 800;
+  font-size: 17px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 14px;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 28px rgba(194, 24, 91, 0.25);
 }
 
-.startCardTag {
-    background: rgba(255, 255, 255, 0.18);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 999px;
+.ctaBtn:hover {
+  background: #9d1249;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(194, 24, 91, 0.35);
 }
 
-.startCardTitle {
-    font-size: 22px;
-    font-weight: 800;
-    margin: 0;
+.ctaArrow {
+  font-size: 20px;
+  transition: transform 0.2s ease;
 }
 
-.startCardDesc {
-    font-size: 14px;
-    opacity: 0.9;
-    line-height: 1.8;
-    margin: 0;
+.ctaBtn:hover .ctaArrow {
+  transform: translateX(4px);
 }
 
-.startCardBtn {
-    width: 100%;
-    background: #fff;
-    color: var(--color-pink-600);
-    font-weight: 800;
-    font-size: 16px;
-    padding: 14px;
-    border: none;
-    border-radius: var(--radius-md);
-    margin-top: 6px;
-}
-
-.startCardBtn:hover {
-    background: var(--color-pink-50);
-}
-
-/* ---------- اعتماد ---------- */
 .trust {
-    display: flex;
-    gap: 28px;
-    margin-top: 36px;
-    color: var(--color-text-muted);
-    font-size: 13px;
+  display: flex;
+  gap: 36px;
+  margin-top: 28px;
 }
 
 .trustItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .trustNumber {
-    color: var(--color-pink-600);
-    font-weight: 800;
-    font-size: 18px;
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.trustLabel {
+  color: #9ca3af;
+  font-size: 13px;
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getTokenFromHeaders } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
 import { verifyPayment } from "@/lib/zarinpal";
+import { generateDietPlan, generateWorkoutPlan } from "@/lib/algorithm";
 
 export async function POST(req: NextRequest) {
     try {
@@ -67,6 +68,10 @@ export async function POST(req: NextRequest) {
             where: { id: payload.userId },
             data: { hasPaid: true },
         });
+
+        // Auto-generate plans after successful payment
+        await generateDietPlan(payload.userId);
+        await generateWorkoutPlan(payload.userId);
 
         return NextResponse.json({
             success: true,

@@ -1,207 +1,208 @@
 .page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .loadingContainer {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--color-track);
-    border-top-color: var(--color-pink-600);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
 .emptyState {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    color: var(--color-text-muted);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #6b7280;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: #ffffff;
 }
 
 .backBtn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-pink-50);
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    font-size: 18px;
-    color: var(--color-text);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #1a1a1a;
 }
 
 .headerTitle {
-    font-weight: 700;
-    font-size: 16px;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .content {
-    flex: 1;
-    padding: 0 20px 40px;
-    max-width: 480px;
-    margin: 0 auto;
-    width: 100%;
+  flex: 1;
+  padding: 0 20px 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .calorieCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(155deg, var(--color-pink-600), var(--color-pink-700));
-    color: #fff;
-    padding: 24px;
-    border-radius: var(--radius-lg);
-    margin-bottom: 20px;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0f0f0f;
+  color: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  gap: 4px;
 }
 
 .calorieLabel {
-    font-size: 13px;
-    opacity: 0.8;
+  font-size: 13px;
+  opacity: 0.7;
 }
 
 .calorieValue {
-    font-size: 36px;
-    font-weight: 800;
+  font-size: 36px;
+  font-weight: 800;
 }
 
 .calorieUnit {
-    font-size: 14px;
-    opacity: 0.8;
+  font-size: 14px;
+  opacity: 0.7;
 }
 
 .dayTabs {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding: 4px 0 16px;
-    -webkit-overflow-scrolling: touch;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0 16px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dayTab {
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1.5px solid var(--color-border);
-    background: #fff;
-    color: var(--color-text-muted);
-    border-radius: 999px;
-    white-space: nowrap;
-    transition: all 0.15s ease;
-    flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  color: #6b7280;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .dayTabActive {
-    background: var(--color-pink-600);
-    border-color: var(--color-pink-600);
-    color: #fff;
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: #fff;
 }
 
 .meals {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .mealCard {
-    background: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 18px;
-    box-shadow: var(--shadow-card);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
 .mealHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .mealSlot {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-pink-600);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .mealCal {
-    font-size: 12px;
-    color: var(--color-text-muted);
-    font-weight: 600;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .mealName {
-    font-size: 16px;
-    font-weight: 800;
-    margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 4px;
 }
 
 .mealDesc {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    margin: 0 0 12px;
-    line-height: 1.6;
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 12px;
+  line-height: 1.6;
 }
 
 .macros {
-    display: flex;
-    gap: 16px;
+  display: flex;
+  gap: 16px;
 }
 
 .macro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
 .macroValue {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-pink-600);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .macroLabel {
-    font-size: 11px;
-    color: var(--color-text-muted);
+  font-size: 11px;
+  color: #6b7280;
 }
 
 .totalRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-    margin-top: 16px;
-    border-top: 1px solid var(--color-border);
-    font-size: 14px;
-    font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  margin-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .totalValue {
-    color: var(--color-pink-600);
-    font-weight: 800;
+  color: #1a1a1a;
+  font-weight: 800;
 }

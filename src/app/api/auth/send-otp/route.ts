@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         // Generate OTP
         const code =
             process.env.TEST_OTP_CODE ||
-            Math.floor(10000 + Math.random() * 90000).toString();
+            Math.floor(100000 + Math.random() * 900000).toString();
 
         // Store in Redis (5 min expiry)
         await redis.set(`otp:${phone}`, code, "EX", 300);

@@ -1,0 +1,98 @@
+.footer {
+  background: #fafafa;
+  border-top: 1px solid #f3f4f6;
+  padding: 60px 24px 0;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 40px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.colLogo {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.colDesc {
+  font-size: 14px;
+  line-height: 2;
+  color: #6b7280;
+  margin: 0;
+}
+
+.colTitle {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  font-size: 14px;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  text-align: right;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1a1a1a;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contactLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contactValue {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.bottom {
+  margin-top: 48px;
+  padding: 20px 0;
+  border-top: 1px solid #f3f4f6;
+}
+
+.copyright {
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+  margin: 0;
+}

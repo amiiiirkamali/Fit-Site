@@ -1,3 +1,7 @@
+if (process.env.ZARINPAL_SANDBOX === "true") {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
+
 const isSandbox = process.env.ZARINPAL_SANDBOX === "true";
 const merchantId = process.env.ZARINPAL_MERCHANT_ID!;
 

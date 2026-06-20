@@ -1,35 +1,40 @@
 .option {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    padding: 16px 20px;
-    background: var(--color-pink-50);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-text);
-    transition: all 0.15s ease;
-    text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  text-align: right;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
 
 .option:hover {
-    border-color: var(--color-pink-400);
-    background: var(--color-pink-100);
+  background: #fafafa;
+  border-color: #d1d5db;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
 }
 
 .selected {
-    background: var(--color-pink-600) !important;
-    border-color: var(--color-pink-600) !important;
-    color: #fff !important;
+  background: #ffffff !important;
+  border-color: #1a1a1a !important;
+  border-width: 2px;
+  color: #1a1a1a !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
 }
 
 .icon {
-    font-size: 20px;
-    flex-shrink: 0;
+  font-size: 20px;
+  flex-shrink: 0;
 }
 
 .label {
-    flex: 1;
+  flex: 1;
 }

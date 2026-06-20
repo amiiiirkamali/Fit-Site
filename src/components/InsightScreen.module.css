@@ -1,28 +1,30 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 16px;
 }
 
 .icon {
-    font-size: 56px;
-    margin-bottom: 8px;
+  font-size: 64px;
+  margin-bottom: 8px;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1.4;
-    margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0;
+  font-family: var(--font-heading);
+  color: #1a1a1a;
 }
 
 .text {
-    font-size: 15px;
-    color: var(--color-text-muted);
-    line-height: 2;
-    max-width: 360px;
-    margin: 0;
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 2;
+  max-width: 360px;
+  margin: 0;
 }
