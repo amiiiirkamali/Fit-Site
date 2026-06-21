@@ -2,6 +2,7 @@
   display: flex;
   gap: 10px;
   justify-content: center;
+  direction: ltr;
 }
 
 .box {
@@ -9,16 +10,23 @@
   height: 60px;
   text-align: center;
   font-size: 24px;
-  font-weight: 700;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #1a1a1a;
+  font-weight: 800;
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   outline: none;
   font-family: var(--font-body);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 
 .box:focus {
-  border-color: #1a1a1a;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.08);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .wrapper { gap: 8px; }
+  .box { width: 44px; height: 52px; font-size: 20px; border-radius: 12px; }
 }

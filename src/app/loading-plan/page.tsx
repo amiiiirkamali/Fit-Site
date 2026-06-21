@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import OtpInput from "@/components/OtpInput";
+import ProgressBar from "@/components/ProgressBar";
+import { toPersianDigits } from "@/lib/persian";
 import styles from "./page.module.css";
 
 const loadingSteps = [
@@ -22,6 +24,14 @@ export default function LoadingPlanPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [countdown, setCountdown] = useState(0);
+    const [showContinue, setShowContinue] = useState(false);
+    const mainRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (showContinue || phase === "phone" || phase === "otp") {
+            mainRef.current?.focus();
+        }
+    }, [showContinue, phase]);
 
     useEffect(() => {
         if (phase !== "loading") return;
@@ -43,7 +53,7 @@ export default function LoadingPlanPage() {
                             clearInterval(interval);
 
                             if (idx === loadingSteps.length - 1) {
-                                setTimeout(() => setPhase("phone"), 600);
+                                setTimeout(() => setShowContinue(true), 600);
                             }
                         }
                         setProgress((prev) => {
@@ -76,8 +86,8 @@ export default function LoadingPlanPage() {
 
     const handleSendOtp = async () => {
         const formattedPhone = phone.startsWith("0") ? phone : `0${phone}`;
-        if (formattedPhone.length < 11) {
-            setError("شماره موبایل معتبر وارد کنید");
+        if (formattedPhone.length !== 11 || !formattedPhone.startsWith("09")) {
+            setError("شماره موبایل باید ۱۱ رقمی و با ۰۹ شروع شود");
             return;
         }
 
@@ -158,64 +168,27 @@ export default function LoadingPlanPage() {
 
     // ---------- LOADING PHASE ----------
     if (phase === "loading") {
-        const overallProgress =
-            progress.reduce((a, b) => a + b, 0) / loadingSteps.length;
+        const virtualCurrent = Math.max(-1, activeStep - 1 + (progress[activeStep] / 100));
+
+        const handleKeyDown = (e: React.KeyboardEvent) => {
+            if (e.key === "Enter" && showContinue) {
+                setPhase("phone");
+            }
+        };
 
         return (
-            <main className={styles.page}>
+            <main ref={mainRef} className={styles.page} tabIndex={-1} onKeyDown={handleKeyDown}>
                 <div className={styles.bgGlowOne} />
                 <div className={styles.bgGlowTwo} />
 
+                <header className={styles.header}>
+                    <div className={styles.headerInner}>
+                        <div className={styles.logo}>فیت‌بانو</div>
+                    </div>
+                    <ProgressBar current={virtualCurrent} total={loadingSteps.length} />
+                </header>
+
                 <section className={styles.loadingContent}>
-                    <div className={styles.logoWrap}>
-                        <div className={styles.logoRing}>
-                            <svg viewBox="0 0 100 100" className={styles.ringSvg}>
-                                <circle
-                                    cx="50"
-                                    cy="50"
-                                    r="46"
-                                    fill="none"
-                                    stroke="#f0e8ec"
-                                    strokeWidth="4"
-                                />
-                                <circle
-                                    cx="50"
-                                    cy="50"
-                                    r="46"
-                                    fill="none"
-                                    stroke="url(#gradPink)"
-                                    strokeWidth="4"
-                                    strokeLinecap="round"
-                                    strokeDasharray={`${(overallProgress / 100) * 289} 289`}
-                                    transform="rotate(-90 50 50)"
-                                    className={styles.ringFill}
-                                />
-                                <defs>
-                                    <linearGradient id="gradPink" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#e8568f" />
-                                        <stop offset="100%" stopColor="#c2185b" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <div className={styles.logoCenter}>
-                <span className={styles.logoPercent}>
-                  {Math.round(overallProgress)}
-                    <small>٪</small>
-                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.loadingHeader}>
-                        <span className={styles.eyebrow}>در حال ساخت برنامه</span>
-                        <h1 className={styles.loadingTitle}>
-                            لطفاً چند لحظه صبر کن
-                        </h1>
-                        <p className={styles.loadingSubtitle}>
-                            داریم برنامه‌ی اختصاصی تو رو می‌سازیم...
-                        </p>
-                    </div>
-
                     <div className={styles.steps}>
                         {loadingSteps.map((step, idx) => {
                             const isDone = progress[idx] >= 100;
@@ -268,14 +241,39 @@ export default function LoadingPlanPage() {
                             );
                         })}
                     </div>
+
+                    {showContinue && (
+                        <button
+                            className={styles.continueBtn}
+                            onClick={() => setPhase("phone")}
+                        >
+                            ادامه
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </button>
+                    )}
                 </section>
             </main>
         );
     }
 
+    const phoneError = phone.length > 0 && (phone.length < 11 ? "شماره موبایل باید ۱۱ رقم باشد" : !phone.startsWith("09") ? "شماره موبایل باید با ۰۹ شروع شود" : "");
+
+    const handlePhoneKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            if (phase === "phone" && !loading && phone.length === 11 && phone.startsWith("09")) {
+                handleSendOtp();
+            } else if (phase === "otp" && !loading && otp.length === 6) {
+                handleVerifyAndSubmit();
+            }
+        }
+    };
+
     // ---------- PHONE / OTP PHASE ----------
     return (
-        <main className={styles.page}>
+        <main ref={mainRef} className={styles.page} tabIndex={-1} onKeyDown={handlePhoneKeyDown}>
             <div className={styles.bgGlowOne} />
             <div className={styles.bgGlowTwo} />
 
@@ -300,7 +298,6 @@ export default function LoadingPlanPage() {
                             <div className={styles.successPulse} />
                         </div>
 
-                        <span className={styles.eyebrow}>برنامه آماده‌ست! 🎉</span>
                         <h1 className={styles.title}>
                             یک قدم تا <span className={styles.titleAccent}>برنامه‌ی تو</span>
                         </h1>
@@ -311,35 +308,37 @@ export default function LoadingPlanPage() {
                         <div className={styles.formCard}>
                             <label className={styles.fieldLabel}>شماره موبایل</label>
                             <div className={styles.phoneInputWrap}>
-                <span className={styles.phonePrefix}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                </span>
                                 <input
                                     type="tel"
                                     inputMode="numeric"
                                     className={styles.phoneInput}
-                                    placeholder="09123456789"
-                                    value={phone}
-                                    onChange={(e) =>
-                                        setPhone(e.target.value.replace(/\D/g, ""))
-                                    }
+                                    placeholder={toPersianDigits("09123456789")}
+                                    value={toPersianDigits(phone)}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/[^\d۰-۹]/g, "");
+                                        const english = raw.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
+                                        setPhone(english);
+                                        if (error) setError("");
+                                    }}
                                     maxLength={11}
-                                    dir="ltr"
                                 />
+                                <div className={styles.phoneBadge}>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                </div>
                             </div>
 
-                            {error && (
+                            {(phoneError || error) && (
                                 <p className={styles.error}>
-                                    <span>⚠️</span> {error}
+                                    <span>⚠️</span> {error || phoneError}
                                 </p>
                             )}
 
                             <button
                                 className={styles.submitBtn}
                                 onClick={handleSendOtp}
-                                disabled={loading || phone.length < 10}
+                                disabled={loading || !!phoneError}
                             >
                                 {loading ? (
                                     <>

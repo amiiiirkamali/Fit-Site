@@ -2,19 +2,37 @@
     display: flex;
     gap: 6px;
     width: 100%;
+    padding: 0 2px;
 }
 
 .bar {
     flex: 1;
-    height: 3px;
-    background: #e5e7eb;
-    border-radius: 2px;
+    height: 4px;
+    background: #f0e8ec;
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .fill {
     height: 100%;
-    background: #c2185b;
-    border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(90deg, #c2185b, #e83e7c);
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+}
+
+.fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }

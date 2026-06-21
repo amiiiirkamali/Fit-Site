@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { quizSteps, TOTAL_SECTIONS } from "@/lib/quizData";
+import { quizSteps } from "@/lib/quizData";
 import ProgressBar from "@/components/ProgressBar";
 import QuizOption from "@/components/QuizOption";
 import NumberInput from "@/components/NumberInput";
@@ -16,11 +16,13 @@ export default function QuizPage() {
     const [answers, setAnswers] = useState<Record<string, string>>({});
 
     const step = quizSteps[current];
+    const mainRef = useRef<HTMLDivElement>(null);
 
-    const sectionSteps = quizSteps.filter((s) => s.section === step.section);
-    const idxInSection = sectionSteps.indexOf(step);
-    const progressInSection =
-        sectionSteps.length > 0 ? (idxInSection + 1) / sectionSteps.length : 0;
+    useEffect(() => {
+        if (step.type === "insight") {
+            mainRef.current?.focus();
+        }
+    }, [current, step.type]);
 
     const handleSingleSelect = useCallback(
         (val: string) => {
@@ -85,17 +87,22 @@ export default function QuizPage() {
         return false;
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" && canProceed() && (step.type === "insight" || step.type === "number" || step.type === "multiple")) {
+            handleNext();
+        }
+    };
+
     return (
-        <main className={styles.page}>
+        <main ref={mainRef} className={styles.page} tabIndex={-1} onKeyDown={handleKeyDown}>
             <header className={styles.header}>
                 <div className={styles.headerInner}>
                     {current > 0 && <BackButton onClick={handleBack} />}
                     <div className={styles.logo}>فیت‌بانو</div>
                 </div>
                 <ProgressBar
-                    currentSection={step.section}
-                    totalSections={TOTAL_SECTIONS}
-                    progressInSection={progressInSection}
+                    current={current}
+                    total={quizSteps.length}
                 />
             </header>
 
@@ -107,7 +114,7 @@ export default function QuizPage() {
                         icon={step.insightIcon}
                     />
                 ) : (
-                    <>
+                    <div key={current} className={styles.questions}>
                         <h1 className={styles.title}>{step.title}</h1>
                         {step.subtitle && (
                             <p className={styles.subtitle}>{step.subtitle}</p>
@@ -154,7 +161,7 @@ export default function QuizPage() {
                                 />
                             )}
                         </div>
-                    </>
+                    </div>
                 )}
             </section>
 

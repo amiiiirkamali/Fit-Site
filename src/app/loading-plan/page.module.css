@@ -2,10 +2,11 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: linear-gradient(160deg, #fcf8fa 0%, #fef9fb 50%, #fcf8fa 100%);
     color: #1a1a1a;
     position: relative;
     overflow: hidden;
+    outline: none;
 }
 
 .bgGlowOne,
@@ -18,19 +19,47 @@
 }
 
 .bgGlowOne {
-    top: -100px;
-    right: -100px;
-    width: 360px;
-    height: 360px;
-    background: rgba(232, 86, 143, 0.12);
+    top: -120px;
+    right: -120px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(232, 86, 143, 0.15) 0%, transparent 70%);
 }
 
 .bgGlowTwo {
-    bottom: -120px;
-    left: -100px;
-    width: 320px;
-    height: 320px;
-    background: rgba(194, 24, 91, 0.08);
+    bottom: -140px;
+    left: -120px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(194, 24, 91, 0.1) 0%, transparent 70%);
+}
+
+/* ===================== HEADER ===================== */
+
+.header {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.headerInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 32px;
+    margin-bottom: 14px;
+}
+
+.logo {
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    text-align: center;
 }
 
 /* ===================== LOADING PHASE ===================== */
@@ -41,152 +70,54 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 24px;
-    gap: 28px;
+    padding: 24px 24px 20px;
+    gap: 16px;
     position: relative;
     z-index: 1;
-    max-width: 480px;
+    max-width: 440px;
     margin: 0 auto;
     width: 100%;
 }
 
-.logoWrap {
-    position: relative;
-    animation: fadeUp 0.6s ease both;
-}
 
-.logoRing {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ringSvg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-}
-
-.ringFill {
-    transition: stroke-dasharray 0.3s ease;
-    filter: drop-shadow(0 4px 12px rgba(194, 24, 91, 0.25));
-}
-
-.logoCenter {
-    position: relative;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #fff 0%, #fdf2f6 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-            0 8px 24px rgba(194, 24, 91, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.logoPercent {
-    font-size: 28px;
-    font-weight: 900;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    font-variant-numeric: tabular-nums;
-    display: flex;
-    align-items: baseline;
-    gap: 1px;
-}
-
-.logoPercent small {
-    font-size: 14px;
-}
-
-.loadingHeader {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    animation: fadeUp 0.6s ease 0.1s both;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: rgba(194, 24, 91, 0.08);
-    color: #a01548;
-    font-size: 12px;
-    font-weight: 800;
-    border: 1px solid rgba(194, 24, 91, 0.12);
-    letter-spacing: 0.2px;
-}
-
-.loadingTitle {
-    font-size: 24px;
-    font-weight: 800;
-    text-align: center;
-    line-height: 1.5;
-    margin: 4px 0 0;
-    color: #1a1a1a;
-    letter-spacing: -0.3px;
-}
-
-.loadingSubtitle {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0;
-    line-height: 1.7;
-}
 
 .steps {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
+    gap: 8px;
     animation: fadeUp 0.6s ease 0.2s both;
 }
 
 .stepRow {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
+    gap: 12px;
+    padding: 12px 14px;
     background: #ffffff;
     border: 1.5px solid #f0e8ec;
-    border-radius: 16px;
+    border-radius: 14px;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stepPending {
-    opacity: 0.5;
+    opacity: 0.45;
 }
 
 .stepActive {
-    border-color: rgba(194, 24, 91, 0.3);
-    background: linear-gradient(135deg, #fff 0%, #fdf2f6 100%);
-    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.08);
-    transform: translateY(-1px);
+    border-color: rgba(194, 24, 91, 0.35);
+    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.07);
 }
 
 .stepDone {
-    border-color: rgba(16, 185, 129, 0.2);
-    background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+    border-color: rgba(194, 24, 91, 0.25);
+    background: linear-gradient(135deg, #fdf2f6, #fef7fa);
 }
 
 .stepIconWrap {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,7 +133,7 @@
 }
 
 .stepDone .stepIconWrap {
-    background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
     color: #fff;
 }
 
@@ -220,7 +151,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
 }
 
@@ -232,7 +163,7 @@
 }
 
 .stepLabel {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: #1a1a1a;
 }
@@ -245,7 +176,7 @@
 }
 
 .stepDone .stepPercent {
-    color: #059669;
+    color: #c2185b;
 }
 
 .stepActive .stepPercent {
@@ -253,7 +184,7 @@
 }
 
 .stepTrack {
-    height: 5px;
+    height: 4px;
     background: #f0e8ec;
     border-radius: 999px;
     overflow: hidden;
@@ -267,7 +198,66 @@
 }
 
 .stepDone .stepFill {
-    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(90deg, #c2185b 0%, #e8568f 100%);
+}
+
+/* ===================== CONTINUE BUTTON ===================== */
+
+.continueBtn {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px;
+    background: linear-gradient(135deg, #c2185b, #d6336c);
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 28px rgba(194, 24, 91, 0.25);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.continueBtn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.continueBtn:hover::after {
+    transform: translateX(100%);
+}
+
+.continueBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(194, 24, 91, 0.3);
+}
+
+.continueBtn:active {
+    transform: translateY(0);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(194, 24, 91, 0.08);
+    color: #a01548;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(194, 24, 91, 0.12);
+    letter-spacing: 0.2px;
 }
 
 /* ===================== PHONE / OTP PHASE ===================== */
@@ -303,12 +293,12 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.3);
     z-index: 2;
     animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
@@ -317,7 +307,7 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: rgba(16, 185, 129, 0.2);
+    background: rgba(194, 24, 91, 0.15);
     animation: pulseRing 2s ease-out infinite;
 }
 
@@ -384,60 +374,77 @@
 
 .formCard {
     width: 100%;
-    background: #ffffff;
-    border: 1.5px solid #f0e8ec;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 24px;
-    padding: 24px 20px;
+    padding: 28px 24px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     box-shadow:
-            0 4px 24px rgba(194, 24, 91, 0.04),
-            0 1px 0 rgba(255, 255, 255, 0.9) inset;
+            0 20px 60px rgba(194, 24, 91, 0.06),
+            0 8px 24px rgba(0, 0, 0, 0.03),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .fieldLabel {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     color: #4b5563;
     padding: 0 4px;
 }
 
 .phoneInputWrap {
-    position: relative;
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
-.phonePrefix {
-    position: absolute;
-    left: 16px;
-    color: #9ca3af;
+.phoneBadge {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #c2185b, #e8568f);
     display: flex;
     align-items: center;
-    pointer-events: none;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.2);
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.phoneInputWrap:focus-within .phoneBadge {
+    box-shadow: 0 6px 24px rgba(194, 24, 91, 0.3);
+    transform: scale(1.05);
 }
 
 .phoneInput {
-    width: 100%;
-    padding: 16px 20px 16px 44px;
-    font-size: 18px;
-    font-weight: 700;
+    flex: 1;
+    padding: 16px 18px;
+    font-size: 20px;
+    font-weight: 800;
     text-align: center;
-    border: 1.5px solid #e8d5dd;
+    border: 2px solid #ece3e6;
     border-radius: 14px;
-    background: #fafafa;
+    background: rgba(255, 255, 255, 0.9);
     color: #1a1a1a;
     outline: none;
     font-family: inherit;
-    letter-spacing: 2px;
-    transition: all 0.2s ease;
+    letter-spacing: 3px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    direction: ltr;
 }
 
 .phoneInput:focus {
     border-color: #c2185b;
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.08);
+    box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.1), 0 8px 24px rgba(194, 24, 91, 0.06);
+    transform: scale(1.02);
 }
 
 .phoneInput::placeholder {
@@ -474,8 +481,8 @@
 
 .submitBtn {
     width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #c2185b 0%, #a01548 100%);
+    padding: 15px;
+    background: linear-gradient(135deg, #c2185b, #d6336c);
     color: #fff;
     font-weight: 800;
     font-size: 15px;
@@ -486,20 +493,35 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 8px 28px rgba(194, 24, 91, 0.25);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.submitBtn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.submitBtn:hover:not(:disabled)::after {
+    transform: translateX(100%);
 }
 
 .submitBtn:disabled {
-    opacity: 0.5;
+    opacity: 0.35;
     cursor: not-allowed;
     box-shadow: none;
 }
 
 .submitBtn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.34);
+    box-shadow: 0 12px 36px rgba(194, 24, 91, 0.3);
 }
 
 .submitBtn:active:not(:disabled) {
@@ -628,29 +650,11 @@
 @media (max-width: 480px) {
     .loadingContent,
     .phoneContent {
-        padding: 32px 18px;
-    }
-
-    .logoRing {
-        width: 110px;
-        height: 110px;
-    }
-
-    .logoCenter {
-        width: 80px;
-        height: 80px;
-    }
-
-    .logoPercent {
-        font-size: 24px;
+        padding: 20px 18px;
     }
 
     .title {
         font-size: 22px;
-    }
-
-    .loadingTitle {
-        font-size: 20px;
     }
 
     .formCard {
@@ -661,14 +665,11 @@
 @media (prefers-reduced-motion: reduce) {
     .page,
     .loadingContent,
-    .logoWrap,
-    .loadingHeader,
     .steps,
     .stepRow,
     .stepIconWrap,
     .stepEmoji,
     .stepFill,
-    .ringFill,
     .phoneContent,
     .successBadge,
     .successRing,
@@ -681,7 +682,8 @@
     .resendBtn,
     .countdownDot,
     .changeBtn,
-    .error {
+    .error,
+    .continueBtn {
         animation: none !important;
         transition: none !important;
     }

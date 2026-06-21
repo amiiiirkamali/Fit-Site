@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
+import { prisma } from "@/lib/prisma";
 import { sendOtp } from "@/lib/sms";
 
 export async function POST(req: NextRequest) {
@@ -11,6 +12,20 @@ export async function POST(req: NextRequest) {
                 { success: false, message: "شماره موبایل معتبر وارد کنید" },
                 { status: 400 }
             );
+        }
+
+        // Look up user to check payment status
+        const user = await prisma.user.findUnique({ where: { phone } });
+        const userExists = !!user;
+        const hasPaid = user?.hasPaid ?? false;
+
+        // If user exists but hasn't paid, skip OTP
+        if (userExists && !hasPaid) {
+            return NextResponse.json({
+                success: false,
+                code: "NOT_PAID",
+                message: "هنوز خریدی ثبت نشده. برای شروع برنامه کلیک کنید.",
+            });
         }
 
         // Check rate limit

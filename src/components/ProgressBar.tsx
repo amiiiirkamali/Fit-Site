@@ -3,27 +3,26 @@
 import styles from "./ProgressBar.module.css";
 
 interface Props {
-    currentSection: number;
-    totalSections: number;
-    progressInSection: number; // 0 to 1
+    current: number;
+    total: number;
 }
 
-export default function ProgressBar({
-                                        currentSection,
-                                        totalSections,
-                                        progressInSection,
-                                    }: Props) {
+export default function ProgressBar({ current, total }: Props) {
+    const totalProgress = total > 0 ? ((current + 1) / total) * 100 : 0;
+
     return (
         <div className={styles.wrap}>
-            {Array.from({ length: totalSections }).map((_, idx) => {
-                const sectionNum = idx + 1;
+            {[0, 1, 2, 3].map((i) => {
+                const segStart = i * 25;
+                const segEnd = (i + 1) * 25;
                 let fill = 0;
-                if (sectionNum < currentSection) fill = 1;
-                else if (sectionNum === currentSection) fill = progressInSection;
+                if (totalProgress >= segEnd) fill = 1;
+                else if (totalProgress > segStart)
+                    fill = (totalProgress - segStart) / 25;
                 else fill = 0;
 
                 return (
-                    <div key={idx} className={styles.bar}>
+                    <div key={i} className={styles.bar}>
                         <div
                             className={styles.fill}
                             style={{ width: `${fill * 100}%` }}
