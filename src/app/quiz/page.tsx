@@ -17,7 +17,6 @@ export default function QuizPage() {
 
     const step = quizSteps[current];
 
-    // Calculate section progress
     const sectionSteps = quizSteps.filter((s) => s.section === step.section);
     const idxInSection = sectionSteps.indexOf(step);
     const progressInSection =
@@ -26,7 +25,6 @@ export default function QuizPage() {
     const handleSingleSelect = useCallback(
         (val: string) => {
             setAnswers((prev) => ({ ...prev, [step.key]: val }));
-            // Auto-advance after selection
             setTimeout(() => {
                 if (current < quizSteps.length - 1) {
                     setCurrent((c) => c + 1);
@@ -63,7 +61,6 @@ export default function QuizPage() {
         if (current < quizSteps.length - 1) {
             setCurrent(current + 1);
         } else {
-            // Quiz finished, save answers to sessionStorage and go to phone step
             sessionStorage.setItem("quizAnswers", JSON.stringify(answers));
             router.push("/loading-plan");
         }
@@ -90,14 +87,17 @@ export default function QuizPage() {
 
     return (
         <main className={styles.page}>
-            <div className={styles.topBar}>
-                <BackButton onClick={handleBack} />
+            <header className={styles.header}>
+                <div className={styles.headerInner}>
+                    {current > 0 && <BackButton onClick={handleBack} />}
+                    <div className={styles.logo}>فیت‌بانو</div>
+                </div>
                 <ProgressBar
                     currentSection={step.section}
                     totalSections={TOTAL_SECTIONS}
                     progressInSection={progressInSection}
                 />
-            </div>
+            </header>
 
             <section className={styles.content}>
                 {step.type === "insight" ? (
@@ -158,7 +158,6 @@ export default function QuizPage() {
                 )}
             </section>
 
-            {/* Show continue button for insight, number, and multiple-choice */}
             {(step.type === "insight" ||
                 step.type === "number" ||
                 step.type === "multiple") && (

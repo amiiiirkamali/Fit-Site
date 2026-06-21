@@ -5,7 +5,7 @@ import styles from "./ProgressBar.module.css";
 interface Props {
     currentSection: number;
     totalSections: number;
-    progressInSection: number; // 0-1
+    progressInSection: number; // 0 to 1
 }
 
 export default function ProgressBar({
@@ -14,22 +14,23 @@ export default function ProgressBar({
                                         progressInSection,
                                     }: Props) {
     return (
-        <div className={styles.bar}>
-            {Array.from({ length: totalSections }).map((_, i) => (
-                <div key={i} className={styles.segment}>
-                    <div
-                        className={styles.fill}
-                        style={{
-                            width:
-                                i < currentSection
-                                    ? "100%"
-                                    : i === currentSection
-                                        ? `${Math.round(progressInSection * 100)}%`
-                                        : "0%",
-                        }}
-                    />
-                </div>
-            ))}
+        <div className={styles.wrap}>
+            {Array.from({ length: totalSections }).map((_, idx) => {
+                const sectionNum = idx + 1;
+                let fill = 0;
+                if (sectionNum < currentSection) fill = 1;
+                else if (sectionNum === currentSection) fill = progressInSection;
+                else fill = 0;
+
+                return (
+                    <div key={idx} className={styles.bar}>
+                        <div
+                            className={styles.fill}
+                            style={{ width: `${fill * 100}%` }}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 }

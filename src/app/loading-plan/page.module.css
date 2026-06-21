@@ -1,205 +1,688 @@
 .page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #0f0f0f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
 }
+
+.bgGlowOne,
+.bgGlowTwo {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bgGlowOne {
+    top: -100px;
+    right: -100px;
+    width: 360px;
+    height: 360px;
+    background: rgba(232, 86, 143, 0.12);
+}
+
+.bgGlowTwo {
+    bottom: -120px;
+    left: -100px;
+    width: 320px;
+    height: 320px;
+    background: rgba(194, 24, 91, 0.08);
+}
+
+/* ===================== LOADING PHASE ===================== */
 
 .loadingContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  gap: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-.loadingIcon {
-  font-size: 56px;
-  animation: pulse 2s ease-in-out infinite;
+.logoWrap {
+    position: relative;
+    animation: fadeUp 0.6s ease both;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+.logoRing {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ringSvg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+.ringFill {
+    transition: stroke-dasharray 0.3s ease;
+    filter: drop-shadow(0 4px 12px rgba(194, 24, 91, 0.25));
+}
+
+.logoCenter {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #fff 0%, #fdf2f6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+            0 8px 24px rgba(194, 24, 91, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.logoPercent {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+}
+
+.logoPercent small {
+    font-size: 14px;
+}
+
+.loadingHeader {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(194, 24, 91, 0.08);
+    color: #a01548;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(194, 24, 91, 0.12);
+    letter-spacing: 0.2px;
 }
 
 .loadingTitle {
-  font-size: 22px;
-  font-weight: 800;
-  text-align: center;
-  line-height: 1.5;
-  margin: 0;
-  color: #ffffff;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.5;
+    margin: 4px 0 0;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+}
+
+.loadingSubtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.7;
 }
 
 .steps {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    animation: fadeUp 0.6s ease 0.2s both;
 }
 
 .stepRow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1.5px solid #f0e8ec;
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stepPending {
+    opacity: 0.5;
 }
 
 .stepActive {
-  opacity: 1;
+    border-color: rgba(194, 24, 91, 0.3);
+    background: linear-gradient(135deg, #fff 0%, #fdf2f6 100%);
+    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.08);
+    transform: translateY(-1px);
 }
 
-.stepIcon {
-  font-size: 24px;
-  flex-shrink: 0;
+.stepDone {
+    border-color: rgba(16, 185, 129, 0.2);
+    background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+}
+
+.stepIconWrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f5f7;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.stepActive .stepIconWrap {
+    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
+    box-shadow: 0 4px 14px rgba(194, 24, 91, 0.25);
+    animation: bounceSoft 1.4s ease-in-out infinite;
+}
+
+.stepDone .stepIconWrap {
+    background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+    color: #fff;
+}
+
+.stepEmoji {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.stepActive .stepEmoji {
+    transform: scale(1.1);
+    filter: brightness(0) invert(1) sepia(1) hue-rotate(290deg) saturate(3);
 }
 
 .stepInfo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.stepTopRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .stepLabel {
-  font-size: 14px;
-  font-weight: 700;
-  color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.stepPercent {
+    font-size: 11px;
+    font-weight: 800;
+    color: #6b7280;
+    font-variant-numeric: tabular-nums;
+}
+
+.stepDone .stepPercent {
+    color: #059669;
+}
+
+.stepActive .stepPercent {
+    color: #c2185b;
 }
 
 .stepTrack {
-  height: 6px;
-  background: #333;
-  border-radius: 999px;
-  overflow: hidden;
+    height: 5px;
+    background: #f0e8ec;
+    border-radius: 999px;
+    overflow: hidden;
 }
 
 .stepFill {
-  height: 100%;
-  background: #c2185b;
-  border-radius: 999px;
-  transition: width 0.2s ease;
+    height: 100%;
+    background: linear-gradient(90deg, #c2185b 0%, #e8568f 100%);
+    border-radius: 999px;
+    transition: width 0.2s ease;
 }
 
-.stepCheck {
-  font-size: 18px;
-  color: #10b981;
-  flex-shrink: 0;
-  font-weight: 700;
+.stepDone .stepFill {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
 }
+
+/* ===================== PHONE / OTP PHASE ===================== */
 
 .phoneContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  gap: 16px;
-  max-width: 400px;
-  margin: 0 auto;
-  width: 100%;
-  background: #ffffff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 12px;
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.5s ease both;
 }
 
-.doneIcon {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  background: #f5f5f5;
-  border-radius: 50%;
-  margin-bottom: 8px;
-  color: #10b981;
+.successBadge {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.successRing {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.3);
+    z-index: 2;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.successPulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.2);
+    animation: pulseRing 2s ease-out infinite;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.lockBadge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #c2185b 0%, #a01548 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.3);
+    margin-bottom: 8px;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 800;
-  margin: 0;
-  text-align: center;
-  color: #1a1a1a;
+    font-size: 26px;
+    font-weight: 800;
+    margin: 4px 0 0;
+    text-align: center;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+    line-height: 1.4;
+}
+
+.titleAccent {
+    background: linear-gradient(120deg, #c2185b 0%, #e8568f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  text-align: center;
-  line-height: 1.7;
-  margin: 0 0 8px;
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.8;
+    margin: 0 0 16px;
+    max-width: 360px;
 }
 
-.inputWrapper {
-  width: 100%;
+.phoneHighlight {
+    color: #1a1a1a;
+    font-weight: 800;
+    background: #fdf2f6;
+    padding: 2px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.formCard {
+    width: 100%;
+    background: #ffffff;
+    border: 1.5px solid #f0e8ec;
+    border-radius: 24px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow:
+            0 4px 24px rgba(194, 24, 91, 0.04),
+            0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.fieldLabel {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4b5563;
+    padding: 0 4px;
+}
+
+.phoneInputWrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.phonePrefix {
+    position: absolute;
+    left: 16px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
 }
 
 .phoneInput {
-  width: 100%;
-  padding: 16px 20px;
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #1a1a1a;
-  outline: none;
-  font-family: var(--font-body);
-  letter-spacing: 2px;
-  transition: border-color 0.2s ease;
+    width: 100%;
+    padding: 16px 20px 16px 44px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    border: 1.5px solid #e8d5dd;
+    border-radius: 14px;
+    background: #fafafa;
+    color: #1a1a1a;
+    outline: none;
+    font-family: inherit;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
 }
 
 .phoneInput:focus {
-  border-color: #1a1a1a;
+    border-color: #c2185b;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.08);
+}
+
+.phoneInput::placeholder {
+    color: #c9c0c5;
+    font-weight: 600;
+}
+
+.otpWrap {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
 }
 
 .error {
-  color: #ef4444;
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ef4444;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    padding: 10px 14px;
+    background: rgba(239, 68, 68, 0.06);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-radius: 10px;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
 }
 
 .submitBtn {
-  width: 100%;
-  padding: 16px;
-  background: #1a1a1a;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  border: none;
-  border-radius: 12px;
-  transition: opacity 0.2s ease;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #c2185b 0%, #a01548 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.25);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-top: 4px;
 }
 
 .submitBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .submitBtn:hover:not(:disabled) {
-  opacity: 0.85;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.34);
+}
+
+.submitBtn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btnSpinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .resendBtn {
-  background: transparent;
-  border: none;
-  color: #6b7280;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.resendBtn:hover:not(:disabled) {
+    color: #c2185b;
+    background: rgba(194, 24, 91, 0.04);
 }
 
 .resendBtn:disabled {
-  color: #9ca3af;
-  cursor: not-allowed;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.countdownDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c2185b;
+    animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.legal {
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: center;
+    margin: 8px 0 0;
+    line-height: 1.7;
+}
+
+.legal a {
+    color: #c2185b;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.legal a:hover {
+    text-decoration: underline;
+}
+
+.changeBtn {
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    margin-top: 4px;
+}
+
+.changeBtn:hover {
+    color: #c2185b;
+    background: rgba(194, 24, 91, 0.04);
+}
+
+/* ===================== ANIMATIONS ===================== */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounceSoft {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 480px) {
+    .loadingContent,
+    .phoneContent {
+        padding: 32px 18px;
+    }
+
+    .logoRing {
+        width: 110px;
+        height: 110px;
+    }
+
+    .logoCenter {
+        width: 80px;
+        height: 80px;
+    }
+
+    .logoPercent {
+        font-size: 24px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .loadingTitle {
+        font-size: 20px;
+    }
+
+    .formCard {
+        padding: 20px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page,
+    .loadingContent,
+    .logoWrap,
+    .loadingHeader,
+    .steps,
+    .stepRow,
+    .stepIconWrap,
+    .stepEmoji,
+    .stepFill,
+    .ringFill,
+    .phoneContent,
+    .successBadge,
+    .successRing,
+    .successPulse,
+    .lockBadge,
+    .formCard,
+    .phoneInput,
+    .submitBtn,
+    .btnSpinner,
+    .resendBtn,
+    .countdownDot,
+    .changeBtn,
+    .error {
+        animation: none !important;
+        transition: none !important;
+    }
 }

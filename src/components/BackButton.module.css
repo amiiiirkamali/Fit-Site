@@ -1,21 +1,22 @@
 .btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;
-  border: none;
-  border-radius: 50%;
-  font-size: 18px;
-  color: #1a1a1a;
-  z-index: 10;
-  transition: background 0.2s ease;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #1a1a1a;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+    padding: 0;
 }
 
 .btn:hover {
-  background: #e5e7eb;
+    background: #f3f4f6;
 }
