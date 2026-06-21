@@ -1,98 +1,454 @@
 .footer {
-  background: #fafafa;
-  border-top: 1px solid #f3f4f6;
-  padding: 60px 24px 0;
+    position: relative;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
 }
 
+/* ---------- wave ---------- */
+.waveWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.waveSvg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(180deg);
+}
+
+.wavePath {
+    fill: rgba(194, 24, 91, 0.12);
+}
+
+.waveAccent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 5%, rgba(194, 24, 91, 0.6) 25%, var(--color-accent) 50%, rgba(194, 24, 91, 0.6) 75%, transparent 95%);
+}
+
+.waveAccent2 {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 15%, rgba(194, 24, 91, 0.35) 40%, rgba(194, 24, 91, 0.5) 60%, transparent 85%);
+}
+
+.waveAccent3 {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 25%, rgba(194, 24, 91, 0.15) 45%, rgba(194, 24, 91, 0.25) 55%, transparent 75%);
+}
+
+/* ---------- blur circles ---------- */
+.blurCircle1 {
+    position: absolute;
+    top: 60px;
+    right: 60px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(194, 24, 91, 0.12);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.blurCircle2 {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(194, 24, 91, 0.08);
+    filter: blur(120px);
+    pointer-events: none;
+}
+
+/* ---------- inner container ---------- */
 .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 40px;
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px 16px;
 }
 
-.col {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ---------- grid ---------- */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
 }
 
-.colLogo {
-  font-family: var(--font-heading);
-  font-size: 22px;
-  font-weight: 800;
-  color: #1a1a1a;
+@media (min-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
-.colDesc {
-  font-size: 14px;
-  line-height: 2;
-  color: #6b7280;
-  margin: 0;
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: 4fr 2fr 2fr 3fr;
+    }
+}
+
+/* ---------- brand column ---------- */
+.brandCol {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logoWrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.logoGlow {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--color-accent);
+    filter: blur(20px);
+    opacity: 0.6;
+}
+
+.logoBox {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--color-accent) 0%, #b81b5a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(194, 24, 91, 0.25);
+    flex-shrink: 0;
+}
+
+.logoText {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #d4c7cf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    color: #b8aab6;
+    line-height: 1.9;
+    font-size: 15px;
+    max-width: 360px;
+    margin: 0;
+}
+
+/* ---------- social ---------- */
+.socialArea {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.socialTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8a7585;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.socialRow {
+    display: flex;
+    gap: 10px;
+}
+
+.socialLink {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b8aab6;
+    border: 1px solid rgba(194, 24, 91, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
+
+.socialLink:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: scale(1.1);
+    box-shadow: 0 4px 24px rgba(194, 24, 91, 0.25);
+}
+
+/* ---------- link columns ---------- */
+.linkCol {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .colTitle {
-  font-size: 15px;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
 }
 
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.colTitleLine {
+    width: 24px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    flex-shrink: 0;
 }
 
-.link {
-  font-size: 14px;
-  color: #6b7280;
-  background: transparent;
-  border: none;
-  text-align: right;
-  padding: 0;
-  transition: color 0.2s ease;
+.linkList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.link:hover {
-  color: #1a1a1a;
+.linkItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #b8aab6;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.contactList {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.linkItem:hover {
+    color: #fff;
+    transform: translateX(-4px);
 }
 
-.contactItem {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.linkHoverLine {
+    width: 0;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 999px;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.contactLabel {
-  font-size: 12px;
-  font-weight: 700;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.linkItem:hover .linkHoverLine {
+    width: 16px;
 }
 
-.contactValue {
-  font-size: 14px;
-  color: #6b7280;
+/* ---------- trust column ---------- */
+.trustCol {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.bottom {
-  margin-top: 48px;
-  padding: 20px 0;
-  border-top: 1px solid #f3f4f6;
+.badgesRow {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.badgeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 80px;
+    height: 88px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(194, 24, 91, 0.15);
+    color: #b8aab6;
+    font-size: 11px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.badgeCard:hover {
+    background: rgba(194, 24, 91, 0.06);
+    border-color: rgba(194, 24, 91, 0.15);
+    transform: translateY(-2px);
+}
+
+.badgeCheck {
+    color: #22c55e;
+}
+
+.paymentRow {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.paymentBadge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(194, 24, 91, 0.15);
+    color: #b8aab6;
+    font-size: 11px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.paymentBadge:hover {
+    background: rgba(194, 24, 91, 0.06);
+    border-color: rgba(194, 24, 91, 0.15);
+    transform: scale(1.05);
+}
+
+/* ---------- divider ---------- */
+.divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.dividerLine {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+}
+
+.dividerLine::before {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: rgba(194, 24, 91, 0.2);
+}
+
+.dividerDot {
+    position: relative;
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-accent);
+}
+
+/* ---------- bottom bar ---------- */
+.bottomBar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: center;
 }
 
 .copyright {
-  font-size: 13px;
-  color: #9ca3af;
-  text-align: center;
-  margin: 0;
+    margin: 0;
+    color: #8a7585;
+    font-size: 13px;
+    line-height: 24px;
+}
+
+.signature {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.signImg {
+    height: 140px;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(2000%) hue-rotate(320deg) brightness(90%) contrast(90%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.signImg:hover {
+    filter: brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(3000%) hue-rotate(320deg) brightness(110%) contrast(100%);
+    transform: scale(1.08);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 640px) {
+    .inner {
+        padding: 60px 16px 8px;
+    }
+
+    .description {
+        max-width: 100%;
+    }
+
+    .socialRow {
+        justify-content: center;
+    }
+
+    .brandCol, .linkCol, .trustCol {
+        align-items: center;
+        text-align: center;
+    }
+
+    .colTitle {
+        justify-content: center;
+    }
+
+    .linkList {
+        align-items: center;
+    }
+
+    .badgesRow {
+        justify-content: center;
+    }
+
+    .paymentRow {
+        justify-content: center;
+    }
+
+    .bottomBar {
+        flex-direction: column;
+        align-items: center;
+    }
+    .signImg {
+        height: 80px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .socialLink, .linkItem, .badgeCard, .paymentBadge {
+        transition: none !important;
+    }
+    .linkItem:hover {
+        transform: none;
+    }
+    .linkItem:hover .linkHoverLine {
+        width: 0;
+    }
 }

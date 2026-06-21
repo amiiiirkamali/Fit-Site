@@ -1,42 +1,87 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Menu, X, ArrowLeft } from "lucide-react";
 import styles from "./Header.module.css";
 
 export default function Header() {
-  const router = useRouter();
-  const pathname = usePathname();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
-  const navItems = [
-    { label: "صفحه اصلی", path: "/" },
-    { label: "درباره ما", path: "/about" },
-    { label: "وبلاگ", path: "/blog" },
-    { label: "تماس با ما", path: "/contact" },
-  ];
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 12);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
 
-  return (
-    <header className={styles.header}>
-      <div className={styles.inner}>
-        <span className={styles.logo} onClick={() => router.push("/")}>
-          فیت‌بانو
-        </span>
+    const navItems = [
+        { label: "امکانات", href: "/#features" },
+        { label: "شروع", href: "/quiz" },
+    ];
 
-        <nav className={styles.nav}>
-          {navItems.map((item) => (
-            <button
-              key={item.path}
-              className={`${styles.navLink} ${pathname === item.path ? styles.navActive : ""}`}
-              onClick={() => router.push(item.path)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
+    return (
+        <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+            <div className={styles.inner}>
+                <Link href="/" className={styles.logoWrap}>
+                    <div className={styles.logoMark}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <span className={styles.logoText}>فیت‌بانو</span>
+                </Link>
 
-        <button className={styles.loginBtn} onClick={() => router.push("/login")}>
-          ورود
-        </button>
-      </div>
-    </header>
-  );
+                <nav className={styles.nav}>
+                    {navItems.map((item) => (
+                        <Link key={item.label} href={item.href} className={styles.navLink}>
+                            {item.label}
+                        </Link>
+                    ))}
+                </nav>
+
+                <div className={styles.actions}>
+                    <Link href="/login" className={styles.loginBtn}>
+                        ورود
+                    </Link>
+                    <Link href="/quiz" className={styles.primaryBtn}>
+                        بساز
+                        <ArrowLeft size={16} />
+                    </Link>
+                </div>
+
+                <button
+                    className={styles.mobileMenuBtn}
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    aria-label="menu"
+                >
+                    {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
+            </div>
+
+            <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}>
+                {navItems.map((item) => (
+                    <Link
+                        key={item.label}
+                        href={item.href}
+                        className={styles.mobileLink}
+                        onClick={() => setMenuOpen(false)}
+                    >
+                        {item.label}
+                    </Link>
+                ))}
+                <div className={styles.mobileActions}>
+                    <Link href="/login" className={styles.mobileLoginBtn} onClick={() => setMenuOpen(false)}>
+                        ورود
+                    </Link>
+                    <Link href="/quiz" className={styles.mobilePrimaryBtn} onClick={() => setMenuOpen(false)}>
+                        شروع کن
+                    </Link>
+                </div>
+            </div>
+        </header>
+    );
 }
