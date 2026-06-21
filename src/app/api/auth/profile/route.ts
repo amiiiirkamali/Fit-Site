@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getTokenFromHeaders } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
     try {
         const payload = getTokenFromHeaders(req.headers);
 
@@ -13,8 +13,29 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        const user = await prisma.user.findUnique({
+        const body = await req.json();
+        const allowedFields = [
+            "name", "gender", "age", "height", "weight",
+            "targetWeight", "goal", "activityLevel",
+        ];
+
+        const updateData: Record<string, unknown> = {};
+        for (const field of allowedFields) {
+            if (body[field] !== undefined) {
+                updateData[field] = body[field];
+            }
+        }
+
+        if (Object.keys(updateData).length === 0) {
+            return NextResponse.json(
+                { success: false, message: "هیچ فیلدی برای بروزرسانی ارسال نشده" },
+                { status: 400 }
+            );
+        }
+
+        const user = await prisma.user.update({
             where: { id: payload.userId },
+            data: updateData,
             select: {
                 id: true,
                 phone: true,
@@ -27,30 +48,12 @@ export async function GET(req: NextRequest) {
                 targetWeight: true,
                 goal: true,
                 activityLevel: true,
-                createdAt: true,
             },
         });
 
-        if (!user) {
-            return NextResponse.json(
-                { success: false, message: "User not found" },
-                { status: 404 }
-            );
-        }
-
-        const quizAnswers = await prisma.quizAnswer.findMany({
-            where: { userId: payload.userId },
-            select: { questionKey: true, answerValue: true },
-        });
-
-        const answersMap: Record<string, string> = {};
-        for (const a of quizAnswers) {
-            answersMap[a.questionKey] = a.answerValue;
-        }
-
-        return NextResponse.json({ success: true, user, quizAnswers: answersMap });
+        return NextResponse.json({ success: true, user });
     } catch (error) {
-        console.error("Me Error:", error);
+        console.error("Profile Update Error:", error);
         return NextResponse.json(
             { success: false, message: "خطای سرور" },
             { status: 500 }

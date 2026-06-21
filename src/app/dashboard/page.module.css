@@ -256,6 +256,33 @@
     animation: pulseDot 2s ease-in-out infinite;
 }
 
+.profileBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    background: transparent;
+    border: 1.5px solid rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.profileBtn:hover {
+    background: rgba(194, 24, 91, 0.06);
+    color: #c2185b;
+    border-color: rgba(194, 24, 91, 0.2);
+    transform: translateY(-1px);
+}
+
+.profileBtn:active {
+    transform: translateY(0);
+}
+
 .logoutBtn {
     display: inline-flex;
     align-items: center;

@@ -5,7 +5,7 @@ import { sendOtp } from "@/lib/sms";
 
 export async function POST(req: NextRequest) {
     try {
-        const { phone } = await req.json();
+        const { phone, source } = await req.json();
 
         if (!phone || phone.length < 10) {
             return NextResponse.json(
@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
         const userExists = !!user;
         const hasPaid = user?.hasPaid ?? false;
 
-        // If user exists but hasn't paid, skip OTP
-        if (userExists && !hasPaid) {
+        // If user hasn't paid (or is new in login flow), skip OTP
+        if ((source === "login" && !hasPaid) || (userExists && !hasPaid)) {
             return NextResponse.json({
                 success: false,
                 code: "NOT_PAID",
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         // Check rate limit
         const rateKey = `otp:rate:${phone}`;
         const rateCount = await redis.get(rateKey);
-        if (rateCount && parseInt(rateCount) > 5) {
+        if (rateCount && parseInt(rateCount) > 20) {
             return NextResponse.json(
                 { success: false, message: "تعداد درخواست‌ها بیش از حد مجاز" },
                 { status: 429 }

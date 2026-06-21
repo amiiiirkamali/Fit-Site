@@ -2,11 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { User } from "lucide-react";
+import ProfilePanel from "@/components/ProfilePanel";
 import styles from "./page.module.css";
 
 interface UserData {
     phone: string;
     hasPaid: boolean;
+    name?: string | null;
+    gender?: string | null;
+    age?: number | null;
+    height?: number | null;
+    weight?: number | null;
+    targetWeight?: number | null;
+    goal?: string | null;
+    activityLevel?: string | null;
 }
 
 export default function DashboardPage() {
@@ -15,6 +25,8 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState("");
     const [greeting, setGreeting] = useState("");
+    const [profileOpen, setProfileOpen] = useState(false);
+    const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -30,6 +42,7 @@ export default function DashboardPage() {
             .then((data) => {
                 if (data.user && data.user.hasPaid) {
                     setUser(data.user);
+                    if (data.quizAnswers) setQuizAnswers(data.quizAnswers);
                 } else {
                     router.push("/");
                 }
@@ -59,6 +72,22 @@ export default function DashboardPage() {
         const interval = setInterval(updateTime, 60000);
         return () => clearInterval(interval);
     }, []);
+
+    const handleSaveProfile = async (data: Partial<UserData>) => {
+        const token = localStorage.getItem("token");
+        const res = await fetch("/api/auth/profile", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (result.success) {
+            setUser((prev) => (prev ? { ...prev, ...result.user } : prev));
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -124,6 +153,10 @@ export default function DashboardPage() {
                         <div className={styles.timeDot} />
                         <span>{currentTime}</span>
                     </div>
+                    <button className={styles.profileBtn} onClick={() => setProfileOpen(true)}>
+                        <User size={16} />
+                        پروفایل
+                    </button>
                     <button className={styles.logoutBtn} onClick={handleLogout}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -350,6 +383,24 @@ export default function DashboardPage() {
                     </div>
                 </button>
             </div>
+
+            <ProfilePanel
+                open={profileOpen}
+                onClose={() => setProfileOpen(false)}
+                phone={user?.phone ?? ""}
+                profile={{
+                    name: user?.name ?? null,
+                    gender: user?.gender ?? null,
+                    age: user?.age ?? null,
+                    height: user?.height ?? null,
+                    weight: user?.weight ?? null,
+                    targetWeight: user?.targetWeight ?? null,
+                    goal: user?.goal ?? null,
+                    activityLevel: user?.activityLevel ?? null,
+                }}
+                quizAnswers={quizAnswers}
+                onSave={handleSaveProfile}
+            />
         </main>
     );
 }

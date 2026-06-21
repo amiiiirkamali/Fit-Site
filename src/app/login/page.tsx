@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Phone } from "lucide-react";
 import OtpInput from "@/components/OtpInput";
 import { toPersianDigits } from "@/lib/persian";
 import styles from "./page.module.css";
@@ -42,7 +43,7 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: phone.startsWith("0") ? phone : `0${phone}` }),
+        body: JSON.stringify({ phone: phone.startsWith("0") ? phone : `0${phone}`, source: "login" }),
       });
 
       const data = await res.json();
@@ -104,8 +105,12 @@ export default function LoginPage() {
   const phoneError = phone.length > 0 && (phone.length < 11 ? "شماره موبایل باید ۱۱ رقم باشد" : !phone.startsWith("09") ? "شماره موبایل باید با ۰۹ شروع شود" : "");
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && step === "phone" && !loading && phone.length === 11 && phone.startsWith("09")) {
-      handleSendOtp();
+    if (e.key === "Enter" && !loading) {
+      if (step === "phone" && phone.length === 11 && phone.startsWith("09")) {
+        handleSendOtp();
+      } else if (step === "otp" && otp.length === 6) {
+        handleVerifyOtp();
+      }
     }
   };
 
@@ -155,7 +160,7 @@ export default function LoginPage() {
         <div ref={mainRef} className={styles.card} tabIndex={-1} onKeyDown={handleKeyDown}>
           {step === "phone" ? (
             <>
-              <div className={styles.iconCircle}>📱</div>
+              <div className={styles.iconCircle}><Phone size={28} /></div>
               <h1 className={styles.title}>ورود به حساب کاربری</h1>
               <p className={styles.subtitle}>
                 شماره موبایلت رو وارد کن تا کد تأیید برات بفرستیم

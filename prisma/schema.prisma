@@ -12,6 +12,14 @@ model User {
   phone      String   @unique
   isVerified Boolean  @default(false)
   hasPaid    Boolean  @default(false)
+  name       String?
+  gender     String?
+  age        Int?
+  height     Float?
+  weight     Float?
+  targetWeight Float?
+  goal       String?
+  activityLevel String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
