@@ -17,8 +17,8 @@ export default function Header() {
     }, []);
 
     const navItems = [
-        { label: "امکانات", href: "/#features" },
-        { label: "شروع", href: "/quiz" },
+        { label: "راهنما", href: "/guide" },
+        { label: "رنک", href: "/rank" },
     ];
 
     return (
@@ -48,8 +48,10 @@ export default function Header() {
                         ورود
                     </Link>
                     <Link href="/quiz" className={styles.primaryBtn}>
-                        بساز
-                        <ArrowLeft size={16} />
+                        شروع کن
+                        <span className={styles.primaryBtnArrow}>
+                            <ArrowLeft size={14} />
+                        </span>
                     </Link>
                 </div>
 

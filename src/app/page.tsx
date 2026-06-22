@@ -135,23 +135,23 @@ function CalorieWidget() {
                     <div className={styles.calRowInner}>
                         <span className={styles.calRowLabel}>وزن</span>
                         <div className={styles.calStepper}>
-                            <button onClick={() => setWeight(w => Math.max(40, w - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
+                            <button onClick={() => setWeight(w => Math.max(30, w - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
                             <span className={styles.stepperValue}>{weight} kg</span>
-                            <button onClick={() => setWeight(w => Math.min(150, w + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
+                            <button onClick={() => setWeight(w => Math.min(230, w + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
                         </div>
                     </div>
-                    <input type="range" min={40} max={150} value={weight} onChange={e => setWeight(Number(e.target.value))} className={styles.calSlider} />
+                    <input type="range" min={30} max={230} value={weight} onChange={e => setWeight(Number(e.target.value))} className={styles.calSlider} />
                 </div>
                 <div className={styles.calRow}>
                     <div className={styles.calRowInner}>
                         <span className={styles.calRowLabel}>قد</span>
                         <div className={styles.calStepper}>
-                            <button onClick={() => setHeight(h => Math.max(140, h - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
+                            <button onClick={() => setHeight(h => Math.max(100, h - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
                             <span className={styles.stepperValue}>{height} cm</span>
-                            <button onClick={() => setHeight(h => Math.min(200, h + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
+                            <button onClick={() => setHeight(h => Math.min(230, h + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
                         </div>
                     </div>
-                    <input type="range" min={140} max={200} value={height} onChange={e => setHeight(Number(e.target.value))} className={styles.calSlider} />
+                    <input type="range" min={100} max={230} value={height} onChange={e => setHeight(Number(e.target.value))} className={styles.calSlider} />
                 </div>
                 <div className={styles.goalRow}>
                     {(["lose", "maintain", "gain"] as Goal[]).map(g => (

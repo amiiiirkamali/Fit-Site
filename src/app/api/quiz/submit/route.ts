@@ -42,6 +42,14 @@ export async function POST(req: NextRequest) {
 
         await Promise.all(upserts);
 
+        // Save name to user profile if provided
+        if (answers.name) {
+            await prisma.user.update({
+                where: { id: payload.userId },
+                data: { name: String(answers.name) },
+            });
+        }
+
         return NextResponse.json({
             success: true,
             message: "پاسخ‌ها ذخیره شد",

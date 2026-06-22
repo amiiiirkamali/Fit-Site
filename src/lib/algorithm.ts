@@ -19,19 +19,58 @@ function parseQuizAnswers(
     const get = (key: string) =>
         answers.find((a) => a.questionKey === key)?.answerValue || "";
 
+    const ageValue = get("age");
+    const ageMap: Record<string, number> = {
+        "18-23": 20,
+        "24-29": 26,
+        "30s": 35,
+        "40s": 45,
+        "50+": 55,
+    };
+    const age = ageMap[ageValue] || 30;
+
+    const activityValue = get("dailyActivity");
+    const activityMap: Record<string, string> = {
+        sedentary: "sedentary",
+        standing: "light",
+        mixed: "moderate",
+        varies: "light",
+    };
+
+    const goalValue = get("goal");
+    const goalMap: Record<string, string> = {
+        lose: "lose",
+        muscle: "muscle",
+        recomposition: "lose",
+        "overall-fitness": "maintain",
+    };
+
+    const experienceValue = get("experience");
+    const fitnessMap: Record<string, string> = {
+        beginner: "beginner",
+        comfortable: "intermediate",
+        experienced: "advanced",
+    };
+
+    const equipValue = get("equipment");
+    const equipList = equipValue ? equipValue.split(",") : [];
+
     return {
-        age: parseInt(get("age")) || 25,
-        height: parseInt(get("height")) || 165,
-        weight: parseInt(get("weight")) || 65,
-        targetWeight: parseInt(get("targetWeight")) || 60,
-        activityLevel: get("activityLevel") || "moderate",
-        goal: get("goal") || "lose",
-        dietaryRestrictions: get("dietaryRestrictions")
-            ? get("dietaryRestrictions").split(",")
-            : [],
+        age,
+        height: 165,
+        weight: 65,
+        targetWeight: 65,
+        activityLevel: activityMap[activityValue] || "moderate",
+        goal: goalMap[goalValue] || "lose",
+        dietaryRestrictions: [],
         workoutDays: parseInt(get("workoutDays")) || 3,
-        equipment: get("equipment") || "none",
-        fitnessLevel: get("fitnessLevel") || "beginner",
+        equipment:
+            equipList.includes("dumbbell") || equipList.includes("band")
+                ? "home-basic"
+                : equipList.includes("machine") || equipList.includes("barbell")
+                  ? "gym"
+                  : "none",
+        fitnessLevel: fitnessMap[experienceValue] || "beginner",
     };
 }
 
@@ -71,30 +110,13 @@ export async function generateDietPlan(userId: string): Promise<string> {
     const tdee = bmr * getActivityMultiplier(quiz.activityLevel);
     const dailyCalories = Math.round(tdee + getCalorieAdjustment(quiz.goal));
 
-    // Fetch all food items
     const allFoods = await prisma.foodItem.findMany();
 
-    // Filter by dietary restrictions
-    let filteredFoods = allFoods;
-    if (quiz.dietaryRestrictions.length > 0) {
-        filteredFoods = allFoods.filter((food) => {
-            if (quiz.dietaryRestrictions.includes("وگان")) {
-                return food.dietaryTags.includes("وگان");
-            }
-            if (quiz.dietaryRestrictions.includes("بدون‌گلوتن")) {
-                return food.dietaryTags.includes("بدون‌گلوتن");
-            }
-            return true;
-        });
-    }
+    const breakfasts = allFoods.filter((f) => f.mealType === "breakfast");
+    const lunches = allFoods.filter((f) => f.mealType === "lunch");
+    const dinners = allFoods.filter((f) => f.mealType === "dinner");
+    const snacks = allFoods.filter((f) => f.mealType === "snack");
 
-    // Group by meal type
-    const breakfasts = filteredFoods.filter((f) => f.mealType === "breakfast");
-    const lunches = filteredFoods.filter((f) => f.mealType === "lunch");
-    const dinners = filteredFoods.filter((f) => f.mealType === "dinner");
-    const snacks = filteredFoods.filter((f) => f.mealType === "snack");
-
-    // Create the diet plan
     const dietPlan = await prisma.dietPlan.create({
         data: {
             userId,
@@ -102,7 +124,6 @@ export async function generateDietPlan(userId: string): Promise<string> {
         },
     });
 
-    // Generate 7 days of meals
     for (let day = 1; day <= 7; day++) {
         const pick = (arr: typeof allFoods) =>
             arr[Math.floor(Math.random() * arr.length)];
@@ -114,15 +135,13 @@ export async function generateDietPlan(userId: string): Promise<string> {
             { food: pick(snacks), slot: "snack" },
         ];
 
-        // Check total calories and adjust
         let totalCal = dayMeals.reduce((sum, m) => sum + (m.food?.calories || 0), 0);
         let attempts = 0;
 
         while (
             Math.abs(totalCal - dailyCalories) > dailyCalories * 0.15 &&
             attempts < 20
-            ) {
-            // Replace a random meal
+        ) {
             const idx = Math.floor(Math.random() * dayMeals.length);
             const lists = [breakfasts, lunches, dinners, snacks];
             dayMeals[idx].food = pick(lists[idx]);
@@ -153,20 +172,17 @@ export async function generateWorkoutPlan(userId: string): Promise<string> {
 
     const allExercises = await prisma.exerciseItem.findMany();
 
-    // Filter by equipment
     let filtered = allExercises;
-    if (quiz.equipment === "none" || quiz.equipment === "خانه") {
+    if (quiz.equipment === "none") {
         filtered = allExercises.filter(
             (e) => e.equipment === "بدون تجهیزات" || e.equipment === "none"
         );
     }
 
-    // Filter by difficulty
-    if (quiz.fitnessLevel === "beginner" || quiz.fitnessLevel === "مبتدی") {
+    if (quiz.fitnessLevel === "beginner") {
         filtered = filtered.filter((e) => e.difficulty !== "پیشرفته");
     }
 
-    // Define weekly split
     const splits: Record<number, string[]> = {
         2: ["فول‌بادی", "فول‌بادی"],
         3: ["بالاتنه", "پایین‌تنه", "فول‌بادی"],
@@ -208,12 +224,10 @@ export async function generateWorkoutPlan(userId: string): Promise<string> {
             targetGroups.includes(e.muscleGroup)
         );
 
-        // Pick 4-6 exercises for the day
         const count = Math.min(dayExercises.length, quiz.fitnessLevel === "beginner" ? 4 : 5);
         const shuffled = dayExercises.sort(() => Math.random() - 0.5);
         const selected = shuffled.slice(0, count);
 
-        // If not enough exercises, add from general pool
         if (selected.length < 3) {
             const extras = filtered
                 .filter((e) => !selected.includes(e))

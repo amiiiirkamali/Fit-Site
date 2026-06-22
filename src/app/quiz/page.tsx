@@ -7,6 +7,8 @@ import ProgressBar from "@/components/ProgressBar";
 import QuizOption from "@/components/QuizOption";
 import NumberInput from "@/components/NumberInput";
 import InsightScreen from "@/components/InsightScreen";
+import TestimonialCard from "@/components/TestimonialCard";
+import BehaviorProfile from "@/components/BehaviorProfile";
 import BackButton from "@/components/BackButton";
 import styles from "./page.module.css";
 
@@ -19,7 +21,7 @@ export default function QuizPage() {
     const mainRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (step.type === "insight") {
+        if (step.type === "insight" || step.type === "testimonial" || step.type === "behavior") {
             mainRef.current?.focus();
         }
     }, [current, step.type]);
@@ -77,7 +79,8 @@ export default function QuizPage() {
     };
 
     const canProceed = () => {
-        if (step.type === "insight") return true;
+        if (step.type === "insight" || step.type === "testimonial" || step.type === "behavior") return true;
+        if (step.type === "text") return !!(answers[step.key] && answers[step.key].trim().length > 0);
         if (step.type === "single") return !!answers[step.key];
         if (step.type === "multiple") return !!answers[step.key];
         if (step.type === "number") {
@@ -87,8 +90,23 @@ export default function QuizPage() {
         return false;
     };
 
+    const showBottomBar = (): boolean => {
+        return (
+            step.type === "insight" ||
+            step.type === "testimonial" ||
+            step.type === "behavior" ||
+            step.type === "text" ||
+            step.type === "number" ||
+            step.type === "multiple"
+        );
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" && canProceed() && (step.type === "insight" || step.type === "number" || step.type === "multiple")) {
+        if (
+            e.key === "Enter" &&
+            canProceed() &&
+            showBottomBar()
+        ) {
             handleNext();
         }
     };
@@ -112,6 +130,19 @@ export default function QuizPage() {
                         title={step.title}
                         text={step.insightText || ""}
                         icon={step.insightIcon}
+                    />
+                ) : step.type === "testimonial" ? (
+                    <TestimonialCard
+                        title={step.title}
+                        quote={step.quote || ""}
+                        author={step.author || ""}
+                        rating={step.rating || 5}
+                    />
+                ) : step.type === "behavior" ? (
+                    <BehaviorProfile
+                        title={step.title}
+                        description={step.profileDescription || ""}
+                        nextSteps={step.nextSteps || ""}
                     />
                 ) : (
                     <div key={current} className={styles.questions}>
@@ -160,21 +191,33 @@ export default function QuizPage() {
                                     max={step.max}
                                 />
                             )}
+
+                            {step.type === "text" && (
+                                <div className={styles.textInputWrap}>
+                                    <input
+                                        type="text"
+                                        className={styles.textInput}
+                                        value={answers[step.key] || ""}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({ ...prev, [step.key]: e.target.value }))
+                                        }
+                                        placeholder={step.placeholder}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
             </section>
 
-            {(step.type === "insight" ||
-                step.type === "number" ||
-                step.type === "multiple") && (
+            {showBottomBar() && (
                 <div className={styles.bottomBar}>
                     <button
                         className={styles.nextBtn}
                         onClick={handleNext}
                         disabled={!canProceed()}
                     >
-                        {current === quizSteps.length - 1 ? "ساخت برنامه" : "ادامه"}
+                        ادامه
                     </button>
                 </div>
             )}
