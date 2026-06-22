@@ -2,140 +2,148 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowRight, Check, Shield, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 
-const plans = [
-  {
+const plan = {
     id: "monthly",
-    name: "پلن ماهانه",
-    price: 149000,
-    priceLabel: "۱۴۹,۰۰۰",
-    duration: "۱ ماه",
-    features: ["برنامه‌ی غذایی ۷ روزه", "برنامه‌ی ورزشی هفتگی", "گیف آموزشی حرکات"],
-    popular: false,
-  },
-  {
-    id: "quarterly",
-    name: "پلن سه‌ماهه",
-    price: 349000,
-    priceLabel: "۳۴۹,۰۰۰",
-    duration: "۳ ماه",
+    name: "پلن یک ماهه",
+    price: 499000,
+    priceLabel: "۴۹۹,۰۰۰",
+    duration: "۱ ماهه",
     features: [
-      "برنامه‌ی غذایی ۷ روزه",
-      "برنامه‌ی ورزشی هفتگی",
-      "گیف آموزشی حرکات",
-      "بازسازی برنامه هر ماه",
-      "۳۰٪ تخفیف",
+        "برنامه غذایی ۳۰ روزه اختصاصی",
+        "برنامه ورزشی ۳۰ روزه",
+        "گیف آموزشی تمام حرکات",
+        "دسترسی همیشگی به برنامه",
     ],
-    popular: true,
-  },
-];
+};
 
 export default function CheckoutPage() {
-  const router = useRouter();
-  const [selectedPlan, setSelectedPlan] = useState("quarterly");
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    if (!t) {
-      router.push("/");
-      return;
-    }
-    setToken(t);
-  }, [router]);
+    useEffect(() => {
+        const t = localStorage.getItem("token");
+        if (!t) {
+            router.push("/");
+            return;
+        }
+        setToken(t);
+    }, [router]);
 
-  const handlePayment = async () => {
-    const plan = plans.find((p) => p.id === selectedPlan);
-    if (!plan || !token) return;
+    const handlePayment = async () => {
+        if (!token) return;
 
-    setLoading(true);
+        setLoading(true);
 
-    try {
-      const res = await fetch("/api/payment/request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          amount: plan.price,
-          planType: plan.id,
-        }),
-      });
+        try {
+            const res = await fetch("/api/payment/request", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    amount: plan.price,
+                    planType: plan.id,
+                }),
+            });
 
-      const data = await res.json();
+            const data = await res.json();
 
-      if (data.paymentUrl) {
-        window.location.href = data.paymentUrl;
-      } else {
-        alert(data.message || "خطا در اتصال به درگاه پرداخت");
-      }
-    } catch {
-      alert("خطا در ارتباط با سرور");
-    } finally {
-      setLoading(false);
-    }
-  };
+            if (data.paymentUrl) {
+                window.location.href = data.paymentUrl;
+            } else {
+                alert(data.message || "خطا در اتصال به درگاه پرداخت");
+            }
+        } catch {
+            alert("خطا در ارتباط با سرور");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => router.back()}>
-          ←
-        </button>
-        <span className={styles.headerTitle}>انتخاب پلن</span>
-        <div />
-      </header>
+    return (
+        <main className={styles.page}>
+            <header className={styles.header}>
+                <button className={styles.backBtn} onClick={() => router.back()}>
+                    <ArrowRight size={18} />
+                </button>
+                <span className={styles.logo}>فیت‌بانو</span>
+                <div className={styles.headerSpacer} />
+            </header>
 
-      <section className={styles.content}>
-        <h1 className={styles.title}>برنامه‌ت آماده‌ست!</h1>
-        <p className={styles.subtitle}>
-          پلن مورد نظرت رو انتخاب کن و برنامه‌ی اختصاصیت رو ببین
-        </p>
+            <section className={styles.content}>
+                <div className={styles.topSection}>
+                    <div className={styles.badge}>
+                        <Sparkles size={14} />
+                        آخرین قدم
+                    </div>
+                    <h1 className={styles.title}>برنامه‌ات آماده‌ست!</h1>
+                    <p className={styles.subtitle}>
+                        با فعال‌سازی اشتراک، به برنامه‌ی اختصاصی خودت دسترسی پیدا کن
+                    </p>
+                </div>
 
-        <div className={styles.plans}>
-          {plans.map((plan) => (
-            <button
-              key={plan.id}
-              className={`${styles.planCard} ${
-                selectedPlan === plan.id ? styles.planSelected : ""
-              } ${plan.popular ? styles.planPopular : ""}`}
-              onClick={() => setSelectedPlan(plan.id)}
-            >
-              {plan.popular && (
-                <span className={styles.badge}>پرطرفدار</span>
-              )}
-              <h3 className={styles.planName}>{plan.name}</h3>
-              <div className={styles.planPrice}>
-                <span className={styles.priceAmount}>{plan.priceLabel}</span>
-                <span className={styles.priceCurrency}>تومان</span>
-              </div>
-              <span className={styles.planDuration}>{plan.duration}</span>
-              <ul className={styles.features}>
-                {plan.features.map((f, i) => (
-                  <li key={i}>
-                    <span className={styles.checkIcon}>✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-            </button>
-          ))}
-        </div>
+                <div className={styles.planCard}>
+                    <div className={styles.planHeader}>
+                        <div className={styles.planIcon}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                <path d="M2 17l10 5 10-5" />
+                                <path d="M2 12l10 5 10-5" />
+                            </svg>
+                            <div className={styles.planIconRing} />
+                        </div>
+                        <div>
+                            <h2 className={styles.planName}>{plan.name}</h2>
+                            <span className={styles.planDuration}>{plan.duration}</span>
+                        </div>
+                    </div>
 
-        <button
-          className={styles.payBtn}
-          onClick={handlePayment}
-          disabled={loading}
-        >
-          {loading ? "در حال اتصال به درگاه..." : "پرداخت و دریافت برنامه"}
-        </button>
+                    <div className={styles.priceSection}>
+                        <span className={styles.priceAmount}>{plan.priceLabel}</span>
+                        <span className={styles.priceCurrency}>تومان</span>
+                    </div>
 
-        <p className={styles.guarantee}>
-          🔒 پرداخت امن از طریق درگاه زرین‌پال
-        </p>
-      </section>
-    </main>
-  );
+                    <div className={styles.divider} />
+
+                    <ul className={styles.features}>
+                        {plan.features.map((f, i) => (
+                            <li key={i}>
+                                <span className={styles.checkWrap}>
+                                    <Check size={14} />
+                                </span>
+                                {f}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <button
+                    className={styles.payBtn}
+                    onClick={handlePayment}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <>
+                            <span className={styles.btnSpinner} />
+                            در حال اتصال به درگاه...
+                        </>
+                    ) : (
+                        <>
+                            پرداخت {plan.priceLabel} تومان
+                        </>
+                    )}
+                </button>
+
+                <div className={styles.guarantee}>
+                    <Shield size={14} />
+                    <span>پرداخت امن با ضمانت زرین‌پال</span>
+                </div>
+            </section>
+        </main>
+    );
 }

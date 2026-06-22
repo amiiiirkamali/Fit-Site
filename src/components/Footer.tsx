@@ -81,8 +81,9 @@ export default function Footer() {
                         <ul className={styles.linkList}>
                             {[
                                 { label: "صفحه اصلی", href: "/" },
-                                { label: "امکانات", href: "#features" },
-                                { label: "ورود", href: "/login" },
+                                { label: "راهنما", href: "/guide" },
+                                { label: "قوانین و مقررات", href: "/rules" },
+                                { label: "حریم خصوصی", href: "/privacy" },
                             ].map((item, i) => (
                                 <li key={i}>
                                     <Link href={item.href} className={styles.linkItem}>
