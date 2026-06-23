@@ -70,8 +70,17 @@ export async function POST(req: NextRequest) {
         });
 
         // Auto-generate plans after successful payment
-        await generateDietPlan(payload.userId);
-        await generateWorkoutPlan(payload.userId);
+        try {
+            await generateDietPlan(payload.userId);
+        } catch (e) {
+            console.error("Diet plan generation failed:", e);
+        }
+
+        try {
+            await generateWorkoutPlan(payload.userId);
+        } catch (e) {
+            console.error("Workout plan generation failed:", e);
+        }
 
         return NextResponse.json({
             success: true,

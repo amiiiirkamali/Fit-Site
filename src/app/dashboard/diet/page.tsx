@@ -121,6 +121,7 @@ export default function DietPage() {
     const router = useRouter();
     const [plan, setPlan] = useState<DietPlan | null>(null);
     const [loading, setLoading] = useState(true);
+    const [generating, setGenerating] = useState(false);
     const [selectedDay, setSelectedDay] = useState(1);
     const [consumed, setConsumed] = useState<ConsumedState>({});
     const [animatingCard, setAnimatingCard] = useState<string | null>(null);
@@ -150,15 +151,61 @@ export default function DietPage() {
             return;
         }
 
-        fetch("/api/plan/my-plans", {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.dietPlan) setPlan(data.dietPlan);
+        const fetchPlan = async (): Promise<DietPlan | null> => {
+            const res = await fetch("/api/plan/my-plans", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            return data.dietPlan || null;
+        };
+
+        const generateMissing = async (): Promise<void> => {
+            const res = await fetch("/api/plan/my-plans", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+
+            const promises: Promise<Response>[] = [];
+
+            if (!data.dietPlan) {
+                promises.push(
+                    fetch("/api/plan/generate-diet", {
+                        method: "POST",
+                        headers: { Authorization: `Bearer ${token}` },
+                    })
+                );
+            }
+
+            if (!data.workoutPlan) {
+                promises.push(
+                    fetch("/api/plan/generate-workout", {
+                        method: "POST",
+                        headers: { Authorization: `Bearer ${token}` },
+                    })
+                );
+            }
+
+            await Promise.all(promises);
+        };
+
+        (async () => {
+            try {
+                let p = await fetchPlan();
+                if (!p) {
+                    setGenerating(true);
+                    await generateMissing();
+                    p = await fetchPlan();
+                    if (p) setPlan(p);
+                } else {
+                    setPlan(p);
+                }
+            } catch {
+                // ignore
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => setLoading(false));
+                setGenerating(false);
+            }
+        })();
     }, [router]);
 
     useEffect(() => {
@@ -198,7 +245,7 @@ export default function DietPage() {
         }
     };
 
-    if (loading) {
+    if (loading || generating) {
         return (
             <main className={styles.page}>
                 <div className={styles.loadingWrap}>
@@ -206,7 +253,14 @@ export default function DietPage() {
                         <div className={styles.spinner} />
                         <Salad size={24} className={styles.spinnerIcon} />
                     </div>
-                    <p className={styles.loadingText}>در حال بارگذاری...</p>
+                    <p className={styles.loadingText}>
+                        {generating ? "در حال ساخت برنامه غذایی اختصاصی تو..." : "در حال بارگذاری..."}
+                    </p>
+                    {generating && (
+                        <p className={styles.loadingSubText}>
+                            این فرایند ممکن است چند ثانیه طول بکشد
+                        </p>
+                    )}
                 </div>
             </main>
         );
@@ -221,15 +275,66 @@ export default function DietPage() {
                     </div>
                     <p className={styles.emptyText}>برنامه غذایی هنوز ساخته نشده</p>
                     <p className={styles.emptySubText}>
-                        برای ساخت برنامه غذایی به داشبورد مراجعه کنید
+                        برای ساخت برنامه روی دکمه زیر کلیک کن
                     </p>
-                    <button
-                        className={styles.emptyBtn}
-                        onClick={() => router.push("/dashboard")}
-                    >
-                        <ArrowRight size={16} />
-                        بازگشت به داشبورد
-                    </button>
+                    <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+                        <button
+                            className={styles.emptyBtn}
+                            onClick={async () => {
+                                const token = localStorage.getItem("token");
+                                if (!token) return;
+                                setLoading(true);
+                                setGenerating(true);
+                                try {
+                                    const checkRes = await fetch("/api/plan/my-plans", {
+                                        headers: { Authorization: `Bearer ${token}` },
+                                    });
+                                    const checkData = await checkRes.json();
+
+                                    const promises: Promise<Response>[] = [];
+                                    if (!checkData.dietPlan) {
+                                        promises.push(
+                                            fetch("/api/plan/generate-diet", {
+                                                method: "POST",
+                                                headers: { Authorization: `Bearer ${token}` },
+                                            })
+                                        );
+                                    }
+                                    if (!checkData.workoutPlan) {
+                                        promises.push(
+                                            fetch("/api/plan/generate-workout", {
+                                                method: "POST",
+                                                headers: { Authorization: `Bearer ${token}` },
+                                            })
+                                        );
+                                    }
+                                    await Promise.all(promises);
+
+                                    const planRes = await fetch("/api/plan/my-plans", {
+                                        headers: { Authorization: `Bearer ${token}` },
+                                    });
+                                    const planData = await planRes.json();
+                                    if (planData.dietPlan) setPlan(planData.dietPlan);
+                                } catch {
+                                    alert("خطا در ارتباط با سرور");
+                                } finally {
+                                    setLoading(false);
+                                    setGenerating(false);
+                                }
+                            }}
+                        >
+                            <ChefHat size={16} />
+                            ساخت برنامه غذایی
+                        </button>
+                        <button
+                            className={styles.emptyBtn}
+                            style={{ background: "linear-gradient(135deg, #6b7280, #4b5563)" }}
+                            onClick={() => router.push("/dashboard")}
+                        >
+                            <ArrowRight size={16} />
+                            داشبورد
+                        </button>
+                    </div>
                 </div>
             </main>
         );

@@ -412,15 +412,13 @@ export async function generateWorkoutPlan(userId: string): Promise<string> {
         cardioMin <= 5 ? 2 :
         cardioMin <= 8 ? 3 : 4;
 
+    let splitIdx = 0;
     for (let day = 0; day < 30; day++) {
-        // Fixed mapping: day 0 → Saturday (index 0), day 1 → Sunday, ...
         const dayOfWeek = day % 7;
 
-        if (!schedule[dayOfWeek]) {
-            continue;
+        if (schedule[dayOfWeek]) {
+            splitIdx = workoutDayIndices.indexOf(dayOfWeek) % weeklySplit.length;
         }
-
-        const splitIdx = workoutDayIndices.indexOf(dayOfWeek) % weeklySplit.length;
         const targetGroups = muscleGroupMap[weeklySplit[splitIdx]] || ["فول‌بادی"];
 
         // ─── 1. Pick cardio (warm-up) ───

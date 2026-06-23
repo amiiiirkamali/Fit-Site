@@ -26,7 +26,7 @@
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(194, 24, 91, 0.05) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
 }
@@ -38,7 +38,7 @@
     width: 400px;
     height: 400px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(194, 24, 91, 0.03) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.03) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
 }
@@ -91,6 +91,12 @@
     font-weight: 600;
 }
 
+.loadingSubText {
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
 .emptyIconWrap {
     width: 100px;
     height: 100px;
@@ -130,6 +136,57 @@
 }
 
 /* ═══════════════════════════════════════
+   CONFETTI
+   ═══════════════════════════════════════ */
+.confettiContainer {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confetti {
+    position: absolute;
+    top: -10px;
+    left: var(--x);
+    width: 10px;
+    height: 10px;
+    background: var(--color);
+    border-radius: 2px;
+    animation: confettiFall var(--duration) ease-in var(--delay) forwards;
+    transform: rotate(var(--rotate));
+}
+
+@keyframes confettiFall {
+    0% { top: -10px; opacity: 1; transform: rotate(0deg) scale(1); }
+    100% { top: 110vh; opacity: 0; transform: rotate(720deg) scale(0.5); }
+}
+
+.confettiMessage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 36px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    color: #c2185b;
+    font-size: 18px;
+    font-weight: 800;
+    animation: confettiMsgIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    border: 2px solid rgba(194, 24, 91, 0.2);
+}
+
+@keyframes confettiMsgIn {
+    0% { transform: scale(0.5) translateY(30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════
    HERO HEADER
    ═══════════════════════════════════════ */
 .hero {
@@ -164,7 +221,7 @@
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(194, 24, 91, 0.06) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
 }
 
 .heroParticles {
@@ -232,10 +289,10 @@
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    background: rgba(194, 24, 91, 0.1);
-    border: 1px solid rgba(194, 24, 91, 0.15);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.15);
     border-radius: 999px;
-    color: #d6336c;
+    color: #fbbf24;
     font-size: 13px;
     font-weight: 700;
 }
@@ -286,6 +343,7 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 20px;
     backdrop-filter: blur(10px);
+    flex-wrap: wrap;
 }
 
 .heroStat {
@@ -304,6 +362,7 @@
     background: rgba(194, 24, 91, 0.1);
     border-radius: 12px;
     color: #d6336c;
+    flex-shrink: 0;
 }
 
 .heroStatInfo {
@@ -388,22 +447,22 @@
 .weeklyGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    gap: 8px;
 }
 
 .weekdayCard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 12px 6px;
-    border-radius: 14px;
+    gap: 6px;
+    padding: 14px 6px;
+    border-radius: 16px;
     transition: all 0.25s ease;
 }
 
 .weekdayActive {
     background: linear-gradient(135deg, #c2185b, #d6336c);
-    box-shadow: 0 4px 12px rgba(194, 24, 91, 0.2);
+    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.22);
 }
 
 .weekdayRest {
@@ -423,8 +482,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
 }
 
@@ -432,11 +491,11 @@
 .weekdayRest .weekdayIcon { background: #ece3e6; color: #b8aab6; }
 
 .weekdayStatus {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 600;
 }
 
-.weekdayActive .weekdayStatus { color: rgba(255, 255, 255, 0.7); }
+.weekdayActive .weekdayStatus { color: rgba(255, 255, 255, 0.75); }
 .weekdayRest .weekdayStatus { color: #b8aab6; }
 
 /* ─── Split Info ─── */
@@ -445,7 +504,7 @@
 }
 
 .splitCard {
-    padding: 16px 20px;
+    padding: 18px 22px;
     background: linear-gradient(145deg, #0d0d0d 0%, #1a1a1a 100%);
     border-radius: 20px;
     color: #fff;
@@ -467,7 +526,7 @@
     justify-content: center;
     background: rgba(194, 24, 91, 0.15);
     border-radius: 10px;
-    color: rgba(194, 24, 91, 0.6);
+    color: rgba(214, 51, 108, 0.8);
     flex-shrink: 0;
 }
 
@@ -575,6 +634,15 @@
     opacity: 0.55;
 }
 
+.dayTabDone {
+    border-color: rgba(194, 24, 91, 0.3);
+    background: rgba(194, 24, 91, 0.03);
+}
+
+.dayTabDone.dayTabActive {
+    background: linear-gradient(145deg, #2b0d18 0%, #1a0a12 100%);
+}
+
 .dayTabWeek {
     font-size: 9px;
     font-weight: 700;
@@ -626,67 +694,285 @@
     margin-top: 1px;
 }
 
-/* ─── Status ─── */
-.statusSection {
-    padding: 0 0 14px;
+.dayTabProgress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(194, 24, 91, 0.1);
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
 }
 
-.statusCard {
+.dayTabProgressFill {
+    height: 100%;
+    background: linear-gradient(270deg, #c2185b, #d6336c);
+    border-radius: 0 0 18px 18px;
+    transition: width 0.4s ease;
+}
+
+.dayTabCheck {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c2185b;
+    border-radius: 50%;
+    color: #fff;
+    animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+.dayTabActive .dayTabCheck { background: #d6336c; }
+
+/* ═══════════════════════════════════════
+   PROGRESS SECTION
+   ═══════════════════════════════════════ */
+.progressSection {
+    padding: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Overall card */
+.overallCard {
+    padding: 20px 24px;
+    background: linear-gradient(145deg, #1a0a12 0%, #2b0d18 100%);
+    border-radius: 20px;
+    color: #fff;
+    box-shadow: 0 12px 40px rgba(194, 24, 91, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.overallCard::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(214, 51, 108, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.overallTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 18px;
-    background: #fff;
-    border: 1.5px solid #ece3e6;
-    border-radius: 14px;
-    flex-wrap: wrap;
-    gap: 8px;
+    margin-bottom: 14px;
+    position: relative;
 }
 
-.statusLeft {
+.overallTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.overallTitle svg {
+    color: #fbbf24;
+}
+
+.overallBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.overallTrack {
+    position: relative;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.overallFill {
+    height: 100%;
+    background: linear-gradient(270deg, #c2185b, #d6336c, #f59e0b);
+    background-size: 200% 100%;
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: shimmer 2.5s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.overallMeta {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+/* Progress grid (cardio + strength) */
+.progressGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 700px) {
+    .progressGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.progressCard {
+    padding: 20px 22px;
+    background: #fff;
+    border: 1.5px solid #ece3e6;
+    border-radius: 18px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressCard:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+}
+
+.progressCardCardio {
+    border-color: rgba(236, 72, 153, 0.15);
+    background: linear-gradient(145deg, #fff, rgba(252, 231, 243, 0.4));
+}
+
+.progressCardStrength {
+    border-color: rgba(194, 24, 91, 0.15);
+    background: linear-gradient(145deg, #fff, rgba(253, 232, 240, 0.4));
+}
+
+.progressCardHeader {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
+    margin-bottom: 14px;
 }
 
-.statusLabel {
+.progressCardIcon {
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 700;
+    justify-content: center;
+    border-radius: 14px;
+    flex-shrink: 0;
+}
+
+.iconCardio {
+    background: rgba(236, 72, 153, 0.1);
+    color: #ec4899;
+}
+
+.iconStrength {
+    background: rgba(194, 24, 91, 0.1);
+    color: #c2185b;
+}
+
+.progressCardInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.progressCardTitle {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0 0 2px;
     color: #1a1a1a;
 }
 
-.statusSub {
+.progressCardSub {
+    font-size: 12px;
+    color: #6f6770;
+    margin: 0;
+    font-weight: 600;
+}
+
+.progressPercent {
+    font-size: 22px;
+    font-weight: 900;
+    direction: ltr;
+}
+
+.percentCardio { color: #ec4899; }
+.percentStrength { color: #c2185b; }
+
+.progressTrack {
+    position: relative;
+    height: 10px;
+    background: #f0e6ea;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.progressFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px 999px 0 0;
+}
+
+.fillCardio {
+    background: linear-gradient(270deg, #f472b6, #ec4899);
+}
+
+.fillStrength {
+    background: linear-gradient(270deg, #c2185b, #d6336c);
+}
+
+.progressMeta {
     display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6f6770;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.progressMeta span {
+    display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #d6336c;
-    padding: 3px 8px;
-    background: rgba(214, 51, 108, 0.06);
-    border-radius: 999px;
 }
 
-.statusRight {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.statusMeta {
-    font-size: 11px;
-    font-weight: 700;
-    color: #c2185b;
-    padding: 4px 10px;
-    background: rgba(194, 24, 91, 0.06);
-    border-radius: 999px;
-}
-
-/* ─── Section Block (Cardio / Strength) ─── */
+/* ─── Section Block ─── */
 .sectionBlock {
     margin-bottom: 24px;
 }
@@ -704,15 +990,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(194, 24, 91, 0.08), rgba(232, 86, 143, 0.08));
     border-radius: 12px;
-    color: #c2185b;
     flex-shrink: 0;
 }
 
 .sectionBlockTitle {
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 17px;
+    font-weight: 900;
     margin: 0 0 2px;
     color: #1a1a1a;
 }
@@ -723,14 +1007,27 @@
     color: #6f6770;
 }
 
+.sectionBlockCount {
+    margin-right: auto;
+    margin-left: 0;
+    padding: 5px 14px;
+    background: #fff;
+    border: 1.5px solid #ece3e6;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #c2185b;
+    direction: ltr;
+}
+
 /* ─── Exercises Grid ─── */
 .exercisesGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 14px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 700px) {
     .exercisesGrid {
         grid-template-columns: 1fr;
     }
@@ -740,61 +1037,165 @@
     display: flex;
     background: #fff;
     border: 1.5px solid #ece3e6;
-    border-radius: 18px;
+    border-radius: 20px;
     overflow: hidden;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .exerciseCard:hover {
-    border-color: rgba(194, 24, 91, 0.12);
-    box-shadow: 0 8px 24px rgba(21, 18, 26, 0.04);
+    border-color: rgba(194, 24, 91, 0.15);
+    box-shadow: 0 12px 32px rgba(21, 18, 26, 0.05);
+    transform: translateY(-3px);
 }
 
 .exerciseCardCardio {
-    border-color: rgba(214, 51, 108, 0.15);
-    background: linear-gradient(145deg, #fff, rgba(214, 51, 108, 0.02));
+    border-color: rgba(236, 72, 153, 0.15);
+    background: linear-gradient(145deg, #fff, rgba(252, 231, 243, 0.25));
 }
 
 .exerciseCardCardio:hover {
-    border-color: rgba(214, 51, 108, 0.25);
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+.exerciseCardDone {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fff 100%);
+    border-color: rgba(194, 24, 91, 0.25);
+}
+
+/* ─── Done Check (Center Overlay) ─── */
+.exerciseCardDone::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #c2185b, #d6336c);
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 0 12px 40px rgba(194, 24, 91, 0.45), 0 0 0 8px rgba(194, 24, 91, 0.08);
+    animation: doneBadgePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.exerciseCardDone::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+    z-index: 6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    animation: doneCheckPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.exerciseCardCardio.exerciseCardDone::before {
+    background: linear-gradient(135deg, #ec4899, #f472b6);
+    box-shadow: 0 12px 40px rgba(236, 72, 153, 0.45), 0 0 0 8px rgba(236, 72, 153, 0.08);
+}
+
+@keyframes doneBadgePop {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes doneCheckPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.exerciseCardDone .exerciseBody {
+    opacity: 0.4;
+    filter: blur(0.3px);
+    transition: all 0.4s ease;
+}
+
+.exerciseCardDone:hover .exerciseBody {
+    opacity: 0.85;
+    filter: none;
+}
+
+.exerciseCardAnimating {
+    animation: cardPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardPulse {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.97); }
+    60% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
 .exerciseNum {
-    width: 44px;
+    width: 48px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 18px;
+    padding-top: 20px;
     flex-shrink: 0;
 }
 
 .exerciseNum span {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(194, 24, 91, 0.08), rgba(232, 86, 143, 0.08));
+    background: linear-gradient(135deg, rgba(194, 24, 91, 0.1), rgba(214, 51, 108, 0.06));
     color: #c2185b;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 900;
     border-radius: 50%;
+}
+
+.exerciseNumCardio span {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.06));
+    color: #ec4899;
 }
 
 .exerciseBody {
     flex: 1;
-    padding: 16px 18px 16px 0;
+    padding: 18px 20px 18px 0;
+    min-width: 0;
 }
 
 .exerciseTop {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .exerciseName {
     font-size: 15px;
     font-weight: 800;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     color: #1a1a1a;
+    padding-left: 36px;
 }
 
 .exerciseMeta {
@@ -818,18 +1219,19 @@
 .exerciseDesc {
     font-size: 13px;
     color: #6f6770;
-    margin: 0 0 12px;
-    line-height: 1.7;
+    margin: 0 0 14px;
+    line-height: 1.8;
 }
 
 .setsReps {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 10px 16px;
-    background: #f9f5f7;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #f9f5f7, #fdf2f8);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(194, 24, 91, 0.06);
 }
 
 .srItem {
@@ -840,13 +1242,13 @@
 
 .srValue {
     font-size: 18px;
-    font-weight: 800;
-    color: #1a1a1a;
+    font-weight: 900;
+    color: #c2185b;
 }
 
 .srLabel {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #6f6770;
 }
 
@@ -859,10 +1261,11 @@
 
 .gifWrap {
     position: relative;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     border: 1px solid #f0e6ea;
     cursor: pointer;
+    margin-bottom: 14px;
 }
 
 .gif {
@@ -876,8 +1279,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 8px 12px;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    padding: 10px 14px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
     color: #fff;
     font-size: 12px;
     font-weight: 700;
@@ -892,9 +1295,135 @@
     opacity: 1;
 }
 
+/* ─── Complete Button ─── */
+.completeBtn {
+    width: 80%;
+    max-width: 260px;
+    margin: 4px auto 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: 2px solid #e5dde1;
+    border-radius: 999px;
+    background: #faf8fc;
+    cursor: pointer;
+    overflow: hidden;
+    height: 48px;
+    font-family: inherit;
+    transition: all 0.4s ease;
+}
+
+.completeBtn:hover {
+    border-color: rgba(194, 24, 91, 0.3);
+    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.08);
+}
+
+.completeBtnCardio:hover {
+    border-color: rgba(236, 72, 153, 0.3);
+    box-shadow: 0 4px 16px rgba(236, 72, 153, 0.08);
+}
+
+.completeBtnActive {
+    border-color: #c2185b;
+    background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+}
+
+.completeBtnCardio.completeBtnActive {
+    border-color: #ec4899;
+    background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+}
+
+.completeBtnFill {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(194, 24, 91, 0.08), rgba(194, 24, 91, 0.15));
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 12px;
+}
+
+.completeBtnCardio .completeBtnFill {
+    background: linear-gradient(90deg, rgba(236, 72, 153, 0.08), rgba(236, 72, 153, 0.15));
+}
+
+.completeBtnActive .completeBtnFill {
+    width: 100%;
+}
+
+.completeBtnContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0 18px;
+    justify-content: center;
+}
+
+.completeBtnIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b8aab6;
+    transition: all 0.3s ease;
+}
+
+.completeBtnActive .completeBtnIcon {
+    color: #c2185b;
+}
+
+.completeBtnCardio.completeBtnActive .completeBtnIcon {
+    color: #ec4899;
+}
+
+.completeBtnCircle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #d4c9ce;
+    transition: all 0.3s ease;
+}
+
+.completeBtn:hover .completeBtnCircle {
+    border-color: #c2185b;
+}
+
+.completeBtnCardio:hover .completeBtnCircle {
+    border-color: #ec4899;
+}
+
+.completeBtnText {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6f6770;
+    transition: all 0.3s ease;
+}
+
+.completeBtnActive .completeBtnText {
+    color: #c2185b;
+    font-weight: 800;
+}
+
+.completeBtnCardio.completeBtnActive .completeBtnText {
+    color: #ec4899;
+}
+
+.completeBtnStar {
+    color: #fbbf24;
+    animation: starSpin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes starSpin {
+    0% { transform: scale(0) rotate(-180deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
 /* ─── Rest Day ─── */
 .restSection {
-    padding: 20px 0;
+    padding: 24px 0;
 }
 
 .restCard {
@@ -902,37 +1431,39 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 40px 24px;
-    background: #fff;
-    border: 1.5px solid #ece3e6;
+    padding: 48px 28px;
+    background: linear-gradient(145deg, #fff, #fdf2f8);
+    border: 1.5px solid rgba(194, 24, 91, 0.08);
     border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03);
 }
 
 .restIcon {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    background: linear-gradient(135deg, #1a0a12, #2b0d18);
     border-radius: 50%;
-    color: #fff;
-    margin-bottom: 16px;
+    color: #d6336c;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 28px rgba(26, 10, 18, 0.2);
 }
 
 .restTitle {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     color: #1a1a1a;
 }
 
 .restDesc {
     font-size: 14px;
     color: #6f6770;
-    margin: 0 0 20px;
-    line-height: 1.7;
-    max-width: 380px;
+    margin: 0 0 24px;
+    line-height: 1.8;
+    max-width: 400px;
 }
 
 .restTips {
@@ -946,17 +1477,18 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
-    background: #f9f5f7;
+    padding: 10px 16px;
+    background: #fff;
+    border: 1px solid rgba(194, 24, 91, 0.1);
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #6f6770;
 }
 
 .restTip svg {
     color: #c2185b;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 /* ─── Responsive ─── */
@@ -1007,5 +1539,17 @@
 
     .contextBar {
         font-size: 12px;
+    }
+
+    .weeklyGrid {
+        gap: 4px;
+    }
+
+    .weekdayCard {
+        padding: 10px 4px;
+    }
+
+    .weekdayStatus {
+        font-size: 9px;
     }
 }

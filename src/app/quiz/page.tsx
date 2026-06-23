@@ -21,26 +21,31 @@ export default function QuizPage() {
     const mainRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (!step) return;
         if (step.type === "insight" || step.type === "testimonial" || step.type === "behavior") {
             mainRef.current?.focus();
         }
-    }, [current, step.type]);
+    }, [current, step]);
 
     const handleSingleSelect = useCallback(
         (val: string) => {
-            setAnswers((prev) => ({ ...prev, [step.key]: val }));
+            setAnswers((prev) => {
+                if (!step) return prev;
+                return { ...prev, [step.key]: val };
+            });
             setTimeout(() => {
                 if (current < quizSteps.length - 1) {
                     setCurrent((c) => c + 1);
                 }
             }, 300);
         },
-        [current, step.key]
+        [current, step]
     );
 
     const handleMultiSelect = useCallback(
         (val: string) => {
             setAnswers((prev) => {
+                if (!step) return prev;
                 const existing = prev[step.key] || "";
                 const arr = existing ? existing.split(",") : [];
 
@@ -58,7 +63,7 @@ export default function QuizPage() {
                 }
             });
         },
-        [step.key]
+        [step]
     );
 
     const handleNext = () => {
