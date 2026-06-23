@@ -406,8 +406,8 @@ export default function WorkoutPage() {
                                     "--x": `${Math.random() * 100}vw`,
                                     "--delay": `${Math.random() * 0.5}s`,
                                     "--color": [
-                                        "#c2185b", "#d6336c", "#f59e0b",
-                                        "#6366f1", "#ec4899", "#10b981",
+                                        "#c2185b", "#9d1249", "#e8568f",
+                                        "#c2185b", "#fdeaf1", "#c2185b",
                                     ][Math.floor(Math.random() * 6)],
                                     "--rotate": `${Math.random() * 360}deg`,
                                     "--duration": `${1.5 + Math.random() * 1.5}s`,

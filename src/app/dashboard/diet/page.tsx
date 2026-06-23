@@ -26,6 +26,7 @@ import {
     Zap,
     Heart,
     Star,
+    Activity,
 } from "lucide-react";
 import styles from "./page.module.css";
 
@@ -58,31 +59,27 @@ interface ConsumedState {
 
 const mealSlotNames: Record<
     string,
-    { label: string; icon: React.ReactNode; color: string; gradient: string }
+    { label: string; icon: React.ReactNode; gradient: string }
 > = {
     breakfast: {
         label: "صبحانه",
         icon: <Sun size={16} />,
-        color: "#f59e0b",
-        gradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+        gradient: "linear-gradient(135deg, #34d399, #10b981)",
     },
     lunch: {
         label: "ناهار",
         icon: <Utensils size={16} />,
-        color: "#10b981",
-        gradient: "linear-gradient(135deg, #34d399, #10b981)",
+        gradient: "linear-gradient(135deg, #10b981, #059669)",
     },
     dinner: {
         label: "شام",
         icon: <Moon size={16} />,
-        color: "#6366f1",
-        gradient: "linear-gradient(135deg, #818cf8, #6366f1)",
+        gradient: "linear-gradient(135deg, #059669, #10b981)",
     },
     snack: {
         label: "میان‌وعده",
         icon: <Apple size={16} />,
-        color: "#ec4899",
-        gradient: "linear-gradient(135deg, #f472b6, #ec4899)",
+        gradient: "linear-gradient(135deg, #10b981, #34d399)",
     },
 };
 
@@ -424,11 +421,11 @@ export default function DietPage() {
                                     "--delay": `${Math.random() * 0.5}s`,
                                     "--color": [
                                         "#10b981",
-                                        "#f59e0b",
-                                        "#6366f1",
-                                        "#ec4899",
-                                        "#3b82f6",
-                                        "#f43f5e",
+                                        "#059669",
+                                        "#34d399",
+                                        "#10b981",
+                                        "#d1fae5",
+                                        "#059669",
                                     ][Math.floor(Math.random() * 6)],
                                     "--rotate": `${Math.random() * 360}deg`,
                                     "--duration": `${1.5 + Math.random() * 1.5}s`,
@@ -438,7 +435,7 @@ export default function DietPage() {
                     ))}
                     <div className={styles.confettiMessage}>
                         <Trophy size={32} />
-                        <span>آفرین! همه وعده‌ها رو خوردی! 🎉</span>
+                        <span>آفرین! همه وعده‌ها رو مصرف کردی! 🎉</span>
                     </div>
                 </div>
             )}
@@ -524,12 +521,13 @@ export default function DietPage() {
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className={styles.heroWave}>
-                        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                            <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,80C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
-                        </svg>
-                    </div>
+
+                <div className={styles.heroWave}>
+                    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                        <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,80C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
+                    </svg>
                 </div>
             </header>
 
@@ -620,6 +618,38 @@ export default function DietPage() {
 
                 {/* ─── Progress Cards ─── */}
                 <section className={styles.progressSection}>
+                    {/* Overall Day Card */}
+                    <div className={styles.overallCard}>
+                        <div className={styles.overallTop}>
+                            <div className={styles.overallTitle}>
+                                <Flame size={18} />
+                                <span>روز {toPersianNum(selectedDay)} — کالری</span>
+                            </div>
+                            <div className={styles.overallBadge}>
+                                {consumedCal >= plan.dailyCalorieTarget ? (
+                                    <>
+                                        <Trophy size={14} />
+                                        <span>هدف محقق شد</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Activity size={14} />
+                                        <span>{toPersianNum(calPercent)}٪</span>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        <div className={styles.overallTrack}>
+                            <div
+                                className={styles.overallFill}
+                                style={{ width: `${Math.min(100, calPercent)}%` }}
+                            />
+                        </div>
+                        <div className={styles.overallMeta}>
+                            <span>{toPersianNum(consumedCal)} از {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری مصرف شد</span>
+                        </div>
+                    </div>
+
                     <div className={styles.progressGrid}>
                         {/* Calorie Progress */}
                         <div className={styles.progressCard}>
@@ -660,11 +690,8 @@ export default function DietPage() {
                         {/* Meal Progress */}
                         <div className={styles.progressCard}>
                             <div className={styles.progressCardHeader}>
-                                <div
-                                    className={styles.progressCardIcon}
-                                    style={{ background: "rgba(99, 102, 241, 0.1)" }}
-                                >
-                                    <Target size={18} style={{ color: "#6366f1" }} />
+                                <div className={styles.progressCardIcon}>
+                                    <Target size={18} />
                                 </div>
                                 <div>
                                     <h3 className={styles.progressCardTitle}>
@@ -677,14 +704,13 @@ export default function DietPage() {
                                 </div>
                                 <span
                                     className={styles.progressPercent}
-                                    style={{ color: "#6366f1" }}
                                 >
                   {toPersianNum(mealProgress)}٪
                 </span>
                             </div>
                             <div className={styles.progressTrack}>
                                 <div
-                                    className={`${styles.progressFill} ${styles.progressFillPurple}`}
+                                    className={styles.progressFill}
                                     style={{ width: `${mealProgress}%` }}
                                 />
                             </div>
@@ -701,11 +727,8 @@ export default function DietPage() {
                     {/* Macro Summary */}
                     <div className={styles.macroSummary}>
                         <div className={styles.macroSummaryItem}>
-                            <div
-                                className={styles.macroSummaryIcon}
-                                style={{ background: "rgba(59,130,246,0.1)" }}
-                            >
-                                <Wheat size={16} style={{ color: "#3b82f6" }} />
+                            <div className={`${styles.macroSummaryIcon} ${styles.macroProtein}`}>
+                                <Wheat size={16} />
                             </div>
                             <div className={styles.macroSummaryInfo}>
                 <span className={styles.macroSummaryValue}>
@@ -713,22 +736,18 @@ export default function DietPage() {
                 </span>
                                 <span className={styles.macroSummaryLabel}>پروتئین</span>
                             </div>
-                            <div className={styles.macroSummaryBar}>
+                            <div className={`${styles.macroSummaryBar} ${styles.barProtein}`}>
                                 <div
-                                    className={styles.macroSummaryBarFill}
+                                    className={`${styles.macroSummaryBarFill} ${styles.fillProtein}`}
                                     style={{
                                         width: `${totalProtein ? Math.min(100, (consumedProtein / totalProtein) * 100) : 0}%`,
-                                        background: "#3b82f6",
                                     }}
                                 />
                             </div>
                         </div>
                         <div className={styles.macroSummaryItem}>
-                            <div
-                                className={styles.macroSummaryIcon}
-                                style={{ background: "rgba(245,158,11,0.1)" }}
-                            >
-                                <Banana size={16} style={{ color: "#f59e0b" }} />
+                            <div className={`${styles.macroSummaryIcon} ${styles.macroCarbs}`}>
+                                <Banana size={16} />
                             </div>
                             <div className={styles.macroSummaryInfo}>
                 <span className={styles.macroSummaryValue}>
@@ -736,22 +755,18 @@ export default function DietPage() {
                 </span>
                                 <span className={styles.macroSummaryLabel}>کربوهیدرات</span>
                             </div>
-                            <div className={styles.macroSummaryBar}>
+                            <div className={`${styles.macroSummaryBar} ${styles.barCarbs}`}>
                                 <div
-                                    className={styles.macroSummaryBarFill}
+                                    className={`${styles.macroSummaryBarFill} ${styles.fillCarbs}`}
                                     style={{
                                         width: `${totalCarbs ? Math.min(100, (consumedCarbs / totalCarbs) * 100) : 0}%`,
-                                        background: "#f59e0b",
                                     }}
                                 />
                             </div>
                         </div>
                         <div className={styles.macroSummaryItem}>
-                            <div
-                                className={styles.macroSummaryIcon}
-                                style={{ background: "rgba(236,72,153,0.1)" }}
-                            >
-                                <Droplets size={16} style={{ color: "#ec4899" }} />
+                            <div className={`${styles.macroSummaryIcon} ${styles.macroFat}`}>
+                                <Droplets size={16} />
                             </div>
                             <div className={styles.macroSummaryInfo}>
                 <span className={styles.macroSummaryValue}>
@@ -759,12 +774,11 @@ export default function DietPage() {
                 </span>
                                 <span className={styles.macroSummaryLabel}>چربی</span>
                             </div>
-                            <div className={styles.macroSummaryBar}>
+                            <div className={`${styles.macroSummaryBar} ${styles.barFat}`}>
                                 <div
-                                    className={styles.macroSummaryBarFill}
+                                    className={`${styles.macroSummaryBarFill} ${styles.fillFat}`}
                                     style={{
                                         width: `${totalFat ? Math.min(100, (consumedFat / totalFat) * 100) : 0}%`,
-                                        background: "#ec4899",
                                     }}
                                 />
                             </div>
@@ -814,19 +828,19 @@ export default function DietPage() {
                                         <div className={styles.mealBody}>
                                             <div className={styles.mealTop}>
                                                 <div className={styles.mealSlotRow}>
-                          <span
-                              className={styles.mealSlotIcon}
-                              style={{
-                                  background: `${slotInfo.color}15`,
-                                  color: slotInfo.color,
-                              }}
-                          >
+                          <span className={styles.mealSlotIcon}>
                             {slotInfo.icon}
                           </span>
                                                     <span className={styles.mealSlotName}>
                             {slotInfo.label}
                           </span>
                                                 </div>
+                                            </div>
+
+                                            <div className={styles.mealNameRow}>
+                                                <h3 className={styles.mealName}>
+                                                    {meal.foodItem.name}
+                                                </h3>
                                                 <div className={styles.mealCalBadge}>
                                                     <Flame size={12} />
                                                     <span>
@@ -836,10 +850,6 @@ export default function DietPage() {
                                                 </div>
                                             </div>
 
-                                            <h3 className={styles.mealName}>
-                                                {meal.foodItem.name}
-                                            </h3>
-
                                             {meal.foodItem.description && (
                                                 <p className={styles.mealDesc}>
                                                     {meal.foodItem.description}
@@ -847,36 +857,21 @@ export default function DietPage() {
                                             )}
 
                                             <div className={styles.mealMacros}>
-                                                <div
-                                                    className={styles.mealMacro}
-                                                    style={
-                                                        { "--mc": "#3b82f6" } as React.CSSProperties
-                                                    }
-                                                >
+                                                <div className={styles.mealMacro}>
                                                     <Wheat size={11} />
                                                     <span>{meal.foodItem.protein}g</span>
                                                     <span className={styles.mealMacroLabel}>
                             پروتئین
                           </span>
                                                 </div>
-                                                <div
-                                                    className={styles.mealMacro}
-                                                    style={
-                                                        { "--mc": "#f59e0b" } as React.CSSProperties
-                                                    }
-                                                >
+                                                <div className={styles.mealMacro}>
                                                     <Banana size={11} />
                                                     <span>{meal.foodItem.carbs}g</span>
                                                     <span className={styles.mealMacroLabel}>
                             کربوهیدرات
                           </span>
                                                 </div>
-                                                <div
-                                                    className={styles.mealMacro}
-                                                    style={
-                                                        { "--mc": "#ec4899" } as React.CSSProperties
-                                                    }
-                                                >
+                                                <div className={styles.mealMacro}>
                                                     <Droplets size={11} />
                                                     <span>{meal.foodItem.fat}g</span>
                                                     <span className={styles.mealMacroLabel}>
@@ -915,6 +910,11 @@ export default function DietPage() {
                                                 </div>
                                             </button>
                                         </div>
+                                        {isConsumed && (
+                                            <div className={styles.completedBadge}>
+                                                <Check size={14} />
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             }
