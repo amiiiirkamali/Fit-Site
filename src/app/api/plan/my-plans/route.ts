@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getTokenFromHeaders } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
+import { fillMissingDietDays } from "@/lib/algorithm";
 
 export async function GET(req: NextRequest) {
     try {
@@ -13,7 +14,7 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        // Get latest diet plan
+        // Get latest diet plan & fill missing days if needed
         const dietPlan = await prisma.dietPlan.findFirst({
             where: { userId: payload.userId },
             orderBy: { createdAt: "desc" },
@@ -26,6 +27,23 @@ export async function GET(req: NextRequest) {
                 },
             },
         });
+
+        if (dietPlan) {
+            await fillMissingDietDays(dietPlan.id);
+        }
+
+        // Re-fetch after fill
+        const filledDietPlan = dietPlan
+            ? await prisma.dietPlan.findUnique({
+                  where: { id: dietPlan.id },
+                  include: {
+                      items: {
+                          include: { foodItem: true },
+                          orderBy: [{ day: "asc" }, { mealSlot: "asc" }],
+                      },
+                  },
+              })
+            : null;
 
         // Get latest workout plan
         const workoutPlan = await prisma.workoutPlan.findFirst({
@@ -43,7 +61,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            dietPlan,
+            dietPlan: filledDietPlan,
             workoutPlan,
         });
     } catch (error) {

@@ -39,25 +39,99 @@ async function main() {
     ];
 
     const exercises = [
-        { name: "پوش‌آپ (شنا)", muscleGroup: "سینه", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "10-12", description: "شنا روی زمین" },
-        { name: "پرس سینه با دمبل", muscleGroup: "سینه", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "12", description: "پرس سینه روی نیمکت با دمبل" },
-        { name: "نشر از جلو با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "12-15", description: "نشر از جلو برای شانه‌ی قدامی" },
-        { name: "نشر از بغل با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "12-15", description: "نشر جانبی برای شانه‌ی میانی" },
-        { name: "جلو بازو با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "12", description: "کرل جلو بازو با دمبل" },
-        { name: "پشت بازو با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "12", description: "اکستنشن پشت بازو" },
-        { name: "زیربغل با دمبل", muscleGroup: "پشت", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "12", description: "رویینگ دمبل تک‌دست" },
-        { name: "پلانک", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "30 ثانیه", description: "پلانک ساعد" },
-        { name: "اسکوات بدون وزنه", muscleGroup: "پا", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "15", description: "اسکوات با وزن بدن" },
-        { name: "اسکوات با دمبل", muscleGroup: "پا", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "12", description: "اسکوات گابلت با دمبل" },
-        { name: "لانج جلو", muscleGroup: "پا", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "12 هر پا", description: "لانج جلو با وزن بدن" },
-        { name: "ددلیفت رومانیایی با دمبل", muscleGroup: "همسترینگ", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "12", description: "ددلیفت رومانیایی" },
-        { name: "هیپ تراست", muscleGroup: "باسن", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "15", description: "گلوت بریج / هیپ تراست" },
-        { name: "ساق پا ایستاده", muscleGroup: "ساق", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "20", description: "بلند شدن روی پنجه‌ی پا" },
-        { name: "برپی", muscleGroup: "فول‌بادی", equipment: "بدون تجهیزات", difficulty: "پیشرفته", sets: 3, reps: "8-10", description: "حرکت ترکیبی برپی" },
-        { name: "مانتین کلایمبر", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "20 هر پا", description: "کوهنورد (مانتین کلایمبر)" },
-        { name: "جامپینگ جک", muscleGroup: "فول‌بادی", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "30", description: "پرش ستاره‌ای" },
-        { name: "کرانچ شکم", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "15-20", description: "کرانچ سنتی" },
-        { name: "سوپرمن", muscleGroup: "پشت", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "12", description: "حرکت سوپرمن برای تقویت کمر" }
+        // ─── Cardio / Warm-up ───
+        { name: "پرش ستاره‌ای (جامپینگ جک)", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۳۰ ثانیه", description: "پرش همزمان دست و پا به طرفین" },
+        { name: "زانو بلند (های نی)", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۳۰ ثانیه", description: "دویدن درجا با بالا آوردن زانوها" },
+        { name: "پرش اسکوات", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "اسکوات همراه با پرش به بالا" },
+        { name: "برپی", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "پیشرفته", sets: 3, reps: "۸-۱۰", description: "حرکت ترکیبی تمام بدن" },
+        { name: "پرش لانج", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "لانج همراه با پرش و تعویض پا" },
+        { name: "دویدن درجا", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۴۵ ثانیه", description: "دویدن آرام درجا برای گرم کردن" },
+        { name: "کوهنورد (مانتین کلایمبر)", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۳۰ ثانیه", description: "حرکت کوهنورد در حالت شنا" },
+        { name: "طناب زدن", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۳۰ ثانیه", description: "طناب زدن سریع" },
+        { name: "کرانچ دوچرخه", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "حرکت دوچرخه برای شکم و کاردیو" },
+        { name: "بورپی (مدل ساده)", muscleGroup: "کاردیو", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۸", description: "برپی ساده بدون پرش" },
+
+        // ─── Home: Chest ───
+        { name: "پوش‌آپ (شنا)", muscleGroup: "سینه", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۰-۱۲", description: "شنا روی زمین" },
+        { name: "پرس سینه با دمبل", muscleGroup: "سینه", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "پرس سینه روی نیمکت با دمبل" },
+        { name: "پوش‌آپ پا بالا", muscleGroup: "سینه", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۸-۱۰", description: "شنا با پاها روی نیمکت" },
+        { name: "پوش‌آپ جمع", muscleGroup: "سینه", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۸-۱۰", description: "شنا با دست‌های جمع (زیر سینه)" },
+
+        // ─── Home: Shoulders ───
+        { name: "نشر از جلو با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "۱۲-۱۵", description: "نشر از جلو برای شانه قدامی" },
+        { name: "نشر از بغل با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "۱۲-۱۵", description: "نشر جانبی برای شانه میانی" },
+        { name: "نشر خمیده با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲-۱۵", description: "نشر خمیده برای شانه خلفی" },
+        { name: "پرس شانه با دمبل", muscleGroup: "شانه", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۰-۱۲", description: "پرس شانه با دمبل روی نیمکت" },
+
+        // ─── Home: Arms ───
+        { name: "جلو بازو با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "کرل جلو بازو با دمبل" },
+        { name: "پشت بازو با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "اکستنشن پشت بازو" },
+        { name: "جلو بازو چکشی با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "چکشی جلو بازو با دمبل" },
+        { name: "پشت بازو خوابیده با دمبل", muscleGroup: "بازو", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "پشت بازو خوابیده با دو دمبل" },
+
+        // ─── Home: Back ───
+        { name: "زیربغل با دمبل", muscleGroup: "پشت", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "رویینگ دمبل تک‌دست" },
+        { name: "سوپرمن", muscleGroup: "پشت", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "حرکت سوپرمن برای تقویت کمر" },
+        { name: "زیربغل خمیده با دمبل", muscleGroup: "پشت", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "رویینگ خمیده با دو دمبل" },
+        { name: "پلانک لمسی شانه", muscleGroup: "پشت", equipment: "بدون تجهیزات", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "پلانک با touch شانه" },
+
+        // ─── Home: Legs & Glutes ───
+        { name: "اسکوات بدون وزنه", muscleGroup: "پا", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "اسکوات با وزن بدن" },
+        { name: "اسکوات با دمبل", muscleGroup: "پا", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "اسکوات گابلت با دمبل" },
+        { name: "لانج جلو", muscleGroup: "پا", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۲ هر پا", description: "لانج جلو با وزن بدن" },
+        { name: "لانج با دمبل", muscleGroup: "پا", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۰ هر پا", description: "لانج جلو با دمبل" },
+        { name: "ددلیفت رومانیایی با دمبل", muscleGroup: "همسترینگ", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "ددلیفت رومانیایی با دمبل" },
+        { name: "هیپ تراست", muscleGroup: "باسن", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "گلوت بریج / هیپ تراست" },
+        { name: "هیپ تراست با دمبل", muscleGroup: "باسن", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "هیپ تراست با دمبل روی زمین" },
+        { name: "ساق پا ایستاده", muscleGroup: "ساق", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۲۰", description: "بلند شدن روی پنجه پا" },
+        { name: "اسکوات سومو با دمبل", muscleGroup: "پا", equipment: "دمبل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "اسکوات سومو با یک دمبل" },
+        { name: "لانج معکوس", muscleGroup: "پا", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۲ هر پا", description: "لانج به عقب" },
+
+        // ─── Home: Abs ───
+        { name: "پلانک", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۳۰ ثانیه", description: "پلانک ساعد" },
+        { name: "کرانچ شکم", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۵-۲۰", description: "کرانچ سنتی" },
+        { name: "پلانک پهلو", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۲۰ ثانیه", description: "پلانک پهلو برای عضلات مورب" },
+        { name: "کرانچ معکوس", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "بالا بردن پاها در حالت خوابیده" },
+
+        // ─── Gym: Chest ───
+        { name: "پرس سینه هالتر", muscleGroup: "سینه", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "پرس سینه با هالتر روی نیمکت" },
+        { name: "پرس سینه بالا با هالتر", muscleGroup: "سینه", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "پرس سینه بالا با هالتر روی نیمکت ۳۰ درجه" },
+        { name: "پرس سینه دستگاه", muscleGroup: "سینه", equipment: "دستگاه", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "پرس سینه با دستگاه" },
+        { name: "کراس اوور کابل", muscleGroup: "سینه", equipment: "کابل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "کراس اوور سینه با کابل" },
+
+        // ─── Gym: Shoulders ───
+        { name: "پرس شانه هالتر نشسته", muscleGroup: "شانه", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "پرس شانه با هالتر روی نیمکت" },
+        { name: "نشر از بغل کابل", muscleGroup: "شانه", equipment: "کابل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "نشر جانبی با کابل" },
+        { name: "نشر از جلو هالتر", muscleGroup: "شانه", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "نشر از جلو با هالتر" },
+        { name: "آرنولد پرس", muscleGroup: "شانه", equipment: "دمبل", difficulty: "پیشرفته", sets: 3, reps: "۱۰", description: "آرنولد پرس روی نیمکت" },
+
+        // ─── Gym: Arms ───
+        { name: "جلو بازو هالتر", muscleGroup: "بازو", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "جلو بازو با هالتر صاف" },
+        { name: "جلو بازو کابل", muscleGroup: "بازو", equipment: "کابل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "جلو بازو با کابل" },
+        { name: "پشت بازو کابل", muscleGroup: "بازو", equipment: "کابل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "پشت بازو با کابل" },
+        { name: "پشت بازو هالتر خوابیده", muscleGroup: "بازو", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "پشت بازو خوابیده با هالتر EZ" },
+
+        // ─── Gym: Back ───
+        { name: "زیربغل هالتر خمیده", muscleGroup: "پشت", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "رویینگ با هالتر خمیده" },
+        { name: "زیربغل سیمکش دست باز", muscleGroup: "پشت", equipment: "کابل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "لات پول‌داون با کابل دست باز" },
+        { name: "زیربغل سیمکش دست جمع", muscleGroup: "پشت", equipment: "کابل", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "لات پول‌داون با کابل دست جمع" },
+        { name: "ددلیفت هالتر", muscleGroup: "پشت", equipment: "هالتر", difficulty: "پیشرفته", sets: 3, reps: "۸", description: "ددلیفت با هالتر" },
+        { name: "زیربغل تی‌بار", muscleGroup: "پشت", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "زیربغل تی‌بار با هالتر و دستگیره" },
+
+        // ─── Gym: Legs & Glutes ───
+        { name: "اسکوات هالتر (اسکوات کلاسیک)", muscleGroup: "پا", equipment: "هالتر", difficulty: "پیشرفته", sets: 3, reps: "۱۰", description: "اسکوات با هالتر پشت" },
+        { name: "لگ پرس دستگاه", muscleGroup: "پا", equipment: "دستگاه", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "لگ پرس با دستگاه" },
+        { name: "هاک اسکوات", muscleGroup: "پا", equipment: "دستگاه", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "هاک اسکوات دستگاه" },
+        { name: "ددلیفت رومانیایی هالتر", muscleGroup: "همسترینگ", equipment: "هالتر", difficulty: "متوسط", sets: 3, reps: "۱۰", description: "ددلیفت رومانیایی با هالتر" },
+        { name: "باسن پرس دستگاه", muscleGroup: "باسن", equipment: "دستگاه", difficulty: "مبتدی", sets: 3, reps: "۱۲", description: "باسن پرس با دستگاه" },
+        { name: "فیله کابل", muscleGroup: "همسترینگ", equipment: "کابل", difficulty: "متوسط", sets: 3, reps: "۱۲", description: "لیفت پا با کابل مچ پا" },
+        { name: "ساق پا دستگاه نشسته", muscleGroup: "ساق", equipment: "دستگاه", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "ساق پا با دستگاه نشسته" },
+        { name: "لانج هالتر", muscleGroup: "پا", equipment: "هالتر", difficulty: "پیشرفته", sets: 3, reps: "۸ هر پا", description: "لانج جلو با هالتر" },
+
+        // ─── Gym: Abs ───
+        { name: "کرانچ دستگاه", muscleGroup: "شکم", equipment: "دستگاه", difficulty: "مبتدی", sets: 3, reps: "۱۵", description: "کرانچ با دستگاه شکم" },
+        { name: "پلانک روی نیمکت", muscleGroup: "شکم", equipment: "نیمکت", difficulty: "مبتدی", sets: 3, reps: "۳۰ ثانیه", description: "پلانک ساعد روی نیمکت" },
+        { name: "آویزان شکم", muscleGroup: "شکم", equipment: "بدون تجهیزات", difficulty: "پیشرفته", sets: 3, reps: "۱۰", description: "بالا آوردن پاها در حالت آویزان از بار" },
     ];
 
     await prisma.foodItem.createMany({ data: foods });

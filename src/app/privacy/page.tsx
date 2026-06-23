@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Lock } from "lucide-react";
+import {ArrowLeft, ArrowRight, Lock} from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
             <section className={styles.cta}>
                 <Link href="/quiz" className={styles.ctaBtn}>
                     شروع کنید
-                    <ArrowRight size={16} />
+                    <ArrowLeft size={16} />
                 </Link>
                 <Link href="/rules" className={styles.secondaryBtn}>
                     قوانین و مقررات

@@ -1,187 +1,829 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import {
+    ArrowRight,
+    Flame,
+    ChefHat,
+    ChevronLeft,
+    ChevronRight,
+    Wheat,
+    Banana,
+    Droplets,
+    Salad,
+    Calendar,
+    Sun,
+    Moon,
+    Apple,
+    Check,
+    CircleCheck,
+    Trophy,
+    TrendingUp,
+    Sparkles,
+    Utensils,
+    Target,
+    Zap,
+    Heart,
+    Star,
+} from "lucide-react";
 import styles from "./page.module.css";
 
 interface FoodItem {
-  id: string;
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  description?: string;
+    id: string;
+    name: string;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    description?: string;
 }
 
 interface MealItem {
-  mealSlot: string;
-  day: number;
-  foodItem: FoodItem;
+    mealSlot: string;
+    day: number;
+    foodItem: FoodItem;
 }
 
 interface DietPlan {
-  id: string;
-  dailyCalorieTarget: number;
-  items: MealItem[];
+    id: string;
+    dailyCalorieTarget: number;
+    createdAt: string;
+    items: MealItem[];
 }
 
-const dayNames = [
-  "شنبه",
-  "یک‌شنبه",
-  "دوشنبه",
-  "سه‌شنبه",
-  "چهارشنبه",
-  "پنج‌شنبه",
-  "جمعه",
-];
+interface ConsumedState {
+    [key: string]: boolean;
+}
 
-const mealSlotNames: Record<string, string> = {
-  breakfast: "صبحانه",
-  lunch: "ناهار",
-  dinner: "شام",
-  snack: "میان‌وعده",
+const mealSlotNames: Record<
+    string,
+    { label: string; icon: React.ReactNode; color: string; gradient: string }
+> = {
+    breakfast: {
+        label: "صبحانه",
+        icon: <Sun size={16} />,
+        color: "#f59e0b",
+        gradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+    },
+    lunch: {
+        label: "ناهار",
+        icon: <Utensils size={16} />,
+        color: "#10b981",
+        gradient: "linear-gradient(135deg, #34d399, #10b981)",
+    },
+    dinner: {
+        label: "شام",
+        icon: <Moon size={16} />,
+        color: "#6366f1",
+        gradient: "linear-gradient(135deg, #818cf8, #6366f1)",
+    },
+    snack: {
+        label: "میان‌وعده",
+        icon: <Apple size={16} />,
+        color: "#ec4899",
+        gradient: "linear-gradient(135deg, #f472b6, #ec4899)",
+    },
 };
 
-export default function DietPage() {
-  const router = useRouter();
-  const [plan, setPlan] = useState<DietPlan | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedDay, setSelectedDay] = useState(1);
+const persianMonths = [
+    "فروردین",
+    "اردیبهشت",
+    "خرداد",
+    "تیر",
+    "مرداد",
+    "شهریور",
+    "مهر",
+    "آبان",
+    "آذر",
+    "دی",
+    "بهمن",
+    "اسفند",
+];
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
+function toPersianDateStr(date: Date): string {
+    const d = new Date(date);
+    const monthIdx = (d.getMonth() + 9) % 12;
+    return `${d.getDate()} ${persianMonths[monthIdx]}`;
+}
+
+function toPersianDay(date: Date): string {
+    const weekdays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+    const d = new Date(date);
+    return weekdays[d.getDay() === 6 ? 0 : d.getDay() + 1];
+}
+
+function toPersianNum(n: number): string {
+    return n.toLocaleString("fa-IR");
+}
+
+export default function DietPage() {
+    const router = useRouter();
+    const [plan, setPlan] = useState<DietPlan | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedDay, setSelectedDay] = useState(1);
+    const [consumed, setConsumed] = useState<ConsumedState>({});
+    const [animatingCard, setAnimatingCard] = useState<string | null>(null);
+    const [showConfetti, setShowConfetti] = useState(false);
+    const tabsRef = useRef<HTMLDivElement>(null);
+
+    // Load consumed state from localStorage
+    useEffect(() => {
+        const saved = localStorage.getItem("diet-consumed");
+        if (saved) {
+            try {
+                setConsumed(JSON.parse(saved));
+            } catch {}
+        }
+    }, []);
+
+    // Save consumed state to localStorage
+    const saveConsumed = useCallback((newState: ConsumedState) => {
+        setConsumed(newState);
+        localStorage.setItem("diet-consumed", JSON.stringify(newState));
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            router.push("/login");
+            return;
+        }
+
+        fetch("/api/plan/my-plans", {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.dietPlan) setPlan(data.dietPlan);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, [router]);
+
+    useEffect(() => {
+        const el = tabsRef.current;
+        if (!el) return;
+        const btn = el.querySelector(
+            `[data-day="${selectedDay}"]`
+        ) as HTMLElement;
+        btn?.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest",
+        });
+    }, [selectedDay]);
+
+    const getConsumedKey = (day: number, slot: string) => `${day}-${slot}`;
+
+    const toggleConsumed = (day: number, slot: string) => {
+        const key = getConsumedKey(day, slot);
+        const newState = { ...consumed, [key]: !consumed[key] };
+        saveConsumed(newState);
+
+        setAnimatingCard(key);
+        setTimeout(() => setAnimatingCard(null), 600);
+
+        // Check if all meals for the day are consumed
+        if (!consumed[key]) {
+            const dayMeals = plan?.items.filter((m) => m.day === day) || [];
+            const allConsumed = dayMeals.every((m) => {
+                const mKey = getConsumedKey(day, m.mealSlot);
+                return mKey === key ? true : newState[mKey];
+            });
+            if (allConsumed && dayMeals.length > 0) {
+                setShowConfetti(true);
+                setTimeout(() => setShowConfetti(false), 2500);
+            }
+        }
+    };
+
+    if (loading) {
+        return (
+            <main className={styles.page}>
+                <div className={styles.loadingWrap}>
+                    <div className={styles.spinnerContainer}>
+                        <div className={styles.spinner} />
+                        <Salad size={24} className={styles.spinnerIcon} />
+                    </div>
+                    <p className={styles.loadingText}>در حال بارگذاری...</p>
+                </div>
+            </main>
+        );
     }
 
-    fetch("/api/plan/my-plans", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.dietPlan) {
-          setPlan(data.dietPlan);
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [router]);
-
-  if (loading) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.loadingContainer}>
-          <div className={styles.spinner} />
-        </div>
-      </main>
-    );
-  }
-
-  if (!plan) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.emptyState}>
-          <p>برنامه‌ی غذایی هنوز ساخته نشده</p>
-          <button onClick={() => router.push("/dashboard")}>بازگشت</button>
-        </div>
-      </main>
-    );
-  }
-
-  const dayMeals = plan.items.filter((item: any) => item.day === selectedDay);
-  const totalCal = dayMeals.reduce((sum: number, m: any) => sum + m.foodItem.calories, 0);
-
-  return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <button
-          className={styles.backBtn}
-          onClick={() => router.push("/dashboard")}
-        >
-          ←
-        </button>
-        <span className={styles.headerTitle}>برنامه غذایی</span>
-        <div />
-      </header>
-
-      <section className={styles.content}>
-        <div className={styles.calorieCard}>
-          <span className={styles.calorieLabel}>کالری هدف روزانه</span>
-          <span className={styles.calorieValue}>
-            {plan.dailyCalorieTarget.toLocaleString("fa-IR")}
-          </span>
-          <span className={styles.calorieUnit}>کیلوکالری</span>
-        </div>
-
-        <div className={styles.dayTabs}>
-          {dayNames.map((name, i) => (
-            <button
-              key={i}
-              className={`${styles.dayTab} ${
-                selectedDay === i + 1 ? styles.dayTabActive : ""
-              }`}
-              onClick={() => setSelectedDay(i + 1)}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
-
-        <div className={styles.meals}>
-          {["breakfast", "lunch", "dinner", "snack"].map((slot) => {
-            const meal = dayMeals.find((m) => m.mealSlot === slot);
-            if (!meal) return null;
-
-            return (
-              <div key={slot} className={styles.mealCard}>
-                <div className={styles.mealHeader}>
-                  <span className={styles.mealSlot}>
-                    {mealSlotNames[slot]}
-                  </span>
-                  <span className={styles.mealCal}>
-                    {meal.foodItem.calories} کالری
-                  </span>
+    if (!plan) {
+        return (
+            <main className={styles.page}>
+                <div className={styles.loadingWrap}>
+                    <div className={styles.emptyIconWrap}>
+                        <ChefHat size={48} className={styles.emptyIcon} />
+                    </div>
+                    <p className={styles.emptyText}>برنامه غذایی هنوز ساخته نشده</p>
+                    <p className={styles.emptySubText}>
+                        برای ساخت برنامه غذایی به داشبورد مراجعه کنید
+                    </p>
+                    <button
+                        className={styles.emptyBtn}
+                        onClick={() => router.push("/dashboard")}
+                    >
+                        <ArrowRight size={16} />
+                        بازگشت به داشبورد
+                    </button>
                 </div>
-                <h3 className={styles.mealName}>{meal.foodItem.name}</h3>
-                {meal.foodItem.description && (
-                  <p className={styles.mealDesc}>
-                    {meal.foodItem.description}
-                  </p>
-                )}
-                <div className={styles.macros}>
-                  <div className={styles.macro}>
-                    <span className={styles.macroValue}>
-                      {meal.foodItem.protein}g
-                    </span>
-                    <span className={styles.macroLabel}>پروتئین</span>
-                  </div>
-                  <div className={styles.macro}>
-                    <span className={styles.macroValue}>
-                      {meal.foodItem.carbs}g
-                    </span>
-                    <span className={styles.macroLabel}>کربوهیدرات</span>
-                  </div>
-                  <div className={styles.macro}>
-                    <span className={styles.macroValue}>
-                      {meal.foodItem.fat}g
-                    </span>
-                    <span className={styles.macroLabel}>چربی</span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+            </main>
+        );
+    }
 
-        <div className={styles.totalRow}>
-          <span>مجموع کالری روز:</span>
-          <span className={styles.totalValue}>
-            {totalCal.toLocaleString("fa-IR")} کیلوکالری
-          </span>
-        </div>
-      </section>
-    </main>
-  );
+    const startDate = new Date(plan.createdAt);
+    const totalDays = 30;
+    const dayNumbers = Array.from({ length: totalDays }, (_, i) => i + 1);
+    const dayMeals = plan.items.filter((m) => m.day === selectedDay);
+
+    const totalCal = dayMeals.reduce((s, m) => s + m.foodItem.calories, 0);
+    const consumedCal = dayMeals
+        .filter((m) => consumed[getConsumedKey(selectedDay, m.mealSlot)])
+        .reduce((s, m) => s + m.foodItem.calories, 0);
+    const calPercent = Math.min(
+        100,
+        Math.round((consumedCal / plan.dailyCalorieTarget) * 100)
+    );
+
+    const totalProtein = dayMeals.reduce((s, m) => s + m.foodItem.protein, 0);
+    const totalCarbs = dayMeals.reduce((s, m) => s + m.foodItem.carbs, 0);
+    const totalFat = dayMeals.reduce((s, m) => s + m.foodItem.fat, 0);
+
+    const consumedProtein = dayMeals
+        .filter((m) => consumed[getConsumedKey(selectedDay, m.mealSlot)])
+        .reduce((s, m) => s + m.foodItem.protein, 0);
+    const consumedCarbs = dayMeals
+        .filter((m) => consumed[getConsumedKey(selectedDay, m.mealSlot)])
+        .reduce((s, m) => s + m.foodItem.carbs, 0);
+    const consumedFat = dayMeals
+        .filter((m) => consumed[getConsumedKey(selectedDay, m.mealSlot)])
+        .reduce((s, m) => s + m.foodItem.fat, 0);
+
+    const consumedCount = dayMeals.filter(
+        (m) => consumed[getConsumedKey(selectedDay, m.mealSlot)]
+    ).length;
+    const mealProgress = dayMeals.length
+        ? Math.round((consumedCount / dayMeals.length) * 100)
+        : 0;
+
+    // Overall 30-day progress
+    const totalMeals = plan.items.length;
+    const totalConsumed = plan.items.filter(
+        (m) => consumed[getConsumedKey(m.day, m.mealSlot)]
+    ).length;
+    const overallProgress = totalMeals
+        ? Math.round((totalConsumed / totalMeals) * 100)
+        : 0;
+
+    // Streak calculation
+    let streak = 0;
+    for (let d = 1; d <= totalDays; d++) {
+        const dMeals = plan.items.filter((m) => m.day === d);
+        if (dMeals.length === 0) continue;
+        const allDone = dMeals.every(
+            (m) => consumed[getConsumedKey(d, m.mealSlot)]
+        );
+        if (allDone) streak++;
+        else break;
+    }
+
+    const getDayCompletion = (day: number) => {
+        const dMeals = plan.items.filter((m) => m.day === day);
+        if (dMeals.length === 0) return 0;
+        const doneCount = dMeals.filter(
+            (m) => consumed[getConsumedKey(day, m.mealSlot)]
+        ).length;
+        return Math.round((doneCount / dMeals.length) * 100);
+    };
+
+    return (
+        <main className={styles.page}>
+            <div className={styles.bgGlow1} />
+            <div className={styles.bgGlow2} />
+            <div className={styles.bgGlow3} />
+
+            {/* Confetti */}
+            {showConfetti && (
+                <div className={styles.confettiContainer}>
+                    {Array.from({ length: 40 }).map((_, i) => (
+                        <div
+                            key={i}
+                            className={styles.confetti}
+                            style={
+                                {
+                                    "--x": `${Math.random() * 100}vw`,
+                                    "--delay": `${Math.random() * 0.5}s`,
+                                    "--color": [
+                                        "#10b981",
+                                        "#f59e0b",
+                                        "#6366f1",
+                                        "#ec4899",
+                                        "#3b82f6",
+                                        "#f43f5e",
+                                    ][Math.floor(Math.random() * 6)],
+                                    "--rotate": `${Math.random() * 360}deg`,
+                                    "--duration": `${1.5 + Math.random() * 1.5}s`,
+                                } as React.CSSProperties
+                            }
+                        />
+                    ))}
+                    <div className={styles.confettiMessage}>
+                        <Trophy size={32} />
+                        <span>آفرین! همه وعده‌ها رو خوردی! 🎉</span>
+                    </div>
+                </div>
+            )}
+
+            {/* ─── Hero Header ─── */}
+            <header className={styles.hero}>
+                <div className={styles.heroBg} />
+                <div className={styles.heroParticles}>
+                    {Array.from({ length: 6 }).map((_, i) => (
+                        <div
+                            key={i}
+                            className={styles.heroParticle}
+                            style={
+                                {
+                                    "--px": `${10 + Math.random() * 80}%`,
+                                    "--py": `${10 + Math.random() * 80}%`,
+                                    "--pd": `${3 + Math.random() * 4}s`,
+                                    "--ps": `${4 + Math.random() * 8}px`,
+                                } as React.CSSProperties
+                            }
+                        />
+                    ))}
+                </div>
+                <div className={styles.heroContent}>
+                    <div className={styles.heroTop}>
+                        <button
+                            className={styles.backBtn}
+                            onClick={() => router.push("/dashboard")}
+                        >
+                            <ChevronRight size={18} />
+                            <span>داشبورد</span>
+                        </button>
+                        <div className={styles.heroStreak}>
+                            <Zap size={14} />
+                            <span>{toPersianNum(streak)} روز متوالی</span>
+                        </div>
+                    </div>
+
+                    <div className={styles.heroBody}>
+                        <div className={styles.heroIcon}>
+                            <Salad size={32} />
+                        </div>
+                        <h1 className={styles.heroTitle}>برنامه غذایی ۳۰ روزه</h1>
+                        <p className={styles.heroDesc}>
+                            اختصاصی برای تو — هر روز یه وعده‌ی جدید
+                        </p>
+
+                        <div className={styles.heroStats}>
+                            <div className={styles.heroStat}>
+                                <div className={styles.heroStatIcon}>
+                                    <Flame size={18} />
+                                </div>
+                                <div className={styles.heroStatInfo}>
+                  <span className={styles.heroStatValue}>
+                    {toPersianNum(plan.dailyCalorieTarget)}
+                  </span>
+                                    <span className={styles.heroStatLabel}>کالری روزانه</span>
+                                </div>
+                            </div>
+                            <div className={styles.heroStatDivider} />
+                            <div className={styles.heroStat}>
+                                <div className={styles.heroStatIcon}>
+                                    <TrendingUp size={18} />
+                                </div>
+                                <div className={styles.heroStatInfo}>
+                  <span className={styles.heroStatValue}>
+                    {toPersianNum(overallProgress)}٪
+                  </span>
+                                    <span className={styles.heroStatLabel}>پیشرفت کل</span>
+                                </div>
+                            </div>
+                            <div className={styles.heroStatDivider} />
+                            <div className={styles.heroStat}>
+                                <div className={styles.heroStatIcon}>
+                                    <Trophy size={18} />
+                                </div>
+                                <div className={styles.heroStatInfo}>
+                  <span className={styles.heroStatValue}>
+                    {toPersianNum(totalConsumed)}
+                  </span>
+                                    <span className={styles.heroStatLabel}>وعده مصرف‌شده</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.heroWave}>
+                        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                            <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,80C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
+                        </svg>
+                    </div>
+                </div>
+            </header>
+
+            {/* ─── Content ─── */}
+            <div className={styles.content}>
+                {/* ─── Context Bar ─── */}
+                <div className={styles.contextBar}>
+                    <div className={styles.contextItem}>
+                        <Calendar size={14} />
+                        <span>از {toPersianDateStr(startDate)}</span>
+                    </div>
+                    <div className={styles.contextDivider} />
+                    <div className={styles.contextItem}>
+                        <span>۳۰ روز</span>
+                    </div>
+                    <div className={styles.contextDivider} />
+                    <div className={styles.contextItem}>
+                        <Sparkles size={14} />
+                        <span>
+              {toPersianNum(totalConsumed)} از {toPersianNum(totalMeals)} وعده
+            </span>
+                    </div>
+                </div>
+
+                {/* ─── Day Tabs ─── */}
+                <section className={styles.tabsSection}>
+                    <div className={styles.tabsWrapper}>
+                        <button
+                            className={styles.tabsArrow}
+                            onClick={() => {
+                                if (selectedDay > 1) setSelectedDay(selectedDay - 1);
+                            }}
+                        >
+                            <ChevronRight size={18} />
+                        </button>
+                        <div className={styles.tabsScroll} ref={tabsRef}>
+                            {dayNumbers.map((day) => {
+                                const date = new Date(startDate);
+                                date.setDate(date.getDate() + day - 1);
+                                const completion = getDayCompletion(day);
+                                return (
+                                    <button
+                                        key={day}
+                                        data-day={day}
+                                        className={`${styles.dayTab} ${selectedDay === day ? styles.dayTabActive : ""} ${completion === 100 ? styles.dayTabDone : ""}`}
+                                        onClick={() => setSelectedDay(day)}
+                                    >
+                    <span className={styles.dayTabWeek}>
+                      هفته {toPersianNum(Math.ceil(day / 7))}
+                    </span>
+                                        <span className={styles.dayTabNum}>
+                      {toPersianNum(day)}
+                    </span>
+                                        <span className={styles.dayTabDate}>
+                      {toPersianDateStr(date)}
+                    </span>
+                                        <span className={styles.dayTabDay}>
+                      {toPersianDay(date)}
+                    </span>
+                                        {completion > 0 && (
+                                            <div className={styles.dayTabProgress}>
+                                                <div
+                                                    className={styles.dayTabProgressFill}
+                                                    style={{ width: `${completion}%` }}
+                                                />
+                                            </div>
+                                        )}
+                                        {completion === 100 && (
+                                            <div className={styles.dayTabCheck}>
+                                                <Check size={10} />
+                                            </div>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        <button
+                            className={styles.tabsArrow}
+                            onClick={() => {
+                                if (selectedDay < totalDays)
+                                    setSelectedDay(selectedDay + 1);
+                            }}
+                        >
+                            <ChevronLeft size={18} />
+                        </button>
+                    </div>
+                </section>
+
+                {/* ─── Progress Cards ─── */}
+                <section className={styles.progressSection}>
+                    <div className={styles.progressGrid}>
+                        {/* Calorie Progress */}
+                        <div className={styles.progressCard}>
+                            <div className={styles.progressCardHeader}>
+                                <div className={styles.progressCardIcon}>
+                                    <Flame size={18} />
+                                </div>
+                                <div>
+                                    <h3 className={styles.progressCardTitle}>کالری مصرفی</h3>
+                                    <p className={styles.progressCardSub}>
+                                        روز {toPersianNum(selectedDay)}
+                                    </p>
+                                </div>
+                                <span className={styles.progressPercent}>
+                  {toPersianNum(calPercent)}٪
+                </span>
+                            </div>
+                            <div className={styles.progressTrack}>
+                                <div
+                                    className={styles.progressFill}
+                                    style={{ width: `${calPercent}%` }}
+                                />
+                            </div>
+                            <div className={styles.progressMeta}>
+                <span>
+                  {toPersianNum(consumedCal)} از{" "}
+                    {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری
+                </span>
+                                <span>
+                  باقی‌مانده:{" "}
+                                    {toPersianNum(
+                                        Math.max(0, plan.dailyCalorieTarget - consumedCal)
+                                    )}
+                </span>
+                            </div>
+                        </div>
+
+                        {/* Meal Progress */}
+                        <div className={styles.progressCard}>
+                            <div className={styles.progressCardHeader}>
+                                <div
+                                    className={styles.progressCardIcon}
+                                    style={{ background: "rgba(99, 102, 241, 0.1)" }}
+                                >
+                                    <Target size={18} style={{ color: "#6366f1" }} />
+                                </div>
+                                <div>
+                                    <h3 className={styles.progressCardTitle}>
+                                        وعده‌های مصرف‌شده
+                                    </h3>
+                                    <p className={styles.progressCardSub}>
+                                        {toPersianNum(consumedCount)} از{" "}
+                                        {toPersianNum(dayMeals.length)} وعده
+                                    </p>
+                                </div>
+                                <span
+                                    className={styles.progressPercent}
+                                    style={{ color: "#6366f1" }}
+                                >
+                  {toPersianNum(mealProgress)}٪
+                </span>
+                            </div>
+                            <div className={styles.progressTrack}>
+                                <div
+                                    className={`${styles.progressFill} ${styles.progressFillPurple}`}
+                                    style={{ width: `${mealProgress}%` }}
+                                />
+                            </div>
+                            <div className={styles.progressMeta}>
+                <span>
+                  {consumedCount === dayMeals.length && dayMeals.length > 0
+                      ? "🎉 عالی! همه وعده‌ها مصرف شد"
+                      : `${toPersianNum(dayMeals.length - consumedCount)} وعده باقی‌مانده`}
+                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Macro Summary */}
+                    <div className={styles.macroSummary}>
+                        <div className={styles.macroSummaryItem}>
+                            <div
+                                className={styles.macroSummaryIcon}
+                                style={{ background: "rgba(59,130,246,0.1)" }}
+                            >
+                                <Wheat size={16} style={{ color: "#3b82f6" }} />
+                            </div>
+                            <div className={styles.macroSummaryInfo}>
+                <span className={styles.macroSummaryValue}>
+                  {toPersianNum(consumedProtein)}/{toPersianNum(totalProtein)}g
+                </span>
+                                <span className={styles.macroSummaryLabel}>پروتئین</span>
+                            </div>
+                            <div className={styles.macroSummaryBar}>
+                                <div
+                                    className={styles.macroSummaryBarFill}
+                                    style={{
+                                        width: `${totalProtein ? Math.min(100, (consumedProtein / totalProtein) * 100) : 0}%`,
+                                        background: "#3b82f6",
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.macroSummaryItem}>
+                            <div
+                                className={styles.macroSummaryIcon}
+                                style={{ background: "rgba(245,158,11,0.1)" }}
+                            >
+                                <Banana size={16} style={{ color: "#f59e0b" }} />
+                            </div>
+                            <div className={styles.macroSummaryInfo}>
+                <span className={styles.macroSummaryValue}>
+                  {toPersianNum(consumedCarbs)}/{toPersianNum(totalCarbs)}g
+                </span>
+                                <span className={styles.macroSummaryLabel}>کربوهیدرات</span>
+                            </div>
+                            <div className={styles.macroSummaryBar}>
+                                <div
+                                    className={styles.macroSummaryBarFill}
+                                    style={{
+                                        width: `${totalCarbs ? Math.min(100, (consumedCarbs / totalCarbs) * 100) : 0}%`,
+                                        background: "#f59e0b",
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.macroSummaryItem}>
+                            <div
+                                className={styles.macroSummaryIcon}
+                                style={{ background: "rgba(236,72,153,0.1)" }}
+                            >
+                                <Droplets size={16} style={{ color: "#ec4899" }} />
+                            </div>
+                            <div className={styles.macroSummaryInfo}>
+                <span className={styles.macroSummaryValue}>
+                  {toPersianNum(consumedFat)}/{toPersianNum(totalFat)}g
+                </span>
+                                <span className={styles.macroSummaryLabel}>چربی</span>
+                            </div>
+                            <div className={styles.macroSummaryBar}>
+                                <div
+                                    className={styles.macroSummaryBarFill}
+                                    style={{
+                                        width: `${totalFat ? Math.min(100, (consumedFat / totalFat) * 100) : 0}%`,
+                                        background: "#ec4899",
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ─── Meals ─── */}
+                <section className={styles.mealsSection}>
+                    <div className={styles.mealsHeader}>
+                        <div className={styles.mealsHeaderRight}>
+                            <h2 className={styles.mealsTitle}>وعده‌های امروز</h2>
+                            <span className={styles.mealsCount}>
+                {toPersianNum(dayMeals.length)} وعده
+              </span>
+                        </div>
+                        {consumedCount > 0 && (
+                            <div className={styles.mealsHeaderBadge}>
+                                <Heart size={12} />
+                                <span>
+                  {toPersianNum(consumedCount)} مصرف شده
+                </span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className={styles.mealsGrid}>
+                        {(["breakfast", "lunch", "dinner", "snack"] as const).map(
+                            (slot) => {
+                                const meal = dayMeals.find((m) => m.mealSlot === slot);
+                                if (!meal) return null;
+                                const slotInfo = mealSlotNames[slot];
+                                const isConsumed =
+                                    consumed[getConsumedKey(selectedDay, slot)];
+                                const isAnimating =
+                                    animatingCard === getConsumedKey(selectedDay, slot);
+
+                                return (
+                                    <div
+                                        key={slot}
+                                        className={`${styles.mealCard} ${isConsumed ? styles.mealCardConsumed : ""} ${isAnimating ? styles.mealCardAnimating : ""}`}
+                                    >
+                                        <div
+                                            className={styles.mealAccent}
+                                            style={{ background: slotInfo.gradient }}
+                                        />
+                                        <div className={styles.mealBody}>
+                                            <div className={styles.mealTop}>
+                                                <div className={styles.mealSlotRow}>
+                          <span
+                              className={styles.mealSlotIcon}
+                              style={{
+                                  background: `${slotInfo.color}15`,
+                                  color: slotInfo.color,
+                              }}
+                          >
+                            {slotInfo.icon}
+                          </span>
+                                                    <span className={styles.mealSlotName}>
+                            {slotInfo.label}
+                          </span>
+                                                </div>
+                                                <div className={styles.mealCalBadge}>
+                                                    <Flame size={12} />
+                                                    <span>
+                            {toPersianNum(meal.foodItem.calories)}
+                          </span>
+                                                    <span className={styles.mealCalUnit}>kcal</span>
+                                                </div>
+                                            </div>
+
+                                            <h3 className={styles.mealName}>
+                                                {meal.foodItem.name}
+                                            </h3>
+
+                                            {meal.foodItem.description && (
+                                                <p className={styles.mealDesc}>
+                                                    {meal.foodItem.description}
+                                                </p>
+                                            )}
+
+                                            <div className={styles.mealMacros}>
+                                                <div
+                                                    className={styles.mealMacro}
+                                                    style={
+                                                        { "--mc": "#3b82f6" } as React.CSSProperties
+                                                    }
+                                                >
+                                                    <Wheat size={11} />
+                                                    <span>{meal.foodItem.protein}g</span>
+                                                    <span className={styles.mealMacroLabel}>
+                            پروتئین
+                          </span>
+                                                </div>
+                                                <div
+                                                    className={styles.mealMacro}
+                                                    style={
+                                                        { "--mc": "#f59e0b" } as React.CSSProperties
+                                                    }
+                                                >
+                                                    <Banana size={11} />
+                                                    <span>{meal.foodItem.carbs}g</span>
+                                                    <span className={styles.mealMacroLabel}>
+                            کربوهیدرات
+                          </span>
+                                                </div>
+                                                <div
+                                                    className={styles.mealMacro}
+                                                    style={
+                                                        { "--mc": "#ec4899" } as React.CSSProperties
+                                                    }
+                                                >
+                                                    <Droplets size={11} />
+                                                    <span>{meal.foodItem.fat}g</span>
+                                                    <span className={styles.mealMacroLabel}>
+                            چربی
+                          </span>
+                                                </div>
+                                            </div>
+
+                                            {/* ─── Consume Toggle ─── */}
+                                            <button
+                                                className={`${styles.consumeBtn} ${isConsumed ? styles.consumeBtnActive : ""}`}
+                                                onClick={() => toggleConsumed(selectedDay, slot)}
+                                            >
+                                                <div className={styles.consumeBtnTrack}>
+                                                    <div className={styles.consumeBtnFill} />
+                                                </div>
+                                                <div className={styles.consumeBtnContent}>
+                                                    <div className={styles.consumeBtnIcon}>
+                                                        {isConsumed ? (
+                                                            <CircleCheck size={18} />
+                                                        ) : (
+                                                            <div className={styles.consumeBtnCircle} />
+                                                        )}
+                                                    </div>
+                                                    <span className={styles.consumeBtnText}>
+                            {isConsumed
+                                ? "مصرف شده ✓"
+                                : "مصرف کردم"}
+                          </span>
+                                                    {isConsumed && (
+                                                        <Star
+                                                            size={14}
+                                                            className={styles.consumeBtnStar}
+                                                        />
+                                                    )}
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        )}
+                    </div>
+
+                    {dayMeals.length === 0 && (
+                        <div className={styles.noMeals}>
+                            <ChefHat size={40} />
+                            <p>وعده‌ای برای این روز ثبت نشده</p>
+                        </div>
+                    )}
+                </section>
+            </div>
+        </main>
+    );
 }
