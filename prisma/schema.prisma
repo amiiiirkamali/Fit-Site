@@ -27,6 +27,7 @@ model User {
   payments     Payment[]
   dietPlans    DietPlan[]
   workoutPlans WorkoutPlan[]
+  cardioLogs   CardioLog[]
 }
 
 model QuizAnswer {
@@ -123,4 +124,16 @@ model WorkoutPlanItem {
 
   workoutPlan  WorkoutPlan  @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
   exerciseItem ExerciseItem @relation(fields: [exerciseId], references: [id])
+}
+
+model CardioLog {
+  id         String   @id @default(cuid())
+  userId     String
+  exerciseId String
+  day        Int
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId, day])
 }

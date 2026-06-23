@@ -98,10 +98,46 @@ const persianMonths = [
     "اسفند",
 ];
 
+function div(a: number, b: number) {
+    return Math.floor(a / b);
+}
+
+function gregorianToJalali(gy: number, gm: number, gd: number): [number, number, number] {
+    const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    let jy = gy <= 1600 ? 0 : 979;
+    gy -= gy <= 1600 ? 621 : 1600;
+    const gy2 = gm > 2 ? gy + 1 : gy;
+    let days =
+        365 * gy +
+        div(gy2 + 3, 4) -
+        div(gy2 + 99, 100) +
+        div(gy2 + 399, 400) -
+        80 +
+        gd +
+        g_d_m[gm - 1];
+    jy += 33 * div(days, 12053);
+    days %= 12053;
+    jy += 4 * div(days, 1461);
+    days %= 1461;
+    if (days > 365) {
+        jy += div(days - 1, 365);
+        days = (days - 1) % 365;
+    }
+    let jm: number, jd: number;
+    if (days < 186) {
+        jm = 1 + div(days, 31);
+        jd = 1 + (days % 31);
+    } else {
+        jm = 7 + div(days - 186, 30);
+        jd = 1 + ((days - 186) % 30);
+    }
+    return [jy, jm, jd];
+}
+
 function toPersianDateStr(date: Date): string {
     const d = new Date(date);
-    const monthIdx = (d.getMonth() + 9) % 12;
-    return `${d.getDate()} ${persianMonths[monthIdx]}`;
+    const [, jm, jd] = gregorianToJalali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+    return `${jd} ${persianMonths[jm - 1]}`;
 }
 
 function toPersianDay(date: Date): string {
@@ -125,21 +161,26 @@ export default function DietPage() {
     const [showConfetti, setShowConfetti] = useState(false);
     const tabsRef = useRef<HTMLDivElement>(null);
 
+    const storageKey = plan ? `diet-consumed-${plan.id}` : null;
+
     // Load consumed state from localStorage
     useEffect(() => {
-        const saved = localStorage.getItem("diet-consumed");
+        if (!storageKey) return;
+        const saved = localStorage.getItem(storageKey);
         if (saved) {
             try {
                 setConsumed(JSON.parse(saved));
             } catch {}
         }
-    }, []);
+    }, [storageKey]);
 
     // Save consumed state to localStorage
     const saveConsumed = useCallback((newState: ConsumedState) => {
         setConsumed(newState);
-        localStorage.setItem("diet-consumed", JSON.stringify(newState));
-    }, []);
+        if (storageKey) {
+            localStorage.setItem(storageKey, JSON.stringify(newState));
+        }
+    }, [storageKey]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -338,6 +379,7 @@ export default function DietPage() {
     }
 
     const startDate = new Date(plan.createdAt);
+    startDate.setDate(startDate.getDate() + 1);
     const totalDays = 30;
     const dayNumbers = Array.from({ length: totalDays }, (_, i) => i + 1);
     const dayMeals = plan.items.filter((m) => m.day === selectedDay);

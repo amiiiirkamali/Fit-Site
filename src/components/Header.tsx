@@ -5,16 +5,17 @@ import Link from "next/link";
 import { Menu, X, ArrowLeft } from "lucide-react";
 import styles from "./Header.module.css";
 
-export default function Header() {
+export default function Header({ sticky = true }: { sticky?: boolean }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
+        if (!sticky) return;
         const onScroll = () => setScrolled(window.scrollY > 12);
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    }, [sticky]);
 
     const navItems = [
         { label: "راهنما", href: "/guide" },
@@ -22,7 +23,7 @@ export default function Header() {
     ];
 
     return (
-        <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+        <header className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${!sticky ? styles.headerStatic : ""}`}>
             <div className={styles.inner}>
                 <Link href="/" className={styles.logoWrap}>
                     <div className={styles.logoMark}>
