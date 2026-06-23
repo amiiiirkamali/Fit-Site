@@ -348,14 +348,25 @@ export default function WorkoutPage() {
     }).length;
     const totalStrengthItems = plan.items.filter((i) => i.exerciseItem.muscleGroup !== "کاردیو").length;
 
+    // Helper to check if an item is completed using the correct local index logic (Cardio first, then Strength)
+    const isItemCompleted = (day: number, item: WorkoutItem) => {
+        const dayItems = plan.items.filter((x) => x.day === day);
+        const cardio = dayItems.filter((e) => e.exerciseItem.muscleGroup === "کاردیو");
+        const strength = dayItems.filter((e) => e.exerciseItem.muscleGroup !== "کاردیو");
+
+        let isCardio = item.exerciseItem.muscleGroup === "کاردیو";
+        if (isCardio) {
+            const idx = cardio.findIndex(x => x === item);
+            return completed[getCompletedKey(day, item.exerciseItem.id, idx)];
+        } else {
+            const idx = strength.findIndex(x => x === item);
+            return completed[getCompletedKey(day, item.exerciseItem.id, idx + cardio.length)];
+        }
+    };
+
     // Overall progress
     const totalExercises = plan.items.length;
-    const totalCompleted = plan.items.filter((item, idx) => {
-        // Re-index by day to compute accurate key
-        const dayItems = plan.items.filter((x) => x.day === item.day);
-        const localIdx = dayItems.findIndex((x) => x === item);
-        return completed[getCompletedKey(item.day, item.exerciseItem.id, localIdx)];
-    }).length;
+    const totalCompleted = plan.items.filter(item => isItemCompleted(item.day, item)).length;
     const overallProgress = totalExercises ? Math.round((totalCompleted / totalExercises) * 100) : 0;
 
     // Streak: consecutive completed workout days from day 1
@@ -365,11 +376,7 @@ export default function WorkoutPage() {
         if (!metadata.schedule[dw]) continue; // skip rest days
         const dItems = plan.items.filter((i) => i.day === d);
         if (dItems.length === 0) break;
-        const allDone = dItems.every((it) => {
-            const dayItems = plan.items.filter((x) => x.day === d);
-            const localIdx = dayItems.findIndex((x) => x === it);
-            return completed[getCompletedKey(d, it.exerciseItem.id, localIdx)];
-        });
+        const allDone = dItems.every((it) => isItemCompleted(d, it));
         if (allDone) streak++;
         else break;
     }
@@ -377,11 +384,7 @@ export default function WorkoutPage() {
     const getDayCompletion = (day: number) => {
         const dItems = plan.items.filter((i) => i.day === day);
         if (dItems.length === 0) return 0;
-        const doneCount = dItems.filter((it, idx) => {
-            const dayItems = plan.items.filter((x) => x.day === day);
-            const localIdx = dayItems.findIndex((x) => x === it);
-            return completed[getCompletedKey(day, it.exerciseItem.id, localIdx)];
-        }).length;
+        const doneCount = dItems.filter((it) => isItemCompleted(day, it)).length;
         return Math.round((doneCount / dItems.length) * 100);
     };
 
@@ -514,12 +517,13 @@ export default function WorkoutPage() {
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className={styles.heroWave}>
-                        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                            <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,80C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
-                        </svg>
-                    </div>
+
+                <div className={styles.heroWave}>
+                    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                        <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,48C960,53,1056,75,1152,80C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
+                    </svg>
                 </div>
             </header>
 
@@ -613,6 +617,11 @@ export default function WorkoutPage() {
                                         className={`${styles.dayTab} ${selectedDay === day ? styles.dayTabActive : ""} ${(!hasEx || !isWD) ? styles.dayTabRest : ""} ${completion === 100 ? styles.dayTabDone : ""}`}
                                         onClick={() => setSelectedDay(day)}
                                     >
+                                        {isWD && hasEx && completion === 100 && (
+                                            <div className={styles.dayTabCheck}>
+                                                <Check size={14} />
+                                            </div>
+                                        )}
                                         <span className={styles.dayTabWeek}>
                                             هفته {toPersianNum(Math.ceil(day / 7))}
                                         </span>
@@ -628,17 +637,12 @@ export default function WorkoutPage() {
                                         {!isWD && (
                                             <span className={styles.dayTabRestBadge}>استراحت</span>
                                         )}
-                                        {isWD && completion > 0 && (
+                                        {isWD && (
                                             <div className={styles.dayTabProgress}>
                                                 <div
                                                     className={styles.dayTabProgressFill}
                                                     style={{ width: `${completion}%` }}
                                                 />
-                                            </div>
-                                        )}
-                                        {isWD && completion === 100 && (
-                                            <div className={styles.dayTabCheck}>
-                                                <Check size={10} />
                                             </div>
                                         )}
                                     </button>
@@ -823,7 +827,6 @@ export default function WorkoutPage() {
                                                 className={`${styles.completeBtn} ${styles.completeBtnCardio} ${isDone ? styles.completeBtnActive : ""}`}
                                                 onClick={() => toggleCompleted(selectedDay, item.exerciseItem.id, idx, allDayExIds)}
                                             >
-                                                <div className={styles.completeBtnFill} />
                                                 <div className={styles.completeBtnContent}>
                                                     <div className={styles.completeBtnIcon}>
                                                         {isDone ? <CircleCheck size={18} /> : <div className={styles.completeBtnCircle} />}
@@ -835,6 +838,11 @@ export default function WorkoutPage() {
                                                 </div>
                                             </button>
                                         </div>
+                                        {isDone && (
+                                            <div className={styles.completedBadge}>
+                                                <Check size={14} />
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -924,7 +932,6 @@ export default function WorkoutPage() {
                                                 className={`${styles.completeBtn} ${isDone ? styles.completeBtnActive : ""}`}
                                                 onClick={() => toggleCompleted(selectedDay, item.exerciseItem.id, globalIdx, allDayExIds)}
                                             >
-                                                <div className={styles.completeBtnFill} />
                                                 <div className={styles.completeBtnContent}>
                                                     <div className={styles.completeBtnIcon}>
                                                         {isDone ? <CircleCheck size={18} /> : <div className={styles.completeBtnCircle} />}
@@ -936,6 +943,11 @@ export default function WorkoutPage() {
                                                 </div>
                                             </button>
                                         </div>
+                                        {isDone && (
+                                            <div className={styles.completedBadge}>
+                                                <Check size={14} />
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
