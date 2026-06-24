@@ -2,27 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Check, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Shield, Sparkles, Minus, Plus } from "lucide-react";
 import styles from "./page.module.css";
 
-const plan = {
-    id: "monthly",
-    name: "پلن یک ماهه",
-    price: 499000,
-    priceLabel: "۴۹۹,۰۰۰",
-    duration: "۱ ماهه",
-    features: [
-        "برنامه غذایی ۳۰ روزه اختصاصی",
-        "برنامه ورزشی ۳۰ روزه",
-        "گیف آموزشی تمام حرکات",
-        "دسترسی همیشگی به برنامه",
-    ],
-};
+const BASE_PRICE = 499000;
+
+const features = [
+    "برنامه غذایی ۳۰ روزه اختصاصی",
+    "برنامه ورزشی ۳۰ روزه",
+    "گیف آموزشی تمام حرکات",
+    "دسترسی همیشگی به برنامه",
+];
+
+function toPersianNum(n: number): string {
+    return n.toLocaleString("fa-IR");
+}
 
 export default function CheckoutPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState("");
+    const [programsCount, setProgramsCount] = useState(1);
 
     useEffect(() => {
         const t = localStorage.getItem("token");
@@ -32,6 +32,9 @@ export default function CheckoutPage() {
         }
         setToken(t);
     }, [router]);
+
+    const totalPrice = BASE_PRICE * programsCount;
+    const totalLabel = toPersianNum(totalPrice);
 
     const handlePayment = async () => {
         if (!token) return;
@@ -46,8 +49,9 @@ export default function CheckoutPage() {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    amount: plan.price,
-                    planType: plan.id,
+                    amount: totalPrice,
+                    planType: "monthly",
+                    programsCount,
                 }),
             });
 
@@ -81,9 +85,9 @@ export default function CheckoutPage() {
                         <Sparkles size={14} />
                         آخرین قدم
                     </div>
-                    <h1 className={styles.title}>برنامه‌ات آماده‌ست!</h1>
+                    <h1 className={styles.title}>برنامه‌هایت آماده‌ست!</h1>
                     <p className={styles.subtitle}>
-                        با فعال‌سازی اشتراک، به برنامه‌ی اختصاصی خودت دسترسی پیدا کن
+                        تعداد برنامه‌هایی که می‌خوای رو انتخاب کن و بعد پرداخت رو انجام بده
                     </p>
                 </div>
 
@@ -98,20 +102,48 @@ export default function CheckoutPage() {
                             <div className={styles.planIconRing} />
                         </div>
                         <div>
-                            <h2 className={styles.planName}>{plan.name}</h2>
-                            <span className={styles.planDuration}>{plan.duration}</span>
+                            <h2 className={styles.planName}>برنامه شخصی</h2>
+                            <span className={styles.planDuration}>۳۰ روزه</span>
+                        </div>
+                    </div>
+
+                    {/* ─── Quantity Selector ─── */}
+                    <div className={styles.quantitySection}>
+                        <span className={styles.quantityLabel}>تعداد برنامه</span>
+                        <div className={styles.quantityControls}>
+                            <button
+                                className={styles.quantityBtn}
+                                onClick={() => setProgramsCount(Math.max(1, programsCount - 1))}
+                                disabled={programsCount <= 1}
+                            >
+                                <Minus size={16} />
+                            </button>
+                            <span className={styles.quantityValue}>{toPersianNum(programsCount)}</span>
+                            <button
+                                className={styles.quantityBtn}
+                                onClick={() => setProgramsCount(Math.min(50, programsCount + 1))}
+                                disabled={programsCount >= 50}
+                            >
+                                <Plus size={16} />
+                            </button>
                         </div>
                     </div>
 
                     <div className={styles.priceSection}>
-                        <span className={styles.priceAmount}>{plan.priceLabel}</span>
+                        <span className={styles.priceAmount}>{totalLabel}</span>
                         <span className={styles.priceCurrency}>تومان</span>
                     </div>
+
+                    {programsCount > 1 && (
+                        <div className={styles.priceBreakdown}>
+                            {toPersianNum(BASE_PRICE)} تومان × {toPersianNum(programsCount)} برنامه
+                        </div>
+                    )}
 
                     <div className={styles.divider} />
 
                     <ul className={styles.features}>
-                        {plan.features.map((f, i) => (
+                        {features.map((f, i) => (
                             <li key={i}>
                                 <span className={styles.checkWrap}>
                                     <Check size={14} />
@@ -119,6 +151,12 @@ export default function CheckoutPage() {
                                 {f}
                             </li>
                         ))}
+                        <li>
+                            <span className={styles.checkWrap}>
+                                <Check size={14} />
+                            </span>
+                            {programsCount} برنامه مجزا با شماره
+                        </li>
                     </ul>
                 </div>
 
@@ -134,7 +172,7 @@ export default function CheckoutPage() {
                         </>
                     ) : (
                         <>
-                            پرداخت {plan.priceLabel} تومان
+                            پرداخت {totalLabel} تومان
                         </>
                     )}
                 </button>

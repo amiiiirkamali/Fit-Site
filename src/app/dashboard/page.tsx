@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "lucide-react";
 import ProfilePanel from "@/components/ProfilePanel";
+import PlansDropdown from "@/components/PlansDropdown";
 import styles from "./page.module.css";
 
 interface UserData {
@@ -62,6 +63,14 @@ interface PlanData {
     workoutPlan: WorkoutPlan | null;
 }
 
+interface ProgramInfo {
+    id: string;
+    programNumber: number;
+    createdAt: string;
+    dietPlan: { id: string; dailyCalorieTarget: number } | null;
+    workoutPlan: { id: string; weeklySplit: string } | null;
+}
+
 function parseWorkoutMetadata(raw: string) {
     const parts = raw.split(" | ");
     const labels: string[] = [];
@@ -104,6 +113,31 @@ export default function DashboardPage() {
     const [profileOpen, setProfileOpen] = useState(false);
     const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
     const [plans, setPlans] = useState<PlanData | null>(null);
+    const [programs, setPrograms] = useState<ProgramInfo[]>([]);
+    const [activeProgram, setActiveProgram] = useState(1);
+    const [currentProgram, setCurrentProgram] = useState(1);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setCurrentProgram(parseInt(params.get("program") || "1"));
+    }, []);
+
+    const fetchPrograms = useCallback(async (token: string) => {
+        const res = await fetch("/api/programs", {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (data.success && data.programs.length > 0) {
+            setPrograms(data.programs);
+            // If current program doesn't exist, use the first one
+            const exists = data.programs.some((p: ProgramInfo) => p.programNumber === currentProgram);
+            if (!exists) {
+                setActiveProgram(data.programs[0].programNumber);
+            } else {
+                setActiveProgram(currentProgram);
+            }
+        }
+    }, [currentProgram]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -130,7 +164,9 @@ export default function DashboardPage() {
                 setLoading(false);
             });
 
-        fetch("/api/plan/my-plans", {
+        fetchPrograms(token);
+
+        fetch(`/api/plan/my-plans?program=${currentProgram}`, {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((r) => r.json())
@@ -140,7 +176,7 @@ export default function DashboardPage() {
                 }
             })
             .catch(() => {});
-    }, [router]);
+    }, [router, currentProgram, fetchPrograms]);
 
     useEffect(() => {
         const updateTime = () => {
@@ -266,6 +302,8 @@ export default function DashboardPage() {
                         </div>
                         <span className={styles.logo}>فیت‌بانو</span>
                     </div>
+
+                    <PlansDropdown />
                 </div>
 
                 <div className={styles.headerRight}>
@@ -294,7 +332,7 @@ export default function DashboardPage() {
                     <div className={styles.greetingRow}>
                         <span className={styles.greetingBadge}>
                             <span className={styles.greetingDot} />
-                            داشبورد شخصی
+                            برنامه {toPersianNum(activeProgram)}
                         </span>
                     </div>
                     <p className={styles.welcomeSubtitle}>
@@ -308,7 +346,7 @@ export default function DashboardPage() {
                 {/* ──── DIET CARD ──── */}
                 <button
                     className={`${styles.card} ${styles.cardDiet}`}
-                    onClick={() => router.push("/dashboard/diet")}
+                    onClick={() => router.push(`/dashboard/diet?program=${activeProgram}`)}
                 >
                     <div className={styles.cardShine} />
 
@@ -345,7 +383,7 @@ export default function DashboardPage() {
 
                         <div className={styles.cardBody}>
                             <div className={styles.cardTitleRow}>
-                                <h2 className={styles.cardTitle}>برنامه غذایی</h2>
+                                <h2 className={styles.cardTitle}>رژیم غذایی</h2>
                                 <div className={`${styles.cardTitleLine} ${styles.cardTitleLineGreen}`} />
                             </div>
                             <p className={styles.cardDesc}>
@@ -407,7 +445,7 @@ export default function DashboardPage() {
                 {/* ──── WORKOUT CARD ──── */}
                 <button
                     className={`${styles.card} ${styles.cardWorkout}`}
-                    onClick={() => router.push("/dashboard/workout")}
+                    onClick={() => router.push(`/dashboard/workout?program=${activeProgram}`)}
                 >
                     <div className={styles.cardShine} />
 
@@ -444,7 +482,7 @@ export default function DashboardPage() {
 
                         <div className={styles.cardBody}>
                             <div className={styles.cardTitleRow}>
-                                <h2 className={styles.cardTitle}>برنامه ورزشی</h2>
+                                <h2 className={styles.cardTitle}>تمرینات</h2>
                                 <div className={`${styles.cardTitleLine} ${styles.cardTitleLinePink}`} />
                             </div>
                             <p className={styles.cardDesc}>

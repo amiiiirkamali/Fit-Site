@@ -14,15 +14,47 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const existing = await prisma.dietPlan.findFirst({
-            where: { userId: payload.userId },
+        const { programNumber } = await req.json();
+        const num = programNumber || 1;
+
+        // Find or create program (race-condition safe)
+        const program = await (async () => {
+            let p = await prisma.program.findFirst({
+                where: { userId: payload.userId, programNumber: num },
+            });
+
+            if (!p) {
+                try {
+                    p = await prisma.program.create({
+                        data: { userId: payload.userId, programNumber: num },
+                    });
+                } catch {
+                    p = await prisma.program.findFirst({
+                        where: { userId: payload.userId, programNumber: num },
+                    });
+                }
+            }
+
+            return p;
+        })();
+
+        if (!program) {
+            return NextResponse.json(
+                { success: false, message: "خطا در ایجاد برنامه" },
+                { status: 500 }
+            );
+        }
+
+        // Check if diet plan already exists for this program
+        const existing = await prisma.dietPlan.findUnique({
+            where: { programId: program.id },
         });
 
         if (existing) {
             return NextResponse.json({
                 success: true,
                 dietPlanId: existing.id,
-                message: "برنامه از قبل وجود دارد",
+                message: "برنامه غذایی از قبل وجود دارد",
             });
         }
 
@@ -37,11 +69,12 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const dietPlanId = await generateDietPlan(payload.userId);
+        const dietPlanId = await generateDietPlan(program.id);
 
         return NextResponse.json({
             success: true,
             dietPlanId,
+            programNumber: num,
             message: "برنامه غذایی با موفقیت ساخته شد",
         });
     } catch (error) {

@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const { amount, planType } = await req.json();
+        const { amount, planType, programsCount } = await req.json();
+        const count = Math.max(1, Math.min(programsCount || 1, 50));
 
         const user = await prisma.user.findUnique({
             where: { id: payload.userId },
@@ -30,9 +31,13 @@ export async function POST(req: NextRequest) {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
         const callbackUrl = `${baseUrl}/payment/callback`;
 
+        const description = count > 1
+            ? `خرید ${count} برنامه فیت‌بانو`
+            : `خرید پلن ${planType} فیت‌بانو`;
+
         const result = await requestPayment(
             amount,
-            `خرید پلن ${planType} فیت‌بانو`,
+            description,
             callbackUrl,
             user.phone
         );
@@ -50,6 +55,7 @@ export async function POST(req: NextRequest) {
                 userId: user.id,
                 amount,
                 planType: planType || "monthly",
+                programsCount: count,
                 zarinpalAuthority: result.authority,
                 status: "pending",
             },

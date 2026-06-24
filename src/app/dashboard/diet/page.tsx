@@ -152,6 +152,8 @@ function toPersianNum(n: number): string {
 
 export default function DietPage() {
     const router = useRouter();
+    const [programNumber, setProgramNumber] = useState(1);
+    const [planId, setPlanId] = useState<string | null>(null);
     const [plan, setPlan] = useState<DietPlan | null>(null);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
@@ -160,6 +162,12 @@ export default function DietPage() {
     const [animatingCard, setAnimatingCard] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const tabsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setProgramNumber(parseInt(params.get("program") || "1"));
+        setPlanId(params.get("planId") || null);
+    }, []);
 
     const storageKey = plan ? `diet-consumed-${plan.id}` : null;
 
@@ -189,51 +197,67 @@ export default function DietPage() {
             return;
         }
 
-        const fetchPlan = async (): Promise<DietPlan | null> => {
-            const res = await fetch("/api/plan/my-plans", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            const data = await res.json();
-            return data.dietPlan || null;
-        };
-
-        const generateMissing = async (): Promise<void> => {
-            const res = await fetch("/api/plan/my-plans", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            const data = await res.json();
-
-            const promises: Promise<Response>[] = [];
-
-            if (!data.dietPlan) {
-                promises.push(
-                    fetch("/api/plan/generate-diet", {
-                        method: "POST",
-                        headers: { Authorization: `Bearer ${token}` },
-                    })
-                );
-            }
-
-            if (!data.workoutPlan) {
-                promises.push(
-                    fetch("/api/plan/generate-workout", {
-                        method: "POST",
-                        headers: { Authorization: `Bearer ${token}` },
-                    })
-                );
-            }
-
-            await Promise.all(promises);
+        const fetchByParams = (): string => {
+            const params = new URLSearchParams(window.location.search);
+            const pid = params.get("planId");
+            if (pid) return `dietPlanId=${encodeURIComponent(pid)}`;
+            const pn = parseInt(params.get("program") || "1");
+            return `program=${pn}`;
         };
 
         (async () => {
             try {
-                let p = await fetchPlan();
+                const qs = fetchByParams();
+                const res = await fetch(`/api/plan/my-plans?${qs}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                const data = await res.json();
+
+                if (data.programNumber) {
+                    setProgramNumber(data.programNumber);
+                }
+
+                let p = data.dietPlan || null;
                 if (!p) {
                     setGenerating(true);
-                    await generateMissing();
-                    p = await fetchPlan();
-                    if (p) setPlan(p);
+                    const pn = parseInt(new URLSearchParams(window.location.search).get("program") || "1");
+                    const checkRes = await fetch(`/api/plan/my-plans?program=${pn}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    const checkData = await checkRes.json();
+
+                    const promises: Promise<Response>[] = [];
+
+                    if (!checkData.dietPlan) {
+                        promises.push(
+                            fetch("/api/plan/generate-diet", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                                body: JSON.stringify({ programNumber: pn }),
+                            })
+                        );
+                    }
+
+                    if (!checkData.workoutPlan) {
+                        promises.push(
+                            fetch("/api/plan/generate-workout", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                                body: JSON.stringify({ programNumber: pn }),
+                            })
+                        );
+                    }
+
+                    await Promise.all(promises);
+
+                    const planRes = await fetch(`/api/plan/my-plans?program=${pn}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    const planData = await planRes.json();
+                    if (planData.dietPlan) {
+                        setPlan(planData.dietPlan);
+                        if (planData.programNumber) setProgramNumber(planData.programNumber);
+                    }
                 } else {
                     setPlan(p);
                 }
@@ -244,7 +268,7 @@ export default function DietPage() {
                 setGenerating(false);
             }
         })();
-    }, [router]);
+    }, [router, programNumber, planId]);
 
     useEffect(() => {
         const el = tabsRef.current;
@@ -324,7 +348,8 @@ export default function DietPage() {
                                 setLoading(true);
                                 setGenerating(true);
                                 try {
-                                    const checkRes = await fetch("/api/plan/my-plans", {
+                                    const pn = parseInt(new URLSearchParams(window.location.search).get("program") || "1");
+                                    const checkRes = await fetch(`/api/plan/my-plans?program=${pn}`, {
                                         headers: { Authorization: `Bearer ${token}` },
                                     });
                                     const checkData = await checkRes.json();
@@ -334,7 +359,8 @@ export default function DietPage() {
                                         promises.push(
                                             fetch("/api/plan/generate-diet", {
                                                 method: "POST",
-                                                headers: { Authorization: `Bearer ${token}` },
+                                                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                                                body: JSON.stringify({ programNumber: pn }),
                                             })
                                         );
                                     }
@@ -342,17 +368,21 @@ export default function DietPage() {
                                         promises.push(
                                             fetch("/api/plan/generate-workout", {
                                                 method: "POST",
-                                                headers: { Authorization: `Bearer ${token}` },
+                                                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                                                body: JSON.stringify({ programNumber: pn }),
                                             })
                                         );
                                     }
                                     await Promise.all(promises);
 
-                                    const planRes = await fetch("/api/plan/my-plans", {
+                                    const planRes = await fetch(`/api/plan/my-plans?program=${pn}`, {
                                         headers: { Authorization: `Bearer ${token}` },
                                     });
                                     const planData = await planRes.json();
-                                    if (planData.dietPlan) setPlan(planData.dietPlan);
+                                    if (planData.dietPlan) {
+                                        setPlan(planData.dietPlan);
+                                        if (planData.programNumber) setProgramNumber(planData.programNumber);
+                                    }
                                 } catch {
                                     alert("خطا در ارتباط با سرور");
                                 } finally {
@@ -367,7 +397,7 @@ export default function DietPage() {
                         <button
                             className={styles.emptyBtn}
                             style={{ background: "linear-gradient(135deg, #6b7280, #4b5563)" }}
-                            onClick={() => router.push("/dashboard")}
+                            onClick={() => router.push(`/dashboard?program=${programNumber}`)}
                         >
                             <ArrowRight size={16} />
                             داشبورد
@@ -505,7 +535,7 @@ export default function DietPage() {
                     <div className={styles.heroTop}>
                         <button
                             className={styles.backBtn}
-                            onClick={() => router.push("/dashboard")}
+                            onClick={() => router.push(`/dashboard?program=${programNumber}`)}
                         >
                             <ChevronRight size={18} />
                             <span>داشبورد</span>

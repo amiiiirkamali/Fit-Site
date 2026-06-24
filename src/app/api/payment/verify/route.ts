@@ -40,6 +40,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
+        // Atomically claim this payment — prevents duplicate processing
+        // when Zarinpal sends two simultaneous callbacks
+        const claim = await prisma.payment.updateMany({
+            where: { id: payment.id, status: "pending" },
+            data: { status: "processing" },
+        });
+
+        if (claim.count === 0) {
+            return NextResponse.json({
+                success: true,
+                message: "پرداخت قبلاً پردازش شده است",
+            });
+        }
+
         // Verify with Zarinpal
         const result = await verifyPayment(authority, payment.amount);
 
@@ -55,7 +69,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Update payment and user
+        // Update payment
         await prisma.payment.update({
             where: { id: payment.id },
             data: {
@@ -69,23 +83,52 @@ export async function POST(req: NextRequest) {
             data: { hasPaid: true },
         });
 
-        // Auto-generate plans after successful payment
-        try {
-            await generateDietPlan(payload.userId);
-        } catch (e) {
-            console.error("Diet plan generation failed:", e);
-        }
+        // Get the last program number
+        const lastProgram = await prisma.program.findFirst({
+            where: { userId: payload.userId },
+            orderBy: { programNumber: "desc" },
+        });
+        let nextNumber = (lastProgram?.programNumber ?? 0) + 1;
 
-        try {
-            await generateWorkoutPlan(payload.userId);
-        } catch (e) {
-            console.error("Workout plan generation failed:", e);
+        // Create programsCount programs, each with diet + workout plans
+        const createdPrograms: { programNumber: number; dietPlanId: string; workoutPlanId: string }[] = [];
+        const count = payment.programsCount;
+
+        for (let i = 0; i < count; i++) {
+            const program = await prisma.program.create({
+                data: {
+                    userId: payload.userId,
+                    programNumber: nextNumber + i,
+                },
+            });
+
+            let dietPlanId: string | null = null;
+            let workoutPlanId: string | null = null;
+
+            try {
+                dietPlanId = await generateDietPlan(program.id);
+            } catch (e) {
+                console.error(`Diet plan generation failed for program ${program.programNumber}:`, e);
+            }
+
+            try {
+                workoutPlanId = await generateWorkoutPlan(program.id);
+            } catch (e) {
+                console.error(`Workout plan generation failed for program ${program.programNumber}:`, e);
+            }
+
+            createdPrograms.push({
+                programNumber: program.programNumber,
+                dietPlanId: dietPlanId ?? "",
+                workoutPlanId: workoutPlanId ?? "",
+            });
         }
 
         return NextResponse.json({
             success: true,
             refId: result.refId,
-            message: "پرداخت موفق",
+            message: `پرداخت موفق — ${count} برنامه ساخته شد`,
+            programs: createdPrograms,
         });
     } catch (error) {
         console.error("Payment Verify Error:", error);

@@ -310,6 +310,90 @@
     transform: translateY(0);
 }
 
+/* ─── PROGRAM SELECTOR ─── */
+.programSelector {
+    position: relative;
+    margin-inline-start: 16px;
+}
+
+.programTrigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #c2185b;
+    background: linear-gradient(135deg, rgba(194, 24, 91, 0.08) 0%, rgba(232, 86, 143, 0.06) 100%);
+    border: 1.5px solid rgba(194, 24, 91, 0.15);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.programTrigger:hover {
+    background: linear-gradient(135deg, rgba(194, 24, 91, 0.14) 0%, rgba(232, 86, 143, 0.1) 100%);
+    border-color: rgba(194, 24, 91, 0.3);
+    transform: translateY(-1px);
+}
+
+.programDropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 180px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    padding: 6px;
+    animation: fadeDown 0.2s ease both;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.programOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-align: right;
+}
+
+.programOption:hover {
+    background: rgba(194, 24, 91, 0.06);
+    color: #c2185b;
+}
+
+.programOptionActive {
+    background: rgba(194, 24, 91, 0.08);
+    color: #c2185b;
+    font-weight: 800;
+}
+
+.programCheck {
+    color: #10b981;
+    font-size: 14px;
+}
+
 /* ═══════════════════════════
    WELCOME SECTION
    ═══════════════════════════ */

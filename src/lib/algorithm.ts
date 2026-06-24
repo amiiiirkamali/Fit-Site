@@ -201,7 +201,14 @@ export async function fillMissingDietDays(dietPlanId: string): Promise<void> {
     }
 }
 
-export async function generateDietPlan(userId: string): Promise<string> {
+export async function generateDietPlan(programId: string): Promise<string> {
+    const program = await prisma.program.findUnique({
+        where: { id: programId },
+        include: { user: true },
+    });
+    if (!program) throw new Error("Program not found");
+    const userId = program.userId;
+
     const answers = await prisma.quizAnswer.findMany({ where: { userId } });
     const quiz = parseQuizAnswers(answers);
     const { weight, height, age } = await getUserPhysicalData(userId);
@@ -217,7 +224,7 @@ export async function generateDietPlan(userId: string): Promise<string> {
     const snacks = allFoods.filter((f) => f.mealType === "snack");
 
     const dietPlan = await prisma.dietPlan.create({
-        data: { userId, dailyCalorieTarget: dailyCalories },
+        data: { programId, dailyCalorieTarget: dailyCalories },
     });
 
     for (let day = 1; day <= 30; day++) {
@@ -298,7 +305,14 @@ function getCardioMinutes(duration: string): number {
 /** Persian day names for the workout schedule */
 const PERSIAN_WEEKDAYS = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
 
-export async function generateWorkoutPlan(userId: string): Promise<string> {
+export async function generateWorkoutPlan(programId: string): Promise<string> {
+    const program = await prisma.program.findUnique({
+        where: { id: programId },
+        include: { user: true },
+    });
+    if (!program) throw new Error("Program not found");
+    const userId = program.userId;
+
     const answers = await prisma.quizAnswer.findMany({ where: { userId } });
     const quiz = parseQuizAnswers(answers);
 
@@ -365,7 +379,7 @@ export async function generateWorkoutPlan(userId: string): Promise<string> {
 
     const workoutPlan = await prisma.workoutPlan.create({
         data: {
-            userId,
+            programId,
             weeklySplit: weeklySplit.join(" | "),
         },
     });
