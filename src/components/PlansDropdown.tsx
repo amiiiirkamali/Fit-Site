@@ -42,13 +42,17 @@ export default function PlansDropdown() {
     }, []);
 
     useEffect(() => {
-        const handler = (e: MouseEvent) => {
+        const handler = (e: MouseEvent | TouchEvent) => {
             if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
                 setOpen(false);
             }
         };
         document.addEventListener("mousedown", handler);
-        return () => document.removeEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
+        };
     }, []);
 
     if (loading || groups.length === 0) return null;
@@ -73,18 +77,19 @@ export default function PlansDropdown() {
                 }}
             >
                 <ListChecks size={16} />
-                برنامه‌های من ({toPersianNum(groups.length)})
+                <span className="plans-dropdown-label" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>برنامه‌های من ({toPersianNum(groups.length)})</span>
                 <ChevronDown size={14} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }} />
             </button>
 
             {open && (
                 <div
                     style={{
-                        position: "absolute",
-                        top: "calc(100% + 8px)",
-                        insetInlineEnd: 0,
-                        width: 320,
-                        maxHeight: 420,
+                                        position: "absolute",
+                                        top: "calc(100% + 8px)",
+                                        right: 0,
+                                        width: 320,
+                                        maxWidth: "calc(100vw - 32px)",
+                                        maxHeight: 420,
                         overflowY: "auto",
                         background: "#fff",
                         borderRadius: 16,

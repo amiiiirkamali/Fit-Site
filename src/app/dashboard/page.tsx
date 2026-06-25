@@ -320,7 +320,7 @@ export default function DashboardPage() {
                     <PlansDropdown />
                     <button className={styles.profileBtn} onClick={() => setProfileOpen(true)}>
                         <User size={16} />
-                        پروفایل
+                        <span className={styles.btnLabel}>پروفایل</span>
                     </button>
                     <button className={styles.logoutBtn} onClick={handleLogout}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -328,7 +328,7 @@ export default function DashboardPage() {
                             <polyline points="16 17 21 12 16 7" />
                             <line x1="21" y1="12" x2="9" y2="12" />
                         </svg>
-                        خروج
+                        <span className={styles.btnLabel}>خروج</span>
                     </button>
                 </div>
             </header>

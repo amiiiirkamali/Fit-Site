@@ -584,6 +584,8 @@
     border-radius: var(--r-lg); background: var(--grad-hero); color: #fff; font-size: 17px; font-weight: 800;
     text-align: center; box-shadow: var(--shadow-lg); border: 1px solid rgba(255, 255, 255, 0.1);
     animation: msgPop 0.5s var(--ease-bounce) both;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
 }
 .confettiMessage svg { color: var(--color-accent-hover); filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)); }
 @keyframes msgPop { 0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
@@ -619,7 +621,40 @@
     .heroStatValue { font-size: 18px; }
     .confettiMessage { padding: 22px 28px; font-size: 15px; }
     .mealsGrid { grid-template-columns: 1fr; }
-    .mealMacros { flex-direction: column; gap: 6px; }
+    .mealMacros { grid-template-columns: 1fr; gap: 8px; }
+    .mealMacro + .mealMacro::before { display: none; }
+}
+
+@media (max-width: 380px) {
+    .heroContent { padding: 12px 14px 0; }
+    .heroTitle { font-size: 20px; }
+    .heroDesc { font-size: 13px; }
+    .heroIcon { width: 60px; height: 60px; border-radius: 20px; }
+    .heroIcon svg { width: 28px; height: 28px; }
+    .heroStatValue { font-size: 16px; }
+    .heroStatIcon { width: 36px; height: 36px; }
+    .content { padding: 8px 12px 48px; }
+    .dayTab { min-width: 76px; padding: 10px 8px 14px; gap: 3px; }
+    .dayTabNum { font-size: 18px; }
+    .dayTabDate { font-size: 9px; }
+    .dayTabWeek { font-size: 8px; }
+    .overallCard { padding: 18px 16px; }
+    .overallTitle { font-size: 15px; }
+    .overallBadge { font-size: 11px; padding: 5px 10px; }
+    .progressCard { padding: 16px 16px; }
+    .progressCardTitle { font-size: 13px; }
+    .macroSummary { gap: 12px; }
+    .macroSummaryItem { padding: 18px 16px 16px; gap: 10px; }
+    .macroSummaryValue { font-size: 18px; }
+    .macroSummaryIcon { width: 40px; height: 40px; }
+    .mealCard { padding: 14px; }
+    .mealName { font-size: 15px; }
+    .mealSlotName { font-size: 13px; }
+    .mealCalBadge { font-size: 12px; padding: 4px 8px; }
+    .contextBar { padding: 10px 8px; gap: 4px; }
+    .contextItem { font-size: 11px; padding: 3px 6px; gap: 4px; }
+    .contextDivider { display: none; }
+    .confettiMessage { padding: 18px 20px; font-size: 14px; }
 }
 
 @keyframes starPop { 0% { transform: scale(0) rotate(-45deg); } 100% { transform: scale(1) rotate(0); } }

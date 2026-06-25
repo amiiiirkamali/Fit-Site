@@ -660,6 +660,27 @@
     .formCard {
         padding: 20px 16px;
     }
+
+    .phoneInputWrap {
+        gap: 8px;
+    }
+
+    .phoneBadge {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .phoneBadge svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .phoneInput {
+        font-size: 16px;
+        letter-spacing: 2px;
+        padding: 14px 12px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

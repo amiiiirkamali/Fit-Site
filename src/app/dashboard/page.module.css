@@ -1192,6 +1192,10 @@
     }
 }
 
+.btnLabel {
+    display: inline;
+}
+
 /* ═══════════════════════════
    RESPONSIVE — TABLET
    ═══════════════════════════ */
@@ -1203,7 +1207,7 @@
     }
 
     .card {
-        min-height: 350px;
+        min-height: auto;
     }
 
     .welcome {
@@ -1232,114 +1236,318 @@
    ═══════════════════════════ */
 @media (max-width: 460px) {
     .header {
-        padding: 14px 18px;
+        padding: 12px 16px;
+    }
+
+    .headerRight {
+        gap: 6px;
+    }
+
+    .btnLabel {
+        display: none;
+    }
+
+    .profileBtn, .logoutBtn {
+        padding: 8px;
+        border-radius: 10px;
+        gap: 0;
     }
 
     .logoIcon {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
     }
 
     .logoIcon svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
     }
 
     .logo {
-        font-size: 19px;
+        font-size: 17px;
     }
 
     .welcome {
-        padding: 28px 18px 12px;
+        padding: 24px 16px 6px;
+    }
+
+    .greetingBadge {
+        font-size: 10px;
+        padding: 5px 12px;
+    }
+
+    .welcomeSubtitle {
+        font-size: 13px;
     }
 
     .cardsGrid {
-        padding: 20px 18px 36px;
+        padding: 16px 16px 32px;
+        gap: 16px;
     }
 
     .cardContent {
-        padding: 22px 20px 20px;
+        padding: 18px 16px 16px;
+        gap: 12px;
     }
 
     .cardIcon {
-        width: 58px;
-        height: 58px;
-        border-radius: 18px;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
     }
 
     .cardEmoji {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .cardTitle {
-        font-size: 20px;
+        font-size: 18px;
+    }
+
+    .cardDesc {
+        font-size: 12px;
     }
 
     .cardStats {
-        padding: 12px;
+        padding: 10px;
+        gap: 4px;
+    }
+
+    .statItem {
+        gap: 5px;
     }
 
     .statIconWrap {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+    }
+
+    .statIconWrap svg {
+        width: 11px;
+        height: 11px;
+    }
+
+    .statValue {
+        font-size: 13px;
+    }
+
+    .statLabel {
+        font-size: 8px;
+    }
+
+    .statText {
+        gap: 2px;
+    }
+
+    .cardAction {
+        padding: 12px 16px;
+        border-radius: 16px;
+    }
+
+    .actionText {
+        font-size: 13px;
+    }
+
+    .actionSubtext {
+        font-size: 9px;
+    }
+
+    .actionArrow {
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+    }
+
+    .actionArrow svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .bgOrb1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .bgOrb2 {
+        width: 160px;
+        height: 160px;
+    }
+
+    .bgOrb3 {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* ═══════════════════════════
+   RESPONSIVE — VERY SMALL PHONES
+   ═══════════════════════════ */
+@media (max-width: 380px) {
+    .header {
+        padding: 10px 12px;
+    }
+
+    .headerRight {
+        gap: 4px;
+    }
+
+    .profileBtn, .logoutBtn {
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .profileBtn svg, .logoutBtn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .logoIcon {
         width: 26px;
         height: 26px;
         border-radius: 8px;
     }
 
-    .statIconWrap svg {
+    .logoIcon svg {
         width: 12px;
         height: 12px;
     }
 
-    .statValue {
-        font-size: 14px;
-    }
-
-    .statLabel {
-        font-size: 9px;
-    }
-
-    .quickStats {
-        padding: 12px 14px;
-        gap: 8px;
-    }
-
-    .quickStatIcon {
-        font-size: 18px;
-    }
-
-    .quickStatValue {
+    .logo {
         font-size: 15px;
     }
 
-    .quickStatLabel {
+    .welcome {
+        padding: 16px 12px 4px;
+    }
+
+    .greetingBadge {
         font-size: 9px;
+        padding: 4px 10px;
+        gap: 5px;
+    }
+
+    .greetingDot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .welcomeSubtitle {
+        font-size: 12px;
+    }
+
+    .cardsGrid {
+        padding: 10px 12px 20px;
+        gap: 12px;
+    }
+
+    .cardContent {
+        padding: 12px 10px 12px;
+        gap: 8px;
+    }
+
+    .cardTopRow {
+        gap: 8px;
+    }
+
+    .cardIcon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .cardEmoji {
+        font-size: 18px;
+    }
+
+    .iconRing {
+        inset: -2px;
+        border-radius: 14px;
+    }
+
+    .iconGlow {
+        inset: -16px;
+    }
+
+    .cardBadge {
+        font-size: 9px;
+        padding: 4px 10px;
+    }
+
+    .badgeDot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .cardTitle {
+        font-size: 15px;
+    }
+
+    .cardTitleLine {
+        width: 28px;
+        height: 2px;
+    }
+
+    .cardDesc {
+        font-size: 10.5px;
+    }
+
+    .cardStats {
+        padding: 6px 4px;
+        gap: 2px;
+        border-radius: 14px;
+    }
+
+    .statItem {
+        gap: 3px;
+    }
+
+    .statIconWrap {
+        width: 18px;
+        height: 18px;
+        border-radius: 5px;
+    }
+
+    .statIconWrap svg {
+        width: 9px;
+        height: 9px;
+    }
+
+    .statValue {
+        font-size: 10px;
+    }
+
+    .statLabel {
+        font-size: 6.5px;
+    }
+
+    .statText {
+        gap: 1px;
+    }
+
+    .cardAction {
+        padding: 8px 12px;
+        border-radius: 12px;
+    }
+
+    .actionText {
+        font-size: 11px;
+    }
+
+    .actionSubtext {
+        font-size: 8px;
     }
 
     .actionArrow {
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
+        width: 22px;
+        height: 22px;
+        border-radius: 8px;
     }
 
     .actionArrow svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .bgOrb1 {
-        width: 250px;
-        height: 250px;
-    }
-
-    .bgOrb2 {
-        width: 200px;
-        height: 200px;
-    }
-
-    .bgOrb3 {
-        width: 180px;
-        height: 180px;
+        width: 12px;
+        height: 12px;
     }
 }
 

@@ -2,7 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Sparkles, Salad, Dumbbell, LayoutDashboard, HelpCircle, ChevronDown } from "lucide-react";
+import {
+    ArrowRight,
+    CheckCircle2,
+    Sparkles,
+    Salad,
+    Dumbbell,
+    LayoutDashboard,
+    HelpCircle,
+    ChevronDown,
+    ArrowLeft
+} from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
@@ -166,11 +176,11 @@ export default function GuidePage() {
                 </div>
 
                 <div className={styles.faqList}>
-                    <FadeUp>
-                        {faqs.map((faq, idx) => (
-                            <Accordion key={idx} q={faq.q} a={faq.a} />
-                        ))}
-                    </FadeUp>
+                    {faqs.map((faq, idx) => (
+                        <FadeUp key={idx} delay={idx * 100}>
+                            <Accordion q={faq.q} a={faq.a} />
+                        </FadeUp>
+                    ))}
                 </div>
             </section>
 
@@ -185,7 +195,7 @@ export default function GuidePage() {
                         </p>
                         <Link href="/quiz" className={styles.ctaBtn}>
                             ساخت برنامه
-                            <ArrowRight size={16} />
+                            <ArrowLeft size={16} />
                         </Link>
                     </div>
                 </FadeUp>

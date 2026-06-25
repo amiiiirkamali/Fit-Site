@@ -492,6 +492,21 @@
     gap: 10px;
 }
 
+@media (max-width: 480px) {
+    .weeklyGrid {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 8px;
+        padding-bottom: 4px;
+    }
+    .weeklyGrid::-webkit-scrollbar { display: none; }
+    .weekdayCard {
+        min-width: 56px;
+    }
+}
+
 .weekdayCard {
     display: flex;
     flex-direction: column;
@@ -1073,6 +1088,11 @@
     margin-bottom: 18px;
 }
 
+.sectionBlockHeaderBody {
+    min-width: 0;
+    overflow: hidden;
+}
+
 .sectionBlockIcon {
     width: 42px;
     height: 42px;
@@ -1500,6 +1520,8 @@
     box-shadow: var(--shadow-lg);
     border: 1px solid rgba(255, 255, 255, 0.1);
     animation: msgPop 0.5s var(--ease-bounce) both;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
 }
 
 .confettiMessage svg { color: var(--color-accent); filter: drop-shadow(0 0 12px rgba(194, 24, 91, 0.7)); }
@@ -1544,4 +1566,34 @@
     .heroStat { padding: 4px 8px; }
     .heroStatValue { font-size: 18px; }
     .confettiMessage { padding: 22px 28px; font-size: 15px; }
+}
+
+@media (max-width: 380px) {
+    .heroContent { padding: 12px 14px 0; }
+    .heroTitle { font-size: 20px; }
+    .heroDesc { font-size: 13px; }
+    .heroIcon { width: 60px; height: 60px; border-radius: 20px; }
+    .heroIcon svg { width: 28px; height: 28px; }
+    .heroStatValue { font-size: 16px; }
+    .heroStatIcon { width: 36px; height: 36px; }
+    .content { padding: 8px 12px 48px; }
+    .dayTab { min-width: 76px; padding: 10px 8px 14px; gap: 3px; }
+    .dayTabNum { font-size: 18px; }
+    .dayTabDate { font-size: 9px; }
+    .dayTabWeek { font-size: 8px; }
+    .progressCard { padding: 16px 16px; }
+    .progressCardTitle { font-size: 13px; }
+    .sectionBlockTitle { font-size: 15px; }
+    .exerciseCard { padding: 14px; }
+    .exerciseName { font-size: 14px; }
+    .contextBar { padding: 10px 8px; gap: 4px; }
+    .contextItem { font-size: 11px; padding: 3px 6px; gap: 4px; }
+    .contextDivider { display: none; }
+    .restCard { padding: 32px 18px; }
+    .restTitle { font-size: 20px; }
+    .confettiMessage { padding: 18px 20px; font-size: 14px; }
+    .weeklyGrid { gap: 5px; }
+    .weekdayCard { padding: 10px 2px; }
+    .weekdayName { font-size: 10px; }
+    .weekdayIcon { width: 24px; height: 24px; }
 }

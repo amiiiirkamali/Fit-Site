@@ -876,7 +876,7 @@ export default function WorkoutPage() {
                             <div className={`${styles.sectionBlockIcon} ${styles.iconCardio}`}>
                                 <Heart size={16} />
                             </div>
-                            <div>
+                            <div className={styles.sectionBlockHeaderBody}>
                                 <h2 className={styles.sectionBlockTitle}>گرم‌کردن و هوازی</h2>
                                 <span className={styles.sectionBlockSub}>قبل از تمرین اصلی انجام بده</span>
                             </div>
@@ -964,7 +964,7 @@ export default function WorkoutPage() {
                             <div className={`${styles.sectionBlockIcon} ${styles.iconStrength}`}>
                                 <Dumbbell size={16} />
                             </div>
-                            <div>
+                            <div className={styles.sectionBlockHeaderBody}>
                                 <h2 className={styles.sectionBlockTitle}>تمرینات قدرتی</h2>
                                 <span className={styles.sectionBlockSub}>
                                     {metadata.splitLabels[workoutDayIndices.indexOf(dayOfWeek) % metadata.splitLabels.length] || "فول‌بادی"}
