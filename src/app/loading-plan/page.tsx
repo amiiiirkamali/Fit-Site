@@ -154,11 +154,7 @@ export default function LoadingPlanPage() {
                 body: JSON.stringify({ answers: quizAnswers }),
             });
 
-            if (verifyData.hasPaid) {
-                router.push("/dashboard");
-            } else {
-                router.push("/checkout");
-            }
+            router.push("/checkout");
         } catch {
             setError("خطا در ارتباط با سرور");
         } finally {

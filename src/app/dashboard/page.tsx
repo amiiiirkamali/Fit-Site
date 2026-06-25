@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { User } from "lucide-react";
 import ProfilePanel from "@/components/ProfilePanel";
 import PlansDropdown from "@/components/PlansDropdown";
@@ -106,6 +106,7 @@ function toPersianNum(n: number): string {
 
 export default function DashboardPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState("");
@@ -115,12 +116,7 @@ export default function DashboardPage() {
     const [plans, setPlans] = useState<PlanData | null>(null);
     const [programs, setPrograms] = useState<ProgramInfo[]>([]);
     const [activeProgram, setActiveProgram] = useState(1);
-    const [currentProgram, setCurrentProgram] = useState(1);
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        setCurrentProgram(parseInt(params.get("program") || "1"));
-    }, []);
+    const [currentProgram, setCurrentProgram] = useState<number | null>(null);
 
     const fetchPrograms = useCallback(async (token: string) => {
         const res = await fetch("/api/programs", {
@@ -129,15 +125,20 @@ export default function DashboardPage() {
         const data = await res.json();
         if (data.success && data.programs.length > 0) {
             setPrograms(data.programs);
-            // If current program doesn't exist, use the first one
-            const exists = data.programs.some((p: ProgramInfo) => p.programNumber === currentProgram);
-            if (!exists) {
-                setActiveProgram(data.programs[0].programNumber);
+            const progParam = searchParams?.get("program") ?? null;
+            let target: number;
+            if (progParam) {
+                target = parseInt(progParam);
+                if (!data.programs.some((p: ProgramInfo) => p.programNumber === target)) {
+                    target = data.programs[data.programs.length - 1].programNumber;
+                }
             } else {
-                setActiveProgram(currentProgram);
+                target = data.programs[data.programs.length - 1].programNumber;
             }
+            setCurrentProgram(target);
+            setActiveProgram(target);
         }
-    }, [currentProgram]);
+    }, [searchParams]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -165,6 +166,13 @@ export default function DashboardPage() {
             });
 
         fetchPrograms(token);
+    }, [router, fetchPrograms]);
+
+    useEffect(() => {
+        if (currentProgram === null) return;
+
+        const token = localStorage.getItem("token");
+        if (!token) return;
 
         fetch(`/api/plan/my-plans?program=${currentProgram}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -176,7 +184,7 @@ export default function DashboardPage() {
                 }
             })
             .catch(() => {});
-    }, [router, currentProgram, fetchPrograms]);
+    }, [currentProgram]);
 
     useEffect(() => {
         const updateTime = () => {
@@ -302,8 +310,6 @@ export default function DashboardPage() {
                         </div>
                         <span className={styles.logo}>فیت‌بانو</span>
                     </div>
-
-                    <PlansDropdown />
                 </div>
 
                 <div className={styles.headerRight}>
@@ -311,6 +317,7 @@ export default function DashboardPage() {
                         <div className={styles.timeDot} />
                         <span>{currentTime}</span>
                     </div>
+                    <PlansDropdown />
                     <button className={styles.profileBtn} onClick={() => setProfileOpen(true)}>
                         <User size={16} />
                         پروفایل

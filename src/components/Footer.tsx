@@ -81,7 +81,7 @@ export default function Footer() {
                         <ul className={styles.linkList}>
                             {[
                                 { label: "صفحه اصلی", href: "/" },
-                                { label: "راهنما", href: "/guide" },
+                                { label: "رنک", href: "/rank" },
                                 { label: "قوانین و مقررات", href: "/rules" },
                                 { label: "حریم خصوصی", href: "/privacy" },
                             ].map((item, i) => (
@@ -103,10 +103,9 @@ export default function Footer() {
                         </h3>
                         <ul className={styles.linkList}>
                             {[
-                                { label: "کاهش وزن", href: "/quiz" },
-                                { label: "بدنسازی", href: "/quiz" },
-                                { label: "فرم‌دهی باسن", href: "/quiz" },
-                                { label: "افزایش وزن", href: "/quiz" },
+                                { label: "برنامه غذایی", href: "/quiz" },
+                                { label: "برنامه ورزشی", href: "/quiz" },
+                                { label: "راهنما", href: "/guide" },
                             ].map((item, i) => (
                                 <li key={i}>
                                     <Link href={item.href} className={styles.linkItem}>

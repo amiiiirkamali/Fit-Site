@@ -18,6 +18,7 @@ export default function Header({ sticky = true }: { sticky?: boolean }) {
     }, [sticky]);
 
     const navItems = [
+        { label: "صفحه اصلی", href: "/" },
         { label: "راهنما", href: "/guide" },
         { label: "رنک", href: "/rank" },
     ];
