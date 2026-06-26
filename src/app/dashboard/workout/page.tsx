@@ -163,9 +163,22 @@ export default function WorkoutPage() {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        setProgramNumber(parseInt(params.get("program") || "1"));
+        const prog = parseInt(params.get("program") || "1");
+        setProgramNumber(prog);
         setPlanId(params.get("planId") || null);
+        const dayParam = params.get("day");
+        if (dayParam) {
+            setSelectedDay(parseInt(dayParam));
+        } else {
+            const saved = localStorage.getItem(`fit-workout-day-${prog}`);
+            if (saved) setSelectedDay(parseInt(saved));
+        }
     }, []);
+
+    // Save selectedDay to localStorage
+    useEffect(() => {
+        localStorage.setItem(`fit-workout-day-${programNumber}`, selectedDay.toString());
+    }, [selectedDay, programNumber]);
 
     const storageKey = plan ? `workout-completed-${plan.id}` : null;
 
@@ -269,7 +282,7 @@ export default function WorkoutPage() {
         if (!el) return;
         const btn = el.querySelector(`[data-day="${selectedDay}"]`) as HTMLElement;
         btn?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }, [selectedDay]);
+    }, [selectedDay, plan]);
 
     const toggleCompleted = (day: number, exerciseId: string, idx: number, allExIds: string[], isCardio: boolean) => {
         const key = getCompletedKey(day, exerciseId, idx);

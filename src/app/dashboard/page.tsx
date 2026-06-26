@@ -115,7 +115,13 @@ export default function DashboardPage() {
     const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
     const [plans, setPlans] = useState<PlanData | null>(null);
     const [programs, setPrograms] = useState<ProgramInfo[]>([]);
-    const [activeProgram, setActiveProgram] = useState(1);
+    const [activeProgram, setActiveProgram] = useState(() => {
+        if (typeof window !== "undefined") {
+            const saved = localStorage.getItem("fit-active-program");
+            return saved ? parseInt(saved) : 1;
+        }
+        return 1;
+    });
     const [currentProgram, setCurrentProgram] = useState<number | null>(null);
 
     const fetchPrograms = useCallback(async (token: string) => {
@@ -125,6 +131,8 @@ export default function DashboardPage() {
         const data = await res.json();
         if (data.success && data.programs.length > 0) {
             setPrograms(data.programs);
+            const savedProg = localStorage.getItem("fit-active-program");
+            const savedNum = savedProg ? parseInt(savedProg) : null;
             const progParam = searchParams?.get("program") ?? null;
             let target: number;
             if (progParam) {
@@ -132,11 +140,14 @@ export default function DashboardPage() {
                 if (!data.programs.some((p: ProgramInfo) => p.programNumber === target)) {
                     target = data.programs[data.programs.length - 1].programNumber;
                 }
+            } else if (savedNum && data.programs.some((p: ProgramInfo) => p.programNumber === savedNum)) {
+                target = savedNum;
             } else {
                 target = data.programs[data.programs.length - 1].programNumber;
             }
             setCurrentProgram(target);
             setActiveProgram(target);
+            localStorage.setItem("fit-active-program", target.toString());
         }
     }, [searchParams]);
 

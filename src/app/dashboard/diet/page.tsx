@@ -165,9 +165,22 @@ export default function DietPage() {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        setProgramNumber(parseInt(params.get("program") || "1"));
+        const prog = parseInt(params.get("program") || "1");
+        setProgramNumber(prog);
         setPlanId(params.get("planId") || null);
+        const dayParam = params.get("day");
+        if (dayParam) {
+            setSelectedDay(parseInt(dayParam));
+        } else {
+            const saved = localStorage.getItem(`fit-diet-day-${prog}`);
+            if (saved) setSelectedDay(parseInt(saved));
+        }
     }, []);
+
+    // Save selectedDay to localStorage
+    useEffect(() => {
+        localStorage.setItem(`fit-diet-day-${programNumber}`, selectedDay.toString());
+    }, [selectedDay, programNumber]);
 
     const storageKey = plan ? `diet-consumed-${plan.id}` : null;
 
@@ -281,7 +294,7 @@ export default function DietPage() {
             inline: "center",
             block: "nearest",
         });
-    }, [selectedDay]);
+    }, [selectedDay, plan]);
 
     const getConsumedKey = (day: number, slot: string) => `${day}-${slot}`;
 
