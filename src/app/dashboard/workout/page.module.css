@@ -1,13 +1,11 @@
 /* ═══════════════════════════════════════════════════════════
-   WORKOUT DASHBOARD — PREMIUM REDESIGN
-   Modern · Editorial · Flawless · RTL
+   WORKOUT DASHBOARD — PREMIUM REDESIGN (FULLY RESPONSIVE)
    ═══════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────
    Design tokens
    ───────────────────────────────────────────── */
 .page {
-    /* Brand */
     --color-accent: #c2185b;
     --color-accent-hover: #9d1249;
     --color-accent-light: #fdeaf1;
@@ -39,6 +37,7 @@
     --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
     min-height: 100vh;
+    min-height: 100dvh;
     background:
             radial-gradient(1200px 600px at 85% -5%, rgba(194, 24, 91, 0.07), transparent 60%),
             radial-gradient(900px 500px at 0% 10%, rgba(124, 58, 237, 0.06), transparent 55%),
@@ -48,9 +47,9 @@
     overflow-x: hidden;
     direction: rtl;
     font-feature-settings: "ss01", "cv01";
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Fine grain texture */
 .page::before {
     content: '';
     position: fixed;
@@ -63,9 +62,7 @@
 }
 
 /* Ambient glows */
-.bgGlow1,
-.bgGlow2,
-.bgGlow3 {
+.bgGlow1, .bgGlow2, .bgGlow3 {
     position: fixed;
     border-radius: 50%;
     filter: blur(80px);
@@ -111,12 +108,13 @@
 }
 
 /* ─────────────────────────────────────────────
-   Loading
+   Loading & Empty
    ───────────────────────────────────────────── */
 .loadingWrap {
     position: relative;
     z-index: 2;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,9 +165,6 @@
     color: var(--ink-faint);
 }
 
-/* ─────────────────────────────────────────────
-   Empty state
-   ───────────────────────────────────────────── */
 .emptyIconWrap {
     width: 110px;
     height: 110px;
@@ -215,11 +210,18 @@
     cursor: pointer;
     box-shadow: var(--shadow-brand);
     transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .emptyBtn:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 24px 54px rgba(194, 24, 91, 0.36);
+}
+
+.emptyBtn:active {
+    transform: scale(0.97);
 }
 
 /* ─────────────────────────────────────────────
@@ -247,7 +249,11 @@
             radial-gradient(600px 300px at 10% 0%, rgba(124, 58, 237, 0.35), transparent 60%);
 }
 
-.heroParticles { position: absolute; inset: 0; overflow: hidden; }
+.heroParticles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
 
 .heroParticle {
     position: absolute;
@@ -296,11 +302,16 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s var(--ease);
+    white-space: nowrap;
 }
 
 .backBtn:hover {
     background: rgba(255, 255, 255, 0.16);
     transform: translateX(4px);
+}
+
+.backBtn:active {
+    transform: translateX(2px) scale(0.97);
 }
 
 .heroStreak {
@@ -314,9 +325,12 @@
     font-size: 12.5px;
     font-weight: 800;
     box-shadow: 0 8px 22px rgba(194, 24, 91, 0.32);
+    white-space: nowrap;
 }
 
-.heroStreak svg { filter: drop-shadow(0 0 6px rgba(255, 220, 150, 0.8)); }
+.heroStreak svg {
+    filter: drop-shadow(0 0 6px rgba(255, 220, 150, 0.8));
+}
 
 .heroBody {
     display: flex;
@@ -339,10 +353,11 @@
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     margin-bottom: 18px;
     animation: floaty 5s ease-in-out infinite;
+    flex-shrink: 0;
 }
 
 .heroTitle {
-    font-size: 34px;
+    font-size: clamp(22px, 5vw, 34px);
     font-weight: 900;
     letter-spacing: -0.02em;
     color: #fff;
@@ -356,11 +371,13 @@
 .heroDesc {
     margin-top: 10px;
     max-width: 460px;
-    font-size: 14.5px;
+    font-size: clamp(12px, 2.5vw, 14.5px);
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.66);
+    padding: 0 12px;
 }
 
+/* ─── Hero Stats — KEY FIX for banner responsiveness ─── */
 .heroStats {
     margin-top: 28px;
     display: flex;
@@ -372,8 +389,11 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(16px);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    /* wrap on small screens, 2x2 grid */
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
+    max-width: 640px;
 }
 
 .heroStat {
@@ -381,6 +401,10 @@
     align-items: center;
     gap: 11px;
     padding: 4px 18px;
+    /* allow shrinking */
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
 }
 
 .heroStatIcon {
@@ -392,28 +416,37 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.14);
     color: var(--color-accent-light);
+    flex-shrink: 0;
 }
 
-.heroStatInfo { display: flex; flex-direction: column; align-items: flex-start; }
+.heroStatInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+}
 
 .heroStatValue {
-    font-size: 21px;
+    font-size: clamp(16px, 3vw, 21px);
     font-weight: 900;
     color: #fff;
     line-height: 1.1;
+    white-space: nowrap;
 }
 
 .heroStatLabel {
-    font-size: 11px;
+    font-size: clamp(9px, 1.8vw, 11px);
     font-weight: 600;
     color: rgba(255, 255, 255, 0.55);
     margin-top: 2px;
+    white-space: nowrap;
 }
 
 .heroStatDivider {
     width: 1px;
     background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     align-self: stretch;
+    flex-shrink: 0;
 }
 
 .heroWave {
@@ -467,6 +500,7 @@
     font-size: 13px;
     font-weight: 700;
     color: var(--ink-soft);
+    white-space: nowrap;
 }
 
 .contextItem svg { color: var(--color-accent); }
@@ -475,36 +509,22 @@
     width: 1px;
     height: 16px;
     background: var(--line-strong);
+    flex-shrink: 0;
 }
 
 /* ─────────────────────────────────────────────
-   Section heading helper (weekly / split)
+   Weekly schedule
    ───────────────────────────────────────────── */
 .weeklySection,
 .splitSection {
     margin-bottom: 26px;
 }
 
-/* ─── Weekly schedule ─── */
+/* Default: 7-column grid */
 .weeklyGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
-}
-
-@media (max-width: 480px) {
-    .weeklyGrid {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        gap: 8px;
-        padding-bottom: 4px;
-    }
-    .weeklyGrid::-webkit-scrollbar { display: none; }
-    .weekdayCard {
-        min-width: 56px;
-    }
 }
 
 .weekdayCard {
@@ -518,6 +538,7 @@
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
     transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    min-width: 0;
 }
 
 .weekdayCard:hover {
@@ -533,9 +554,11 @@
 .weekdayRest { opacity: 0.62; }
 
 .weekdayName {
-    font-size: 12.5px;
+    font-size: clamp(10px, 1.6vw, 12.5px);
     font-weight: 800;
     color: var(--ink);
+    text-align: center;
+    white-space: nowrap;
 }
 
 .weekdayIcon {
@@ -544,6 +567,7 @@
     border-radius: 11px;
     display: grid;
     place-items: center;
+    flex-shrink: 0;
 }
 
 .weekdayActive .weekdayIcon {
@@ -558,9 +582,10 @@
 }
 
 .weekdayStatus {
-    font-size: 10.5px;
+    font-size: clamp(8px, 1.4vw, 10.5px);
     font-weight: 700;
     color: var(--ink-faint);
+    text-align: center;
 }
 
 .weekdayActive .weekdayStatus { color: var(--color-accent-hover); }
@@ -591,6 +616,7 @@
     background: var(--grad-strength);
     color: #fff;
     box-shadow: 0 8px 18px rgba(124, 58, 237, 0.22);
+    flex-shrink: 0;
 }
 
 .splitLabel {
@@ -622,7 +648,7 @@
 }
 
 /* ═════════════════════════════════════════════
-   DAY TABS (calendar)
+   DAY TABS
    ═════════════════════════════════════════════ */
 .tabsSection { margin-bottom: 30px; }
 
@@ -653,6 +679,8 @@
     border-color: transparent;
     box-shadow: 0 10px 24px rgba(194, 24, 91, 0.28);
 }
+
+.tabsArrow:active { transform: scale(0.95); }
 
 .tabsScroll {
     display: flex;
@@ -686,6 +714,7 @@
     overflow: hidden;
     backdrop-filter: blur(10px);
     scroll-snap-align: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .dayTab:hover {
@@ -711,7 +740,6 @@
 
 .dayTabRest { opacity: 0.58; }
 
-/* completed (100%) tab */
 .dayTabDone {
     border-color: rgba(194, 24, 91, 0.4);
     background: linear-gradient(160deg, #fff, #fff2f7);
@@ -783,7 +811,6 @@
     margin-top: 2px;
 }
 
-/* ── Day Tab Progress bar — pinned full-width under the card ── */
 .dayTabProgress {
     position: absolute;
     inset-inline: 0;
@@ -811,7 +838,6 @@
     100% { background-position: 220% 0; }
 }
 
-/* ── Day Tab Check (100% done) ── */
 .dayTabCheck {
     position: relative;
     width: 22px;
@@ -862,7 +888,6 @@
     margin-bottom: 30px;
 }
 
-/* Overall day card */
 .overallCard {
     position: relative;
     overflow: hidden;
@@ -898,6 +923,7 @@
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 18px;
+    flex-wrap: wrap;
 }
 
 .overallTitle {
@@ -907,9 +933,13 @@
     font-size: 17px;
     font-weight: 800;
     color: #fff;
+    white-space: nowrap;
 }
 
-.overallTitle svg { color: var(--color-accent); filter: drop-shadow(0 0 8px rgba(194, 24, 91, 0.6)); }
+.overallTitle svg {
+    color: var(--color-accent);
+    filter: drop-shadow(0 0 8px rgba(194, 24, 91, 0.6));
+}
 
 .overallBadge {
     display: inline-flex;
@@ -923,6 +953,7 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.16);
     backdrop-filter: blur(8px);
+    white-space: nowrap;
 }
 
 .overallBadge svg { color: var(--color-accent); }
@@ -962,7 +993,7 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Cardio + Strength cards */
+/* Progress cards grid */
 .progressGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -994,6 +1025,7 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 14px;
+    flex-wrap: wrap;
 }
 
 .progressCardIcon {
@@ -1009,7 +1041,10 @@
 .iconCardio { background: var(--grad-cardio); box-shadow: 0 8px 18px rgba(194, 24, 91, 0.3); }
 .iconStrength { background: var(--grad-strength); box-shadow: 0 8px 18px rgba(124, 58, 237, 0.28); }
 
-.progressCardInfo { flex: 1; min-width: 0; }
+.progressCardInfo {
+    flex: 1;
+    min-width: 0;
+}
 
 .progressCardTitle {
     font-size: 15px;
@@ -1027,6 +1062,7 @@
     font-size: 22px;
     font-weight: 900;
     letter-spacing: -0.02em;
+    flex-shrink: 0;
 }
 
 .percentCardio {
@@ -1071,9 +1107,15 @@
     font-size: 12px;
     font-weight: 700;
     color: var(--ink-faint);
+    flex-wrap: wrap;
 }
 
-.progressMeta span { display: inline-flex; align-items: center; gap: 5px; }
+.progressMeta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .progressMeta svg { color: var(--ink-soft); }
 
 /* ═════════════════════════════════════════════
@@ -1090,7 +1132,7 @@
 
 .sectionBlockHeaderBody {
     min-width: 0;
-    overflow: hidden;
+    flex: 1;
 }
 
 .sectionBlockIcon {
@@ -1114,6 +1156,8 @@
     font-size: 12.5px;
     color: var(--ink-faint);
     font-weight: 600;
+    display: block;
+    margin-top: 2px;
 }
 
 .sectionBlockCount {
@@ -1126,6 +1170,8 @@
     background: rgba(194, 24, 91, 0.08);
     border: 1px solid rgba(194, 24, 91, 0.16);
     direction: ltr;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 /* ─── Exercise grid & cards ─── */
@@ -1144,8 +1190,10 @@
     background: var(--surface-solid);
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
-    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+    /* INSTANT feedback — no slow transition on color/border */
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .exerciseCard::before {
@@ -1156,27 +1204,32 @@
     width: 4px;
     background: var(--grad-strength);
     opacity: 0;
-    transition: opacity 0.3s var(--ease);
+    transition: opacity 0.15s ease;
 }
 
 .exerciseCard:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
-    border-color: rgba(194, 24, 91, 0.18);
 }
 
 .exerciseCard:hover::before { opacity: 1; }
 
 .exerciseCardCardio::before { background: var(--grad-cardio); }
 
+/* ─── INSTANT done state ─── */
 .exerciseCardDone {
-    border-color: rgba(194, 24, 91, 0.35);
-    background: linear-gradient(160deg, #fff, var(--color-accent-light));
+    border-color: rgba(194, 24, 91, 0.35) !important;
+    background: linear-gradient(160deg, #fff, var(--color-accent-light)) !important;
 }
 
-.exerciseCardDone::before { background: linear-gradient(180deg, var(--color-accent-hover), var(--color-accent-hover)); opacity: 1; }
+.exerciseCardDone::before {
+    background: var(--grad-brand) !important;
+    opacity: 1 !important;
+}
 
-.exerciseCardAnimating { animation: cardCelebrate 0.6s var(--ease-bounce); }
+.exerciseCardAnimating {
+    animation: cardCelebrate 0.6s var(--ease-bounce);
+}
 
 @keyframes cardCelebrate {
     0% { transform: scale(1); }
@@ -1196,13 +1249,27 @@
     background: var(--grad-strength);
     flex-shrink: 0;
     box-shadow: 0 6px 14px rgba(124, 58, 237, 0.25);
+    align-self: flex-start;
 }
 
-.exerciseNumCardio { background: var(--grad-cardio); box-shadow: 0 6px 14px rgba(194, 24, 91, 0.28); }
+.exerciseNumCardio {
+    background: var(--grad-cardio);
+    box-shadow: 0 6px 14px rgba(194, 24, 91, 0.28);
+}
 
-.exerciseBody { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.exerciseBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-.exerciseTop { display: flex; flex-direction: column; gap: 9px; }
+.exerciseTop {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
 
 .exerciseName {
     font-size: 16.5px;
@@ -1211,7 +1278,11 @@
     line-height: 1.35;
 }
 
-.exerciseMeta { display: flex; flex-wrap: wrap; gap: 7px; }
+.exerciseMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
 
 .metaTag {
     display: inline-flex;
@@ -1234,7 +1305,7 @@
     color: var(--ink-soft);
 }
 
-/* sets / reps */
+/* Sets / Reps */
 .setsReps {
     display: flex;
     align-items: center;
@@ -1246,7 +1317,11 @@
     align-self: flex-start;
 }
 
-.srItem { display: flex; flex-direction: column; align-items: center; }
+.srItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .srValue {
     font-size: 18px;
@@ -1255,7 +1330,12 @@
     line-height: 1.1;
 }
 
-.srLabel { font-size: 11px; font-weight: 600; color: var(--ink-faint); margin-top: 2px; }
+.srLabel {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-faint);
+    margin-top: 2px;
+}
 
 .srDivider {
     width: 1px;
@@ -1263,7 +1343,7 @@
     background: rgba(194, 24, 91, 0.18);
 }
 
-/* gif */
+/* GIF */
 .gifWrap {
     position: relative;
     border-radius: var(--r-sm);
@@ -1299,7 +1379,7 @@
 
 .gifWrap:hover .gifOverlay { opacity: 1; }
 
-/* complete button */
+/* ─── Complete button — INSTANT feedback ─── */
 .completeBtn {
     margin-top: auto;
     padding: 13px 18px;
@@ -1308,7 +1388,11 @@
     background: rgba(124, 58, 237, 0.05);
     cursor: pointer;
     font-family: inherit;
-    transition: all 0.3s var(--ease);
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    /* FAST for instant mobile feedback */
+    transition: background 0.1s ease, border-color 0.1s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .completeBtnCardio {
@@ -1321,10 +1405,15 @@
     box-shadow: var(--shadow-sm);
 }
 
+.completeBtn:active {
+    transform: scale(0.97);
+}
+
+/* INSTANT green — !important so no CSS transition delay */
 .completeBtnActive {
-    background: linear-gradient(110deg, var(--color-accent-hover), var(--color-accent-hover));
-    border-color: transparent;
-    box-shadow: 0 10px 24px rgba(194, 24, 91, 0.3);
+    background: linear-gradient(110deg, var(--color-accent-hover), var(--color-accent)) !important;
+    border-color: transparent !important;
+    box-shadow: 0 10px 24px rgba(194, 24, 91, 0.3) !important;
 }
 
 .completeBtnContent {
@@ -1334,11 +1423,14 @@
     gap: 9px;
 }
 
-.completeBtnIcon { display: grid; place-items: center; color: var(--color-accent); }
+.completeBtnIcon {
+    display: grid;
+    place-items: center;
+    color: var(--color-accent);
+    transition: color 0.1s ease;
+}
 
-.completeBtnCardio .completeBtnIcon { color: var(--color-accent); }
-
-.completeBtnActive .completeBtnIcon { color: #fff; }
+.completeBtnActive .completeBtnIcon { color: #fff !important; }
 
 .completeBtnCircle {
     width: 18px;
@@ -1352,9 +1444,10 @@
     font-size: 14px;
     font-weight: 800;
     color: var(--ink);
+    transition: color 0.1s ease;
 }
 
-.completeBtnActive .completeBtnText { color: #fff; }
+.completeBtnActive .completeBtnText { color: #fff !important; }
 
 .completeBtnStar {
     color: #fff;
@@ -1376,10 +1469,11 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: linear-gradient(135deg, var(--color-accent-hover), var(--color-accent-hover));
+    background: var(--grad-brand);
     color: #fff;
     box-shadow: 0 4px 12px rgba(194, 24, 91, 0.4);
     animation: checkPop 0.4s var(--ease-bounce) both;
+    z-index: 2;
 }
 
 /* ═════════════════════════════════════════════
@@ -1522,9 +1616,13 @@
     animation: msgPop 0.5s var(--ease-bounce) both;
     max-width: calc(100vw - 32px);
     box-sizing: border-box;
+    pointer-events: auto;
 }
 
-.confettiMessage svg { color: var(--color-accent); filter: drop-shadow(0 0 12px rgba(194, 24, 91, 0.7)); }
+.confettiMessage svg {
+    color: var(--color-accent);
+    filter: drop-shadow(0 0 12px rgba(194, 24, 91, 0.7));
+}
 
 @keyframes msgPop {
     0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
@@ -1532,68 +1630,385 @@
 }
 
 /* ═════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — COMPREHENSIVE
    ═════════════════════════════════════════════ */
+
+/* ─── Tablet landscape ─── */
+@media (max-width: 1024px) {
+    .exercisesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ─── Tablet portrait ─── */
 @media (max-width: 900px) {
-    .heroTitle { font-size: 28px; }
+    .heroTitle { font-size: clamp(22px, 4.5vw, 28px); }
     .progressGrid { grid-template-columns: 1fr; }
     .heroStats { gap: 4px; padding: 14px 8px; }
     .heroStat { padding: 4px 12px; }
+
+    .weeklyGrid { gap: 7px; }
+    .weekdayCard { padding: 12px 6px; gap: 6px; }
+    .weekdayIcon { width: 30px; height: 30px; border-radius: 9px; }
 }
 
-@media (max-width: 700px) {
-    .heroContent { padding: 18px 18px 0; }
-    .content { padding: 8px 16px 64px; }
-    .heroTitle { font-size: 24px; }
+/* ─── Mobile landscape / large phones ─── */
+@media (max-width: 768px) {
+    .heroContent { padding: 20px 20px 0; }
+    .content { padding: 8px 18px 64px; }
+
     .heroStatDivider { display: none; }
-    .heroStats { gap: 10px; }
-    .weeklyGrid { gap: 7px; }
-    .weekdayCard { padding: 12px 4px; }
-    .weekdayName { font-size: 11px; }
-    .weekdayStatus { font-size: 9px; }
-    .weekdayIcon { width: 30px; height: 30px; }
+    .heroStats {
+        gap: 8px;
+        padding: 12px 8px;
+        /* 2×2 grid on mobile */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        border-radius: 18px;
+    }
+
+    .heroStat {
+        padding: 8px 10px;
+        justify-content: flex-start;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
     .exercisesGrid { grid-template-columns: 1fr; }
+
     .overallCard { padding: 22px 20px; }
     .contextBar { padding: 12px 10px; }
     .contextItem { font-size: 12px; padding: 4px 8px; }
     .sectionBlockTitle { font-size: 17px; }
     .restCard { padding: 44px 22px; }
+
+    /* Weekly: keep 7 cols but smaller */
+    .weeklyGrid { gap: 6px; }
+    .weekdayCard { padding: 10px 4px; gap: 5px; }
+    .weekdayName { font-size: 10px; }
+    .weekdayStatus { font-size: 8px; }
+    .weekdayIcon { width: 26px; height: 26px; border-radius: 8px; }
+    .weekdayIcon svg { width: 12px; height: 12px; }
 }
 
-@media (max-width: 480px) {
-    .dayTab { min-width: 92px; padding: 12px 12px 18px; }
-    .dayTabNum { font-size: 21px; }
-    .heroStat { padding: 4px 8px; }
-    .heroStatValue { font-size: 18px; }
-    .confettiMessage { padding: 22px 28px; font-size: 15px; }
-}
+/* ─── Standard mobile ─── */
+@media (max-width: 640px) {
+    .heroContent { padding: 16px 16px 0; }
+    .content { padding: 8px 14px 64px; }
 
-@media (max-width: 380px) {
-    .heroContent { padding: 12px 14px 0; }
-    .heroTitle { font-size: 20px; }
-    .heroDesc { font-size: 13px; }
-    .heroIcon { width: 60px; height: 60px; border-radius: 20px; }
+    .heroIcon {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        margin-bottom: 14px;
+    }
     .heroIcon svg { width: 28px; height: 28px; }
-    .heroStatValue { font-size: 16px; }
-    .heroStatIcon { width: 36px; height: 36px; }
-    .content { padding: 8px 12px 48px; }
-    .dayTab { min-width: 76px; padding: 10px 8px 14px; gap: 3px; }
+
+    .heroBody { padding: 20px 0 6px; }
+
+    .heroStats {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    .heroStat { gap: 8px; }
+    .heroStatIcon { width: 36px; height: 36px; border-radius: 10px; }
+    .heroStatValue { font-size: 17px; }
+
+    .contextBar { padding: 10px 8px; }
+    .contextItem { font-size: 11px; padding: 3px 7px; }
+
+    /* Weekly: scrollable row on small mobile */
+    .weeklyGrid {
+        grid-template-columns: repeat(7, minmax(46px, 1fr));
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+    }
+    .weeklyGrid::-webkit-scrollbar { display: none; }
+    .weekdayCard { min-width: 46px; padding: 8px 3px; gap: 4px; }
+    .weekdayName { font-size: 9.5px; }
+    .weekdayStatus { font-size: 7.5px; }
+    .weekdayIcon { width: 24px; height: 24px; border-radius: 7px; }
+    .weekdayIcon svg { width: 11px; height: 11px; }
+
+    .dayTab { min-width: 90px; padding: 12px 12px 18px; }
+    .dayTabNum { font-size: 21px; }
+
+    .sectionBlockTitle { font-size: 16px; }
+    .sectionBlockIcon { width: 36px; height: 36px; border-radius: 11px; }
+
+    /* Exercise card: stack vertically */
+    .exerciseCard {
+        flex-direction: row;
+        padding: 14px;
+    }
+
+    .exerciseName { font-size: 15px; }
+    .metaTag { font-size: 10.5px; padding: 4px 9px; }
+    .exerciseDesc { font-size: 12px; }
+
+    .completeBtn { padding: 11px 14px; border-radius: 12px; }
+    .completeBtnText { font-size: 13px; }
+
+    .completedBadge { top: 12px; inset-inline-end: 12px; width: 22px; height: 22px; }
+    .completedBadge svg { width: 12px; height: 12px; }
+
+    .overallCard { padding: 20px 16px; border-radius: var(--r-md); }
+    .overallTitle { font-size: 15px; }
+    .overallBadge { font-size: 12px; padding: 5px 10px; }
+    .overallTrack { height: 12px; }
+
+    .progressCard { padding: 16px 14px; }
+    .progressCardTitle { font-size: 14px; }
+    .progressPercent { font-size: 18px; }
+
+    .restCard { padding: 36px 18px; gap: 12px; }
+    .restTitle { font-size: 20px; }
+    .restDesc { font-size: 13px; }
+    .restIcon { width: 68px; height: 68px; border-radius: 22px; }
+    .restTip { padding: 9px 14px; font-size: 12px; }
+}
+
+/* ─── Small phones ─── */
+@media (max-width: 480px) {
+    .heroContent { padding: 14px 14px 0; }
+    .content { padding: 6px 12px 56px; }
+
+    .backBtn { padding: 8px 14px; font-size: 12px; }
+    .heroStreak { padding: 7px 12px; font-size: 11px; }
+
+    .heroBody { padding: 16px 0 4px; }
+    .heroIcon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        margin-bottom: 12px;
+    }
+    .heroIcon svg { width: 24px; height: 24px; }
+
+    /* Hero stats: 2×2 with smaller icons */
+    .heroStats {
+        margin-top: 16px;
+        padding: 10px 8px;
+        gap: 6px;
+        border-radius: 14px;
+    }
+    .heroStat { padding: 6px 8px; gap: 7px; }
+    .heroStatIcon { width: 32px; height: 32px; border-radius: 9px; }
+    .heroStatIcon svg { width: 14px; height: 14px; }
+    .heroStatValue { font-size: 15px; }
+    .heroStatLabel { font-size: 9px; }
+
+    .heroWave svg { height: 50px; }
+    .hero { padding-bottom: 50px; }
+
+    /* Tabs */
+    .tabsWrapper { gap: 6px; }
+    .tabsArrow { width: 36px; border-radius: 10px; }
+    .tabsScroll { gap: 8px; }
+    .dayTab {
+        min-width: 80px;
+        padding: 10px 10px 16px;
+        gap: 4px;
+        border-radius: 16px;
+    }
+    .dayTabNum { font-size: 20px; }
+    .dayTabDate { font-size: 10px; }
+    .dayTabWeek { font-size: 8.5px; }
+    .dayTabDay { font-size: 9px; padding: 2px 10px; }
+    .dayTabRestBadge { font-size: 7.5px; padding: 2px 7px; }
+
+    /* Context */
+    .contextBar { padding: 10px 8px; gap: 4px; border-radius: 14px; margin-bottom: 20px; }
+    .contextItem { font-size: 10.5px; padding: 3px 6px; gap: 4px; }
+    .contextDivider { height: 12px; }
+
+    /* Weekly */
+    .weeklyGrid {
+        grid-template-columns: repeat(7, minmax(40px, 1fr));
+        gap: 5px;
+    }
+    .weekdayCard { min-width: 40px; padding: 7px 2px; gap: 3px; }
+    .weekdayName { font-size: 8.5px; }
+    .weekdayStatus { font-size: 7px; }
+    .weekdayIcon { width: 22px; height: 22px; border-radius: 6px; }
+    .weekdayIcon svg { width: 10px; height: 10px; }
+
+    /* Split */
+    .splitCard { padding: 16px 14px; }
+    .splitLabel { font-size: 13px; }
+    .splitChip { font-size: 11px; padding: 6px 12px; }
+    .splitIconWrap { width: 34px; height: 34px; border-radius: 10px; }
+
+    /* Section block */
+    .sectionBlockHeader { gap: 10px; margin-bottom: 14px; }
+    .sectionBlockIcon { width: 36px; height: 36px; border-radius: 10px; }
+    .sectionBlockTitle { font-size: 15px; }
+    .sectionBlockSub { font-size: 11px; }
+    .sectionBlockCount { font-size: 12px; padding: 5px 11px; }
+
+    /* Exercise card */
+    .exerciseCard { padding: 12px; gap: 10px; }
+    .exerciseNum { width: 32px; height: 32px; border-radius: 10px; font-size: 14px; }
+    .exerciseName { font-size: 14px; }
+    .metaTag { font-size: 10px; padding: 3px 8px; gap: 3px; }
+    .exerciseDesc { font-size: 11.5px; line-height: 1.6; }
+    .setsReps { padding: 10px 14px; gap: 10px; }
+    .srValue { font-size: 16px; }
+    .srLabel { font-size: 10px; }
+    .srDivider { height: 22px; }
+
+    .completeBtn { padding: 10px 12px; border-radius: 10px; }
+    .completeBtnText { font-size: 12px; }
+    .completeBtnCircle { width: 16px; height: 16px; }
+
+    .completedBadge { top: 10px; inset-inline-end: 10px; width: 20px; height: 20px; }
+
+    /* Overall card */
+    .overallCard { padding: 18px 14px; border-radius: 18px; }
+    .overallTitle { font-size: 14px; gap: 7px; }
+    .overallTitle svg { width: 16px; height: 16px; }
+    .overallBadge { font-size: 11px; padding: 4px 10px; }
+    .overallTrack { height: 11px; }
+    .overallMeta { font-size: 12px; margin-top: 10px; }
+
+    /* Progress card */
+    .progressCard { padding: 14px 12px; border-radius: 16px; }
+    .progressCardHeader { gap: 10px; margin-bottom: 10px; }
+    .progressCardIcon { width: 38px; height: 38px; border-radius: 11px; }
+    .progressCardTitle { font-size: 13px; }
+    .progressCardSub { font-size: 11px; }
+    .progressPercent { font-size: 18px; }
+    .progressMeta { font-size: 11px; margin-top: 8px; }
+
+    /* Rest */
+    .restCard { padding: 32px 16px; }
+    .restTitle { font-size: 18px; }
+    .restDesc { font-size: 13px; line-height: 1.6; }
+    .restIcon { width: 60px; height: 60px; border-radius: 18px; }
+    .restTip { padding: 8px 12px; font-size: 11.5px; }
+
+    .confettiMessage { padding: 22px 24px; font-size: 15px; border-radius: var(--r-md); }
+    .confettiMessage svg { width: 28px; height: 28px; }
+}
+
+/* ─── Extra small phones ─── */
+@media (max-width: 380px) {
+    .heroContent { padding: 12px 12px 0; }
+    .content { padding: 4px 10px 48px; }
+
+    .backBtn { padding: 7px 12px; font-size: 11px; gap: 4px; }
+    .heroStreak { padding: 6px 10px; font-size: 10px; gap: 5px; }
+
+    .heroBody { padding: 14px 0 4px; }
+    .heroIcon {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+    }
+    .heroIcon svg { width: 22px; height: 22px; }
+
+    /* Hero stats: stack to single column on very small */
+    .heroStats {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 8px 6px;
+        gap: 5px;
+        border-radius: 12px;
+        margin-top: 14px;
+    }
+    .heroStat { padding: 5px 6px; gap: 6px; }
+    .heroStatIcon { width: 28px; height: 28px; border-radius: 8px; }
+    .heroStatIcon svg { width: 12px; height: 12px; }
+    .heroStatValue { font-size: 13px; }
+    .heroStatLabel { font-size: 8px; }
+
+    .heroWave svg { height: 40px; }
+    .hero { padding-bottom: 40px; }
+
+    /* Tabs */
+    .tabsArrow { width: 32px; }
+    .dayTab {
+        min-width: 70px;
+        padding: 8px 6px 14px;
+        gap: 3px;
+        border-radius: 12px;
+    }
     .dayTabNum { font-size: 18px; }
     .dayTabDate { font-size: 9px; }
-    .dayTabWeek { font-size: 8px; }
-    .progressCard { padding: 16px 16px; }
-    .progressCardTitle { font-size: 13px; }
-    .sectionBlockTitle { font-size: 15px; }
-    .exerciseCard { padding: 14px; }
-    .exerciseName { font-size: 14px; }
-    .contextBar { padding: 10px 8px; gap: 4px; }
-    .contextItem { font-size: 11px; padding: 3px 6px; gap: 4px; }
+    .dayTabWeek { font-size: 7.5px; }
+    .dayTabDay { font-size: 8px; padding: 2px 7px; }
+    .dayTabCheck { width: 18px; height: 18px; }
+    .dayTabCheck svg { width: 9px; height: 9px; }
+
+    /* Weekly: very compact */
+    .weeklyGrid {
+        grid-template-columns: repeat(7, minmax(34px, 1fr));
+        gap: 4px;
+    }
+    .weekdayCard { min-width: 34px; padding: 6px 1px; gap: 3px; }
+    .weekdayName { font-size: 7.5px; }
+    .weekdayStatus { display: none; }
+    .weekdayIcon { width: 20px; height: 20px; border-radius: 6px; }
+    .weekdayIcon svg { width: 9px; height: 9px; }
+
+    .contextBar { padding: 8px 6px; border-radius: 12px; margin-bottom: 16px; }
+    .contextItem { font-size: 10px; padding: 2px 4px; gap: 3px; }
     .contextDivider { display: none; }
-    .restCard { padding: 32px 18px; }
-    .restTitle { font-size: 20px; }
-    .confettiMessage { padding: 18px 20px; font-size: 14px; }
-    .weeklyGrid { gap: 5px; }
-    .weekdayCard { padding: 10px 2px; }
-    .weekdayName { font-size: 10px; }
-    .weekdayIcon { width: 24px; height: 24px; }
+
+    .splitCard { padding: 14px 12px; }
+    .splitLabel { font-size: 12px; }
+    .splitChip { font-size: 10.5px; padding: 5px 10px; }
+
+    .sectionBlockTitle { font-size: 14px; }
+    .sectionBlockCount { font-size: 11px; padding: 4px 9px; }
+
+    .exerciseCard { padding: 10px; gap: 8px; }
+    .exerciseNum { width: 28px; height: 28px; border-radius: 8px; font-size: 12px; }
+    .exerciseName { font-size: 13px; }
+    .metaTag { font-size: 9.5px; padding: 3px 7px; }
+    .setsReps { padding: 8px 12px; gap: 8px; }
+    .srValue { font-size: 14px; }
+
+    .completeBtn { padding: 9px 10px; }
+    .completeBtnText { font-size: 11.5px; }
+
+    .overallCard { padding: 14px 12px; border-radius: 16px; }
+    .overallTitle { font-size: 13px; }
+    .overallBadge { font-size: 10.5px; padding: 4px 8px; }
+
+    .progressCard { padding: 12px 10px; }
+    .progressCardTitle { font-size: 12px; }
+    .progressPercent { font-size: 16px; }
+
+    .restCard { padding: 28px 14px; }
+    .restTitle { font-size: 16px; }
+    .restIcon { width: 54px; height: 54px; border-radius: 16px; }
+    .restTip { padding: 7px 10px; font-size: 11px; }
+
+    .confettiMessage { padding: 18px 18px; font-size: 13px; gap: 8px; }
+    .confettiMessage svg { width: 24px; height: 24px; }
+}
+
+/* ─── Very tiny screens ─── */
+@media (max-width: 320px) {
+    .heroStats { grid-template-columns: 1fr; }
+    .heroStat { justify-content: flex-start; }
+    .weeklyGrid { grid-template-columns: repeat(7, minmax(28px, 1fr)); gap: 3px; }
+    .weekdayCard { padding: 5px 0; }
+    .weekdayName { font-size: 7px; }
+    .exerciseCard { flex-direction: column; }
+    .exerciseNum { align-self: flex-start; }
+}
+
+/* ─── Safe area support ─── */
+@supports (padding: max(0px)) {
+    .hero {
+        padding-top: max(0px, env(safe-area-inset-top));
+    }
+    .content {
+        padding-bottom: max(80px, calc(48px + env(safe-area-inset-bottom)));
+    }
 }
