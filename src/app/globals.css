@@ -164,12 +164,6 @@ input, textarea, select {
   color: var(--color-accent-hover);
 }
 
-@media (max-width: 460px) {
-  .plans-dropdown-label {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
