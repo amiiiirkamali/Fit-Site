@@ -1901,6 +1901,144 @@
     .mealName { font-size: 13px; }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   LOCKED DAYS & UNLOCK MODAL
+   ═══════════════════════════════════════════════════════════ */
+.dayTabLocked {
+    opacity: 0.5;
+    cursor: pointer;
+    filter: grayscale(0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.dayTabLocked:hover {
+    opacity: 0.7;
+    transform: translateY(-2px);
+    border-color: rgba(107, 114, 128, 0.3);
+}
+
+.dayTabLockOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
+    z-index: 2;
+    border-radius: inherit;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+}
+
+.dayTabLocked:hover .dayTabLockOverlay {
+    background: rgba(255, 255, 255, 0.2);
+    color: #6b7280;
+}
+
+.dayTabNumLocked {
+    opacity: 0.4;
+}
+
+/* ─── UNLOCK MODAL ─── */
+.unlockOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeIn 0.25s ease both;
+    padding: 20px;
+}
+
+.unlockModal {
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(160deg, #0a2618, #071a10);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: 28px;
+    padding: 36px 28px 32px;
+    text-align: center;
+    animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.unlockIcon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.unlockTitle {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 8px;
+    letter-spacing: -0.3px;
+}
+
+.unlockDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 24px;
+    line-height: 1.7;
+    font-weight: 500;
+}
+
+.unlockOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.unlockOption {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
+.unlockOption:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+}
+
+.unlockOption:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* ─── Safe area for notched phones ─── */
 @supports (padding: max(0px)) {
     .hero {

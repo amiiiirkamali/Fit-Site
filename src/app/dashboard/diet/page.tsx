@@ -27,6 +27,8 @@ import {
     Heart,
     Star,
     Activity,
+    Lock,
+    MessageCircle,
 } from "lucide-react";
 import styles from "./page.module.css";
 
@@ -161,12 +163,22 @@ export default function DietPage() {
     const [consumed, setConsumed] = useState<ConsumedState>({});
     const [animatingCard, setAnimatingCard] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [lockedUntilDay, setLockedUntilDay] = useState(7);
+    const [showUnlockModal, setShowUnlockModal] = useState(false);
+    const [pendingDay, setPendingDay] = useState<number | null>(null);
     const tabsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const prog = parseInt(params.get("program") || "1");
         setProgramNumber(prog);
+
+        const unlockKey = `fit-diet-unlocked-${prog}`;
+        const savedUnlock = localStorage.getItem(unlockKey);
+        if (savedUnlock) {
+            setLockedUntilDay(30);
+        }
+
         setPlanId(params.get("planId") || null);
         const dayParam = params.get("day");
         if (dayParam) {
@@ -284,6 +296,21 @@ export default function DietPage() {
     }, [router, programNumber, planId]);
 
     useEffect(() => {
+        if (!plan || lockedUntilDay >= 30) return;
+        const startDate = new Date(plan.createdAt);
+        startDate.setDate(startDate.getDate() + 1);
+        const day8Date = new Date(startDate);
+        day8Date.setDate(day8Date.getDate() + 7);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (today >= day8Date) {
+            setLockedUntilDay(8);
+            setPendingDay(8);
+            setShowUnlockModal(true);
+        }
+    }, [plan, lockedUntilDay]);
+
+    useEffect(() => {
         const el = tabsRef.current;
         if (!el) return;
         const btn = el.querySelector(
@@ -297,6 +324,25 @@ export default function DietPage() {
     }, [selectedDay, plan]);
 
     const getConsumedKey = (day: number, slot: string) => `${day}-${slot}`;
+
+    const handleDayClick = (day: number) => {
+        if (day > lockedUntilDay) return;
+        if (day === 8 && lockedUntilDay === 8) {
+            setPendingDay(8);
+            setShowUnlockModal(true);
+            return;
+        }
+        setSelectedDay(day);
+    };
+
+    const handleUnlockAnswer = (answer: string) => {
+        const prog = programNumber;
+        localStorage.setItem(`fit-diet-unlocked-${prog}`, answer);
+        setLockedUntilDay(30);
+        setShowUnlockModal(false);
+        if (pendingDay) setSelectedDay(pendingDay);
+        setPendingDay(null);
+    };
 
     const toggleConsumed = (day: number, slot: string) => {
         const key = getConsumedKey(day, slot);
@@ -525,6 +571,34 @@ export default function DietPage() {
                 </div>
             )}
 
+            {/* ─── Unlock Modal ─── */}
+            {showUnlockModal && (
+                <div className={styles.unlockOverlay} onClick={() => setShowUnlockModal(false)}>
+                    <div className={styles.unlockModal} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.unlockIcon}>
+                            <MessageCircle size={28} />
+                        </div>
+                        <h2 className={styles.unlockTitle}>نظرت در مورد برنامه غذایی چیه؟</h2>
+                        <p className={styles.unlockDesc}>
+                            تا اینجا از برنامه راضی بودی؟ هر گزینه‌ای که دوست داری انتخاب کن
+                        </p>
+                        <div className={styles.unlockOptions}>
+                            {["عالی بود!", "خوب بود", "معمولی بود", "بد نبود"].map(
+                                (opt) => (
+                                    <button
+                                        key={opt}
+                                        className={styles.unlockOption}
+                                        onClick={() => handleUnlockAnswer(opt)}
+                                    >
+                                        {opt}
+                                    </button>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* ─── Hero Header ─── */}
             <header className={styles.hero}>
                 <div className={styles.heroBg} />
@@ -653,17 +727,24 @@ export default function DietPage() {
                                 const date = new Date(startDate);
                                 date.setDate(date.getDate() + day - 1);
                                 const completion = getDayCompletion(day);
+                                const isLocked = day > lockedUntilDay;
                                 return (
                                     <button
                                         key={day}
                                         data-day={day}
-                                        className={`${styles.dayTab} ${selectedDay === day ? styles.dayTabActive : ""} ${completion === 100 ? styles.dayTabDone : ""}`}
-                                        onClick={() => setSelectedDay(day)}
+                                        className={`${styles.dayTab} ${selectedDay === day ? styles.dayTabActive : ""} ${completion === 100 ? styles.dayTabDone : ""} ${isLocked ? styles.dayTabLocked : ""}`}
+                                        onClick={() => handleDayClick(day)}
+                                        disabled={false}
                                     >
+                                        {isLocked && (
+                                            <div className={styles.dayTabLockOverlay}>
+                                                <Lock size={14} />
+                                            </div>
+                                        )}
                     <span className={styles.dayTabWeek}>
                       هفته {toPersianNum(Math.ceil(day / 7))}
                     </span>
-                                        <span className={styles.dayTabNum}>
+                                        <span className={`${styles.dayTabNum} ${isLocked ? styles.dayTabNumLocked : ""}`}>
                       {toPersianNum(day)}
                     </span>
                                         <span className={styles.dayTabDate}>
@@ -672,7 +753,7 @@ export default function DietPage() {
                                         <span className={styles.dayTabDay}>
                       {toPersianDay(date)}
                     </span>
-                                        {completion > 0 && (
+                                        {completion > 0 && !isLocked && (
                                             <div className={styles.dayTabProgress}>
                                                 <div
                                                     className={styles.dayTabProgressFill}
@@ -680,7 +761,7 @@ export default function DietPage() {
                                                 />
                                             </div>
                                         )}
-                                        {completion === 100 && (
+                                        {completion === 100 && !isLocked && (
                                             <div className={styles.dayTabCheck}>
                                                 <Check size={10} />
                                             </div>
@@ -692,8 +773,16 @@ export default function DietPage() {
                         <button
                             className={styles.tabsArrow}
                             onClick={() => {
-                                if (selectedDay < totalDays)
-                                    setSelectedDay(selectedDay + 1);
+                                if (selectedDay < totalDays) {
+                                    const nextDay = selectedDay + 1;
+                                    if (nextDay > lockedUntilDay) return;
+                                    if (nextDay === 8 && lockedUntilDay === 8) {
+                                        setPendingDay(8);
+                                        setShowUnlockModal(true);
+                                        return;
+                                    }
+                                    setSelectedDay(nextDay);
+                                }
                             }}
                         >
                             <ChevronLeft size={18} />
