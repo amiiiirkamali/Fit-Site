@@ -107,7 +107,7 @@
     margin: 0 auto;
     display: block;
     padding: 14px;
-    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
+    background: linear-gradient(to bottom left, #FFB6C1, #FD3DB5);
     color: #fff;
     font-weight: 800;
     font-size: 15px;

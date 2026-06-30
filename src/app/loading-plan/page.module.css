@@ -2,7 +2,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(160deg, #fcf8fa 0%, #fef9fb 50%, #fcf8fa 100%);
+    background: #ffffff;
     color: #1a1a1a;
     position: relative;
     overflow: hidden;
@@ -207,7 +207,7 @@
     width: 100%;
     margin-top: 4px;
     padding: 14px;
-    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
+    background: var(--color-accent);
     color: #fff;
     font-weight: 800;
     font-size: 15px;
@@ -482,7 +482,7 @@
 .submitBtn {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
+    background: var(--color-accent);
     color: #fff;
     font-weight: 800;
     font-size: 15px;

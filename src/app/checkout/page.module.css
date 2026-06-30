@@ -2,7 +2,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(160deg, #fcf8fa 0%, #fef9fb 50%, #fcf8fa 100%);
+    background: #ffffff;
     color: #1a1a1a;
 }
 
@@ -260,7 +260,7 @@
 .payBtn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
+    background: var(--color-accent);
     color: #fff;
     font-weight: 800;
     font-size: 16px;
@@ -279,7 +279,7 @@
 .payBtn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 12px 36px rgba(242, 139, 160, 0.35);
-    background: linear-gradient(135deg, #f28ba0, #FFB6C1);
+    background: var(--color-accent-hover);
 }
 
 .payBtn:active:not(:disabled) {
