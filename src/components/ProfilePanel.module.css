@@ -118,9 +118,9 @@
 
 .input:focus,
 .select:focus {
-    border-color: #c2185b;
+    border-color: #f28ba0;
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.08);
+    box-shadow: 0 0 0 3px rgba(242, 139, 160, 0.08);
 }
 
 .select {
@@ -149,19 +149,19 @@
     width: 100%;
     padding: 14px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 100%);
     color: #fff;
     font-size: 15px;
     font-weight: 800;
     font-family: inherit;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 8px 24px rgba(242, 139, 160, 0.25);
 }
 
 .saveBtn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.35);
+    box-shadow: 0 12px 32px rgba(242, 139, 160, 0.35);
 }
 
 .saveBtn:active:not(:disabled) {

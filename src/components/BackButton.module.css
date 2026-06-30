@@ -21,9 +21,9 @@
 
 .btn:hover {
     background: #ffffff;
-    border-color: #c2185b;
-    color: #c2185b;
-    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.12);
+    border-color: #f28ba0;
+    color: #f28ba0;
+    box-shadow: 0 4px 16px rgba(242, 139, 160, 0.12);
     transform: translateY(-50%) scale(1.05);
 }
 

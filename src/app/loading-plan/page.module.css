@@ -23,7 +23,7 @@
     right: -120px;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(232, 86, 143, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 182, 193, 0.15) 0%, transparent 70%);
 }
 
 .bgGlowTwo {
@@ -31,7 +31,7 @@
     left: -120px;
     width: 380px;
     height: 380px;
-    background: radial-gradient(circle, rgba(194, 24, 91, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(242, 139, 160, 0.1) 0%, transparent 70%);
 }
 
 /* ===================== HEADER ===================== */
@@ -105,12 +105,12 @@
 }
 
 .stepActive {
-    border-color: rgba(194, 24, 91, 0.35);
-    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.07);
+    border-color: rgba(242, 139, 160, 0.35);
+    box-shadow: 0 6px 20px rgba(242, 139, 160, 0.07);
 }
 
 .stepDone {
-    border-color: rgba(194, 24, 91, 0.25);
+    border-color: rgba(242, 139, 160, 0.25);
     background: linear-gradient(135deg, #fdf2f6, #fef7fa);
 }
 
@@ -127,13 +127,13 @@
 }
 
 .stepActive .stepIconWrap {
-    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
-    box-shadow: 0 4px 14px rgba(194, 24, 91, 0.25);
+    background: linear-gradient(145deg, #f28ba0 0%, #FFB6C1 100%);
+    box-shadow: 0 4px 14px rgba(242, 139, 160, 0.25);
     animation: bounceSoft 1.4s ease-in-out infinite;
 }
 
 .stepDone .stepIconWrap {
-    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(145deg, #f28ba0 0%, #FFB6C1 100%);
     color: #fff;
 }
 
@@ -176,11 +176,11 @@
 }
 
 .stepDone .stepPercent {
-    color: #c2185b;
+    color: #f28ba0;
 }
 
 .stepActive .stepPercent {
-    color: #c2185b;
+    color: #f28ba0;
 }
 
 .stepTrack {
@@ -192,13 +192,13 @@
 
 .stepFill {
     height: 100%;
-    background: linear-gradient(90deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(90deg, #f28ba0 0%, #FFB6C1 100%);
     border-radius: 999px;
     transition: width 0.2s ease;
 }
 
 .stepDone .stepFill {
-    background: linear-gradient(90deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(90deg, #f28ba0 0%, #FFB6C1 100%);
 }
 
 /* ===================== CONTINUE BUTTON ===================== */
@@ -207,7 +207,7 @@
     width: 100%;
     margin-top: 4px;
     padding: 14px;
-    background: linear-gradient(135deg, #c2185b, #d6336c);
+    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
     color: #fff;
     font-weight: 800;
     font-size: 15px;
@@ -218,7 +218,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 8px 28px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 8px 28px rgba(242, 139, 160, 0.25);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
@@ -240,7 +240,7 @@
 
 .continueBtn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 12px 36px rgba(242, 139, 160, 0.3);
 }
 
 .continueBtn:active {
@@ -252,11 +252,11 @@
     align-items: center;
     padding: 6px 14px;
     border-radius: 999px;
-    background: rgba(194, 24, 91, 0.08);
-    color: #a01548;
+    background: rgba(242, 139, 160, 0.08);
+    color: #e0748b;
     font-size: 12px;
     font-weight: 800;
-    border: 1px solid rgba(194, 24, 91, 0.12);
+    border: 1px solid rgba(242, 139, 160, 0.12);
     letter-spacing: 0.2px;
 }
 
@@ -293,12 +293,12 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(145deg, #f28ba0 0%, #FFB6C1 100%);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 12px 32px rgba(242, 139, 160, 0.3);
     z-index: 2;
     animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
@@ -307,7 +307,7 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: rgba(194, 24, 91, 0.15);
+    background: rgba(242, 139, 160, 0.15);
     animation: pulseRing 2s ease-out infinite;
 }
 
@@ -326,12 +326,12 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #c2185b 0%, #a01548 100%);
+    background: linear-gradient(145deg, #f28ba0 0%, #e0748b 100%);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 12px 32px rgba(242, 139, 160, 0.3);
     margin-bottom: 8px;
     animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
@@ -347,7 +347,7 @@
 }
 
 .titleAccent {
-    background: linear-gradient(120deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(120deg, #f28ba0 0%, #FFB6C1 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -384,7 +384,7 @@
     flex-direction: column;
     gap: 16px;
     box-shadow:
-            0 20px 60px rgba(194, 24, 91, 0.06),
+            0 20px 60px rgba(242, 139, 160, 0.06),
             0 8px 24px rgba(0, 0, 0, 0.03),
             inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
@@ -406,18 +406,18 @@
     width: 50px;
     height: 50px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #c2185b, #e8568f);
+    background: linear-gradient(135deg, #f28ba0, #FFB6C1);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.2);
+    box-shadow: 0 4px 16px rgba(242, 139, 160, 0.2);
     color: #fff;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .phoneInputWrap:focus-within .phoneBadge {
-    box-shadow: 0 6px 24px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 6px 24px rgba(242, 139, 160, 0.3);
     transform: scale(1.05);
 }
 
@@ -441,9 +441,9 @@
 }
 
 .phoneInput:focus {
-    border-color: #c2185b;
+    border-color: #f28ba0;
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.1), 0 8px 24px rgba(194, 24, 91, 0.06);
+    box-shadow: 0 0 0 4px rgba(242, 139, 160, 0.1), 0 8px 24px rgba(242, 139, 160, 0.06);
     transform: scale(1.02);
 }
 
@@ -482,7 +482,7 @@
 .submitBtn {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #c2185b, #d6336c);
+    background: linear-gradient(180deg, #FFB6C1, #f28ba0);
     color: #fff;
     font-weight: 800;
     font-size: 15px;
@@ -493,7 +493,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 8px 28px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 8px 28px rgba(242, 139, 160, 0.25);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     margin-top: 4px;
     position: relative;
@@ -521,7 +521,7 @@
 
 .submitBtn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 12px 36px rgba(242, 139, 160, 0.3);
 }
 
 .submitBtn:active:not(:disabled) {
@@ -558,8 +558,8 @@
 }
 
 .resendBtn:hover:not(:disabled) {
-    color: #c2185b;
-    background: rgba(194, 24, 91, 0.04);
+    color: #f28ba0;
+    background: rgba(242, 139, 160, 0.04);
 }
 
 .resendBtn:disabled {
@@ -571,7 +571,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #c2185b;
+    background: #f28ba0;
     animation: pulse 1.4s ease-in-out infinite;
 }
 
@@ -589,7 +589,7 @@
 }
 
 .legal a {
-    color: #c2185b;
+    color: #f28ba0;
     text-decoration: none;
     font-weight: 700;
 }
@@ -612,8 +612,8 @@
 }
 
 .changeBtn:hover {
-    color: #c2185b;
-    background: rgba(194, 24, 91, 0.04);
+    color: #f28ba0;
+    background: rgba(242, 139, 160, 0.04);
 }
 
 /* ===================== ANIMATIONS ===================== */

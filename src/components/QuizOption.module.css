@@ -24,17 +24,17 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(194, 24, 91, 0.04), transparent);
+    background: linear-gradient(135deg, rgba(242, 139, 160, 0.04), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
     border-radius: 18px;
 }
 
 .option:hover {
-    border-color: #c2185b;
+    border-color: #f28ba0;
     background: rgba(253, 242, 246, 0.85);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.08);
+    box-shadow: 0 8px 24px rgba(242, 139, 160, 0.08);
 }
 
 .option:active {
@@ -42,10 +42,10 @@
 }
 
 .selected {
-    border-color: #c2185b !important;
+    border-color: #f28ba0 !important;
     background: linear-gradient(135deg, rgba(253, 242, 246, 0.95), rgba(254, 247, 250, 0.95)) !important;
     border-width: 2px;
-    box-shadow: 0 4px 20px rgba(194, 24, 91, 0.15), inset 0 0 0 1px rgba(194, 24, 91, 0.08);
+    box-shadow: 0 4px 20px rgba(242, 139, 160, 0.15), inset 0 0 0 1px rgba(242, 139, 160, 0.08);
     transform: scale(1.01);
 }
 

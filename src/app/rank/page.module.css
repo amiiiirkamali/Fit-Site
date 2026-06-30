@@ -1,8 +1,8 @@
 .page {
-    --color-accent: #c2185b;
-    --color-accent-hover: #9d1249;
-    --color-accent-light: #fdeaf1;
-    --color-accent-soft: rgba(194, 24, 91, 0.08);
+    --color-accent: #f28ba0;
+    --color-accent-hover: #e0748b;
+    --color-accent-light: #FFB6C1;
+    --color-accent-soft: rgba(242, 139, 160, 0.08);
 
     --ink: #1a0f12;
     --ink-soft: #5a2d3d;
@@ -10,15 +10,15 @@
 
     --surface: rgba(255, 255, 255, 0.86);
     --surface-solid: #ffffff;
-    --line: rgba(194, 24, 91, 0.12);
-    --line-strong: rgba(194, 24, 91, 0.2);
+    --line: rgba(242, 139, 160, 0.12);
+    --line-strong: rgba(242, 139, 160, 0.2);
 
-    --grad-brand: linear-gradient(110deg, #c2185b 0%, #9d1249 55%, #e8568f 130%);
+    --grad-brand: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 55%, #e0748b 100%);
     --grad-hero: linear-gradient(150deg, #260a14 0%, #1a0710 55%, #0e060a 100%);
 
-    --shadow-sm: 0 2px 8px rgba(194, 24, 91, 0.05);
-    --shadow-md: 0 10px 30px rgba(194, 24, 91, 0.08);
-    --shadow-lg: 0 24px 60px rgba(194, 24, 91, 0.12);
+    --shadow-sm: 0 2px 8px rgba(242, 139, 160, 0.05);
+    --shadow-md: 0 10px 30px rgba(242, 139, 160, 0.08);
+    --shadow-lg: 0 24px 60px rgba(242, 139, 160, 0.12);
 
     --r-sm: 12px;
     --r-md: 18px;
@@ -58,8 +58,8 @@
 .heroBg::after {
     content: ''; position: absolute; inset: 0;
     background:
-        radial-gradient(700px 320px at 80% -10%, rgba(194, 24, 91, 0.35), transparent 60%),
-        radial-gradient(600px 300px at 10% 0%, rgba(232, 86, 143, 0.25), transparent 60%);
+        radial-gradient(700px 320px at 80% -10%, rgba(242, 139, 160, 0.35), transparent 60%),
+        radial-gradient(600px 300px at 10% 0%, rgba(255, 182, 193, 0.25), transparent 60%);
 }
 .heroContent { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 24px 28px 0; }
 

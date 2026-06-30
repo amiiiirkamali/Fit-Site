@@ -17,8 +17,8 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 3px solid rgba(194, 24, 91, 0.12);
-    border-top-color: #c2185b;
+    border: 3px solid rgba(242, 139, 160, 0.12);
+    border-top-color: #f28ba0;
     animation: spin 0.8s cubic-bezier(0.6, 0.15, 0.35, 0.85) infinite;
     position: relative;
 }
@@ -28,7 +28,7 @@
     inset: 4px;
     border-radius: 50%;
     border: 2px solid transparent;
-    border-bottom-color: #e8568f;
+    border-bottom-color: #FFB6C1;
     animation: spin 0.55s linear infinite reverse;
 }
 
@@ -59,8 +59,8 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(194, 24, 91, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(232, 86, 143, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(242, 139, 160, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(255, 182, 193, 0.08) 0%, transparent 50%),
         radial-gradient(ellipse 40% 30% at 20% 70%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
     pointer-events: none;
 }
@@ -88,13 +88,13 @@
     width: 64px;
     height: 64px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
     box-shadow:
-        0 12px 32px rgba(194, 24, 91, 0.3),
+        0 12px 32px rgba(242, 139, 160, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
@@ -133,8 +133,8 @@
 }
 
 .inputGroup:focus-within {
-    border-color: rgba(194, 24, 91, 0.4);
-    box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.08);
+    border-color: rgba(242, 139, 160, 0.4);
+    box-shadow: 0 0 0 3px rgba(242, 139, 160, 0.08);
 }
 
 .inputGroup svg { color: #6b7280; flex-shrink: 0; }
@@ -159,7 +159,7 @@
     justify-content: center;
     gap: 8px;
     padding: 14px;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 100%);
     color: #fff;
     font-weight: 800;
     font-size: 15px;
@@ -167,12 +167,12 @@
     border-radius: 14px;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 8px 24px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 8px 24px rgba(242, 139, 160, 0.25);
 }
 
 .loginBtn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(194, 24, 91, 0.35);
+    box-shadow: 0 12px 32px rgba(242, 139, 160, 0.35);
 }
 
 .loginBtn:active { transform: translateY(0); }
@@ -265,7 +265,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #e8568f;
+    color: #FFB6C1;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -332,14 +332,14 @@
 }
 
 .sidebarItemActive {
-    background: rgba(194, 24, 91, 0.12);
-    color: #e8568f;
+    background: rgba(242, 139, 160, 0.12);
+    color: #FFB6C1;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .sidebarItemActive:hover {
-    background: rgba(194, 24, 91, 0.16);
-    color: #e8568f;
+    background: rgba(242, 139, 160, 0.16);
+    color: #FFB6C1;
 }
 
 /* ─── FOOTER ─── */
@@ -464,7 +464,7 @@
     flex-shrink: 0;
 }
 
-.statIconPink { background: rgba(194, 24, 91, 0.15); color: #e8568f; }
+.statIconPink { background: rgba(242, 139, 160, 0.15); color: #FFB6C1; }
 .statIconGreen { background: rgba(16, 185, 129, 0.15); color: #34d399; }
 .statIconGold { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
 .statIconBlue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
@@ -563,8 +563,8 @@
 }
 
 .searchBox:focus-within {
-    border-color: rgba(194, 24, 91, 0.3);
-    box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.06);
+    border-color: rgba(242, 139, 160, 0.3);
+    box-shadow: 0 0 0 3px rgba(242, 139, 160, 0.06);
 }
 
 .searchBox svg { color: #6b7280; flex-shrink: 0; }
@@ -612,7 +612,7 @@
     width: 44px;
     height: 44px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -620,7 +620,7 @@
     font-weight: 900;
     font-size: 18px;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(194, 24, 91, 0.25);
+    box-shadow: 0 4px 12px rgba(242, 139, 160, 0.25);
 }
 
 .userMainInfo {
@@ -700,9 +700,9 @@
 }
 
 .expandBtn:hover {
-    background: rgba(194, 24, 91, 0.08);
-    color: #e8568f;
-    border-color: rgba(194, 24, 91, 0.2);
+    background: rgba(242, 139, 160, 0.08);
+    color: #FFB6C1;
+    border-color: rgba(242, 139, 160, 0.2);
 }
 
 .chevronCollapsed { transform: rotate(180deg); }
@@ -743,7 +743,7 @@
     margin: 0 0 12px;
 }
 
-.detailSectionTitle svg { color: #e8568f; }
+.detailSectionTitle svg { color: #FFB6C1; }
 
 .detailRows {
     display: flex;
@@ -919,8 +919,8 @@
     border-radius: 6px;
     font-size: 10px;
     font-weight: 800;
-    background: rgba(194, 24, 91, 0.1);
-    color: #e8568f;
+    background: rgba(242, 139, 160, 0.1);
+    color: #FFB6C1;
 }
 
 .cardioCount {
@@ -989,8 +989,8 @@
 }
 
 .crudInput:focus {
-    border-color: rgba(194, 24, 91, 0.3);
-    box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.06);
+    border-color: rgba(242, 139, 160, 0.3);
+    box-shadow: 0 0 0 3px rgba(242, 139, 160, 0.06);
 }
 
 .crudInput::placeholder { color: #6b7280; }
@@ -1003,7 +1003,7 @@
 
 .crudBtn {
     padding: 14px;
-    background: linear-gradient(135deg, #c2185b 0%, #e8568f 100%);
+    background: linear-gradient(180deg, #FFB6C1 0%, #f28ba0 100%);
     color: #fff;
     font-weight: 800;
     font-size: 14px;
@@ -1011,13 +1011,13 @@
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.2);
+    box-shadow: 0 6px 20px rgba(242, 139, 160, 0.2);
     font-family: inherit;
 }
 
 .crudBtn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(194, 24, 91, 0.3);
+    box-shadow: 0 8px 28px rgba(242, 139, 160, 0.3);
 }
 
 .crudBtn:active { transform: translateY(0); }

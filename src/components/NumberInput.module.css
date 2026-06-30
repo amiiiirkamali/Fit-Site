@@ -25,8 +25,8 @@
 }
 
 .input:focus {
-    border-color: #c2185b;
-    box-shadow: 0 0 0 4px rgba(194, 24, 91, 0.1), 0 8px 24px rgba(194, 24, 91, 0.08);
+    border-color: #f28ba0;
+    box-shadow: 0 0 0 4px rgba(242, 139, 160, 0.1), 0 8px 24px rgba(242, 139, 160, 0.08);
     transform: scale(1.02);
 }
 
@@ -49,9 +49,9 @@
 .unit {
     font-size: 16px;
     font-weight: 700;
-    color: #c2185b;
+    color: #f28ba0;
     white-space: nowrap;
-    background: rgba(194, 24, 91, 0.08);
+    background: rgba(242, 139, 160, 0.08);
     padding: 8px 16px;
     border-radius: 10px;
 }
