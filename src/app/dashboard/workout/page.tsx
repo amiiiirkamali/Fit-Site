@@ -581,9 +581,7 @@ export default function WorkoutPage() {
                             <Dumbbell size={32} />
                         </div>
                         <h1 className={styles.heroTitle}>برنامه ورزشی ۳۰ روزه</h1>
-                        <p className={styles.heroDesc}>
-                            تمرینات شخصی‌سازی شده با توجه به اهداف و تجهیزات تو
-                        </p>
+
 
                         <div className={styles.heroStats}>
                             <div className={styles.heroStat}>
@@ -780,107 +778,107 @@ export default function WorkoutPage() {
                     </div>
                 </section>
 
-                {/* ─── Day Header & Progress ─── */}
-                {!isRestDay && hasWorkout && (
-                    <section className={styles.progressSection}>
-                        {/* Overall Day Card */}
-                        <div className={styles.overallCard}>
-                            <div className={styles.overallTop}>
-                                <div className={styles.overallTitle}>
-                                    <Flame size={18} />
-                                    <span>روز {toPersianNum(selectedDay)} — {PERSIAN_WEEKDAYS[dayOfWeek]}</span>
-                                </div>
-                                <div className={styles.overallBadge}>
-                                    {overallDayProgress === 100 ? (
-                                        <>
-                                            <Trophy size={14} />
-                                            <span>تکمیل شد</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Activity size={14} />
-                                            <span>{toPersianNum(overallDayProgress)}٪</span>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                            <div className={styles.overallTrack}>
-                                <div
-                                    className={styles.overallFill}
-                                    style={{ width: `${overallDayProgress}%` }}
-                                />
-                            </div>
-                            <div className={styles.overallMeta}>
-                                <span>{toPersianNum(completedCardio + completedStrength)} از {toPersianNum(dayExercises.length)} حرکت انجام شد</span>
-                            </div>
-                        </div>
+                {/*/!* ─── Day Header & Progress ─── *!/*/}
+                {/*{!isRestDay && hasWorkout && (*/}
+                {/*    <section className={styles.progressSection}>*/}
+                {/*        /!* Overall Day Card *!/*/}
+                {/*        <div className={styles.overallCard}>*/}
+                {/*            <div className={styles.overallTop}>*/}
+                {/*                <div className={styles.overallTitle}>*/}
+                {/*                    <Flame size={18} />*/}
+                {/*                    <span>روز {toPersianNum(selectedDay)} — {PERSIAN_WEEKDAYS[dayOfWeek]}</span>*/}
+                {/*                </div>*/}
+                {/*                <div className={styles.overallBadge}>*/}
+                {/*                    {overallDayProgress === 100 ? (*/}
+                {/*                        <>*/}
+                {/*                            <Trophy size={14} />*/}
+                {/*                            <span>تکمیل شد</span>*/}
+                {/*                        </>*/}
+                {/*                    ) : (*/}
+                {/*                        <>*/}
+                {/*                            <Activity size={14} />*/}
+                {/*                            <span>{toPersianNum(overallDayProgress)}٪</span>*/}
+                {/*                        </>*/}
+                {/*                    )}*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*            <div className={styles.overallTrack}>*/}
+                {/*                <div*/}
+                {/*                    className={styles.overallFill}*/}
+                {/*                    style={{ width: `${overallDayProgress}%` }}*/}
+                {/*                />*/}
+                {/*            </div>*/}
+                {/*            <div className={styles.overallMeta}>*/}
+                {/*                <span>{toPersianNum(completedCardio + completedStrength)} از {toPersianNum(dayExercises.length)} حرکت انجام شد</span>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
 
-                        {/* Cardio + Strength Progress Cards */}
-                        <div className={styles.progressGrid}>
-                            {cardioExercises.length > 0 && (
-                                <div className={`${styles.progressCard} ${styles.progressCardCardio}`}>
-                                    <div className={styles.progressCardHeader}>
-                                        <div className={`${styles.progressCardIcon} ${styles.iconCardio}`}>
-                                            <Heart size={18} />
-                                        </div>
-                                        <div className={styles.progressCardInfo}>
-                                            <h3 className={styles.progressCardTitle}>هوازی</h3>
-                                            <p className={styles.progressCardSub}>
-                                                {toPersianNum(completedCardio)} از {toPersianNum(cardioExercises.length)} حرکت
-                                            </p>
-                                        </div>
-                                        <span className={`${styles.progressPercent} ${styles.percentCardio}`}>
-                                            {toPersianNum(cardioProgress)}٪
-                                        </span>
-                                    </div>
-                                    <div className={styles.progressTrack}>
-                                        <div
-                                            className={`${styles.progressFill} ${styles.fillCardio}`}
-                                            style={{ width: `${cardioProgress}%` }}
-                                        />
-                                    </div>
-                                    <div className={styles.progressMeta}>
-                                        <span><Timer size={11} /> {toPersianNum(totalCardioSets)} ست</span>
-                                        <span>
-                                            {cardioProgress === 100 ? "🎉 تمام شد" : `${toPersianNum(cardioExercises.length - completedCardio)} باقی‌مانده`}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
+                {/*        /!* Cardio + Strength Progress Cards *!/*/}
+                {/*        <div className={styles.progressGrid}>*/}
+                {/*            {cardioExercises.length > 0 && (*/}
+                {/*                <div className={`${styles.progressCard} ${styles.progressCardCardio}`}>*/}
+                {/*                    <div className={styles.progressCardHeader}>*/}
+                {/*                        <div className={`${styles.progressCardIcon} ${styles.iconCardio}`}>*/}
+                {/*                            <Heart size={18} />*/}
+                {/*                        </div>*/}
+                {/*                        <div className={styles.progressCardInfo}>*/}
+                {/*                            <h3 className={styles.progressCardTitle}>هوازی</h3>*/}
+                {/*                            <p className={styles.progressCardSub}>*/}
+                {/*                                {toPersianNum(completedCardio)} از {toPersianNum(cardioExercises.length)} حرکت*/}
+                {/*                            </p>*/}
+                {/*                        </div>*/}
+                {/*                        <span className={`${styles.progressPercent} ${styles.percentCardio}`}>*/}
+                {/*                            {toPersianNum(cardioProgress)}٪*/}
+                {/*                        </span>*/}
+                {/*                    </div>*/}
+                {/*                    <div className={styles.progressTrack}>*/}
+                {/*                        <div*/}
+                {/*                            className={`${styles.progressFill} ${styles.fillCardio}`}*/}
+                {/*                            style={{ width: `${cardioProgress}%` }}*/}
+                {/*                        />*/}
+                {/*                    </div>*/}
+                {/*                    <div className={styles.progressMeta}>*/}
+                {/*                        <span><Timer size={11} /> {toPersianNum(totalCardioSets)} ست</span>*/}
+                {/*                        <span>*/}
+                {/*                            {cardioProgress === 100 ? "🎉 تمام شد" : `${toPersianNum(cardioExercises.length - completedCardio)} باقی‌مانده`}*/}
+                {/*                        </span>*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            )}*/}
 
-                            {strengthExercises.length > 0 && (
-                                <div className={`${styles.progressCard} ${styles.progressCardStrength}`}>
-                                    <div className={styles.progressCardHeader}>
-                                        <div className={`${styles.progressCardIcon} ${styles.iconStrength}`}>
-                                            <Dumbbell size={18} />
-                                        </div>
-                                        <div className={styles.progressCardInfo}>
-                                            <h3 className={styles.progressCardTitle}>قدرتی</h3>
-                                            <p className={styles.progressCardSub}>
-                                                {toPersianNum(completedStrength)} از {toPersianNum(strengthExercises.length)} حرکت
-                                            </p>
-                                        </div>
-                                        <span className={`${styles.progressPercent} ${styles.percentStrength}`}>
-                                            {toPersianNum(strengthProgress)}٪
-                                        </span>
-                                    </div>
-                                    <div className={styles.progressTrack}>
-                                        <div
-                                            className={`${styles.progressFill} ${styles.fillStrength}`}
-                                            style={{ width: `${strengthProgress}%` }}
-                                        />
-                                    </div>
-                                    <div className={styles.progressMeta}>
-                                        <span><Target size={11} /> {toPersianNum(totalStrengthSets)} ست</span>
-                                        <span>
-                                            {strengthProgress === 100 ? "🎉 تمام شد" : `${toPersianNum(strengthExercises.length - completedStrength)} باقی‌مانده`}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </section>
-                )}
+                {/*            {strengthExercises.length > 0 && (*/}
+                {/*                <div className={`${styles.progressCard} ${styles.progressCardStrength}`}>*/}
+                {/*                    <div className={styles.progressCardHeader}>*/}
+                {/*                        <div className={`${styles.progressCardIcon} ${styles.iconStrength}`}>*/}
+                {/*                            <Dumbbell size={18} />*/}
+                {/*                        </div>*/}
+                {/*                        <div className={styles.progressCardInfo}>*/}
+                {/*                            <h3 className={styles.progressCardTitle}>قدرتی</h3>*/}
+                {/*                            <p className={styles.progressCardSub}>*/}
+                {/*                                {toPersianNum(completedStrength)} از {toPersianNum(strengthExercises.length)} حرکت*/}
+                {/*                            </p>*/}
+                {/*                        </div>*/}
+                {/*                        <span className={`${styles.progressPercent} ${styles.percentStrength}`}>*/}
+                {/*                            {toPersianNum(strengthProgress)}٪*/}
+                {/*                        </span>*/}
+                {/*                    </div>*/}
+                {/*                    <div className={styles.progressTrack}>*/}
+                {/*                        <div*/}
+                {/*                            className={`${styles.progressFill} ${styles.fillStrength}`}*/}
+                {/*                            style={{ width: `${strengthProgress}%` }}*/}
+                {/*                        />*/}
+                {/*                    </div>*/}
+                {/*                    <div className={styles.progressMeta}>*/}
+                {/*                        <span><Target size={11} /> {toPersianNum(totalStrengthSets)} ست</span>*/}
+                {/*                        <span>*/}
+                {/*                            {strengthProgress === 100 ? "🎉 تمام شد" : `${toPersianNum(strengthExercises.length - completedStrength)} باقی‌مانده`}*/}
+                {/*                        </span>*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            )}*/}
+                {/*        </div>*/}
+                {/*    </section>*/}
+                {/*)}*/}
 
                 {/* ─── Cardio / Warm-up ─── */}
                 {cardioExercises.length > 0 && (

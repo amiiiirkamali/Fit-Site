@@ -638,9 +638,7 @@ export default function DietPage() {
                             <Salad size={32} />
                         </div>
                         <h1 className={styles.heroTitle}>برنامه غذایی ۳۰ روزه</h1>
-                        <p className={styles.heroDesc}>
-                            اختصاصی برای تو — هر روز یه وعده‌ی جدید
-                        </p>
+
 
                         <div className={styles.heroStats}>
                             <div className={styles.heroStat}>
@@ -664,18 +662,6 @@ export default function DietPage() {
                     {toPersianNum(overallProgress)}٪
                   </span>
                                     <span className={styles.heroStatLabel}>پیشرفت کل</span>
-                                </div>
-                            </div>
-                            <div className={styles.heroStatDivider} />
-                            <div className={styles.heroStat}>
-                                <div className={styles.heroStatIcon}>
-                                    <Trophy size={18} />
-                                </div>
-                                <div className={styles.heroStatInfo}>
-                  <span className={styles.heroStatValue}>
-                    {toPersianNum(totalConsumed)}
-                  </span>
-                                    <span className={styles.heroStatLabel}>وعده مصرف‌شده</span>
                                 </div>
                             </div>
                         </div>
@@ -703,12 +689,12 @@ export default function DietPage() {
                         <span>۳۰ روز</span>
                     </div>
                     <div className={styles.contextDivider} />
-                    <div className={styles.contextItem}>
-                        <Sparkles size={14} />
-                        <span>
-              {toPersianNum(totalConsumed)} از {toPersianNum(totalMeals)} وعده
-            </span>
-                    </div>
+            {/*        <div className={styles.contextItem}>*/}
+            {/*            <Sparkles size={14} />*/}
+            {/*            <span>*/}
+            {/*  {toPersianNum(totalConsumed)} از {toPersianNum(totalMeals)} وعده*/}
+            {/*</span>*/}
+            {/*        </div>*/}
                 </div>
 
                 {/* ─── Day Tabs ─── */}
@@ -791,183 +777,180 @@ export default function DietPage() {
                 </section>
 
                 {/* ─── Progress Cards ─── */}
-                <section className={styles.progressSection}>
-                    {/* Overall Day Card */}
-                    <div className={styles.overallCard}>
-                        <div className={styles.overallTop}>
-                            <div className={styles.overallTitle}>
-                                <Flame size={18} />
-                                <span>روز {toPersianNum(selectedDay)} — کالری</span>
-                            </div>
-                            <div className={styles.overallBadge}>
-                                {consumedCal >= plan.dailyCalorieTarget ? (
-                                    <>
-                                        <Trophy size={14} />
-                                        <span>هدف محقق شد</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Activity size={14} />
-                                        <span>{toPersianNum(calPercent)}٪</span>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                        <div className={styles.overallTrack}>
-                            <div
-                                className={styles.overallFill}
-                                style={{ width: `${Math.min(100, calPercent)}%` }}
-                            />
-                        </div>
-                        <div className={styles.overallMeta}>
-                            <span>{toPersianNum(consumedCal)} از {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری مصرف شد</span>
-                        </div>
-                    </div>
+                {/*<section className={styles.progressSection}>*/}
+                {/*    /!* Overall Day Card *!/*/}
+                {/*    <div className={styles.overallCard}>*/}
+                {/*        <div className={styles.overallTop}>*/}
+                {/*            <div className={styles.overallTitle}>*/}
+                {/*                <Flame size={18} />*/}
+                {/*                <span>روز {toPersianNum(selectedDay)} — کالری</span>*/}
+                {/*            </div>*/}
+                {/*            <div className={styles.overallBadge}>*/}
+                {/*                {consumedCal >= plan.dailyCalorieTarget ? (*/}
+                {/*                    <>*/}
+                {/*                        <Trophy size={14} />*/}
+                {/*                        <span>هدف محقق شد</span>*/}
+                {/*                    </>*/}
+                {/*                ) : (*/}
+                {/*                    <>*/}
+                {/*                        <Activity size={14} />*/}
+                {/*                        <span>{toPersianNum(calPercent)}٪</span>*/}
+                {/*                    </>*/}
+                {/*                )}*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className={styles.overallTrack}>*/}
+                {/*            <div*/}
+                {/*                className={styles.overallFill}*/}
+                {/*                style={{ width: `${Math.min(100, calPercent)}%` }}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*        <div className={styles.overallMeta}>*/}
+                {/*            <span>{toPersianNum(consumedCal)} از {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری مصرف شد</span>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
 
-                    <div className={styles.progressGrid}>
-                        {/* Calorie Progress */}
-                        <div className={styles.progressCard}>
-                            <div className={styles.progressCardHeader}>
-                                <div className={styles.progressCardIcon}>
-                                    <Flame size={18} />
-                                </div>
-                                <div>
-                                    <h3 className={styles.progressCardTitle}>کالری مصرفی</h3>
-                                    <p className={styles.progressCardSub}>
-                                        روز {toPersianNum(selectedDay)}
-                                    </p>
-                                </div>
-                                <span className={styles.progressPercent}>
-                  {toPersianNum(calPercent)}٪
-                </span>
-                            </div>
-                            <div className={styles.progressTrack}>
-                                <div
-                                    className={styles.progressFill}
-                                    style={{ width: `${calPercent}%` }}
-                                />
-                            </div>
-                            <div className={styles.progressMeta}>
-                <span>
-                  {toPersianNum(consumedCal)} از{" "}
-                    {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری
-                </span>
-                                <span>
-                  باقی‌مانده:{" "}
-                                    {toPersianNum(
-                                        Math.max(0, plan.dailyCalorieTarget - consumedCal)
-                                    )}
-                </span>
-                            </div>
-                        </div>
+                {/*/!*    <div className={styles.progressGrid}>*!/*/}
+                {/*/!*        /!* Calorie Progress *!/*!/*/}
+                {/*/!*        <div className={styles.progressCard}>*!/*/}
+                {/*/!*            <div className={styles.progressCardHeader}>*!/*/}
+                {/*/!*                <div className={styles.progressCardIcon}>*!/*/}
+                {/*/!*                    <Flame size={18} />*!/*/}
+                {/*/!*                </div>*!/*/}
+                {/*/!*                <div>*!/*/}
+                {/*/!*                    <h3 className={styles.progressCardTitle}>کالری مصرفی</h3>*!/*/}
+                {/*/!*                    <p className={styles.progressCardSub}>*!/*/}
+                {/*/!*                        روز {toPersianNum(selectedDay)}*!/*/}
+                {/*/!*                    </p>*!/*/}
+                {/*/!*                </div>*!/*/}
+                {/*/!*                <span className={styles.progressPercent}>*!/*/}
+                {/*/!*  {toPersianNum(calPercent)}٪*!/*/}
+                {/*/!*</span>*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*            <div className={styles.progressTrack}>*!/*/}
+                {/*/!*                <div*!/*/}
+                {/*/!*                    className={styles.progressFill}*!/*/}
+                {/*/!*                    style={{ width: `${calPercent}%` }}*!/*/}
+                {/*/!*                />*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*            <div className={styles.progressMeta}>*!/*/}
+                {/*/!*<span>*!/*/}
+                {/*/!*  {toPersianNum(consumedCal)} از{" "}*!/*/}
+                {/*/!*    {toPersianNum(plan.dailyCalorieTarget)} کیلوکالری*!/*/}
+                {/*/!*</span>*!/*/}
+                {/*/!*                <span>*!/*/}
+                {/*/!*  باقی‌مانده:{" "}*!/*/}
+                {/*/!*                    {toPersianNum(*!/*/}
+                {/*/!*                        Math.max(0, plan.dailyCalorieTarget - consumedCal)*!/*/}
+                {/*/!*                    )}*!/*/}
+                {/*/!*</span>*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*        </div>*!/*/}
 
-                        {/* Meal Progress */}
-                        <div className={styles.progressCard}>
-                            <div className={styles.progressCardHeader}>
-                                <div className={styles.progressCardIcon}>
-                                    <Target size={18} />
-                                </div>
-                                <div>
-                                    <h3 className={styles.progressCardTitle}>
-                                        وعده‌های مصرف‌شده
-                                    </h3>
-                                    <p className={styles.progressCardSub}>
-                                        {toPersianNum(consumedCount)} از{" "}
-                                        {toPersianNum(dayMeals.length)} وعده
-                                    </p>
-                                </div>
-                                <span
-                                    className={styles.progressPercent}
-                                >
-                  {toPersianNum(mealProgress)}٪
-                </span>
-                            </div>
-                            <div className={styles.progressTrack}>
-                                <div
-                                    className={styles.progressFill}
-                                    style={{ width: `${mealProgress}%` }}
-                                />
-                            </div>
-                            <div className={styles.progressMeta}>
-                <span>
-                  {consumedCount === dayMeals.length && dayMeals.length > 0
-                      ? "🎉 عالی! همه وعده‌ها مصرف شد"
-                      : `${toPersianNum(dayMeals.length - consumedCount)} وعده باقی‌مانده`}
-                </span>
-                            </div>
-                        </div>
-                    </div>
+                {/*/!*        /!* Meal Progress *!/*!/*/}
+                {/*/!*        <div className={styles.progressCard}>*!/*/}
+                {/*/!*            <div className={styles.progressCardHeader}>*!/*/}
+                {/*/!*                <div className={styles.progressCardIcon}>*!/*/}
+                {/*/!*                    <Target size={18} />*!/*/}
+                {/*/!*                </div>*!/*/}
+                {/*/!*                <div>*!/*/}
+                {/*/!*                    <h3 className={styles.progressCardTitle}>*!/*/}
+                {/*/!*                        وعده‌های مصرف‌شده*!/*/}
+                {/*/!*                    </h3>*!/*/}
+                {/*/!*                    <p className={styles.progressCardSub}>*!/*/}
+                {/*/!*                        {toPersianNum(consumedCount)} از{" "}*!/*/}
+                {/*/!*                        {toPersianNum(dayMeals.length)} وعده*!/*/}
+                {/*/!*                    </p>*!/*/}
+                {/*/!*                </div>*!/*/}
+                {/*/!*                <span*!/*/}
+                {/*/!*                    className={styles.progressPercent}*!/*/}
+                {/*/!*                >*!/*/}
+                {/*/!*  {toPersianNum(mealProgress)}٪*!/*/}
+                {/*/!*</span>*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*            <div className={styles.progressTrack}>*!/*/}
+                {/*/!*                <div*!/*/}
+                {/*/!*                    className={styles.progressFill}*!/*/}
+                {/*/!*                    style={{ width: `${mealProgress}%` }}*!/*/}
+                {/*/!*                />*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*            <div className={styles.progressMeta}>*!/*/}
+                {/*/!*<span>*!/*/}
+                {/*/!*  {consumedCount === dayMeals.length && dayMeals.length > 0*!/*/}
+                {/*/!*      ? "🎉 عالی! همه وعده‌ها مصرف شد"*!/*/}
+                {/*/!*      : `${toPersianNum(dayMeals.length - consumedCount)} وعده باقی‌مانده`}*!/*/}
+                {/*/!*</span>*!/*/}
+                {/*/!*            </div>*!/*/}
+                {/*/!*        </div>*!/*/}
+                {/*/!*    </div>*!/*/}
 
-                    {/* Macro Summary */}
-                    <div className={styles.macroSummary}>
-                        <div className={styles.macroSummaryItem}>
-                            <div className={`${styles.macroSummaryIcon} ${styles.macroProtein}`}>
-                                <Wheat size={16} />
-                            </div>
-                            <div className={styles.macroSummaryInfo}>
-                <span className={styles.macroSummaryValue}>
-                  {toPersianNum(consumedProtein)}/{toPersianNum(totalProtein)}g
-                </span>
-                                <span className={styles.macroSummaryLabel}>پروتئین</span>
-                            </div>
-                            <div className={`${styles.macroSummaryBar} ${styles.barProtein}`}>
-                                <div
-                                    className={`${styles.macroSummaryBarFill} ${styles.fillProtein}`}
-                                    style={{
-                                        width: `${totalProtein ? Math.min(100, (consumedProtein / totalProtein) * 100) : 0}%`,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.macroSummaryItem}>
-                            <div className={`${styles.macroSummaryIcon} ${styles.macroCarbs}`}>
-                                <Banana size={16} />
-                            </div>
-                            <div className={styles.macroSummaryInfo}>
-                <span className={styles.macroSummaryValue}>
-                  {toPersianNum(consumedCarbs)}/{toPersianNum(totalCarbs)}g
-                </span>
-                                <span className={styles.macroSummaryLabel}>کربوهیدرات</span>
-                            </div>
-                            <div className={`${styles.macroSummaryBar} ${styles.barCarbs}`}>
-                                <div
-                                    className={`${styles.macroSummaryBarFill} ${styles.fillCarbs}`}
-                                    style={{
-                                        width: `${totalCarbs ? Math.min(100, (consumedCarbs / totalCarbs) * 100) : 0}%`,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.macroSummaryItem}>
-                            <div className={`${styles.macroSummaryIcon} ${styles.macroFat}`}>
-                                <Droplets size={16} />
-                            </div>
-                            <div className={styles.macroSummaryInfo}>
-                <span className={styles.macroSummaryValue}>
-                  {toPersianNum(consumedFat)}/{toPersianNum(totalFat)}g
-                </span>
-                                <span className={styles.macroSummaryLabel}>چربی</span>
-                            </div>
-                            <div className={`${styles.macroSummaryBar} ${styles.barFat}`}>
-                                <div
-                                    className={`${styles.macroSummaryBarFill} ${styles.fillFat}`}
-                                    style={{
-                                        width: `${totalFat ? Math.min(100, (consumedFat / totalFat) * 100) : 0}%`,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/*    /!* Macro Summary *!/*/}
+                {/*    /!*<div className={styles.macroSummary}>*!/*/}
+                {/*    /!*    <div className={styles.macroSummaryItem}>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryIcon} ${styles.macroProtein}`}>*!/*/}
+                {/*    /!*            <Wheat size={16} />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={styles.macroSummaryInfo}>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryValue}>*!/*/}
+                {/*    /!*              {toPersianNum(consumedProtein)}/{toPersianNum(totalProtein)}g*!/*/}
+                {/*    /!*            </span>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryLabel}>پروتئین</span>*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryBar} ${styles.barProtein}`}>*!/*/}
+                {/*    /!*            <div*!/*/}
+                {/*    /!*                className={`${styles.macroSummaryBarFill} ${styles.fillProtein}`}*!/*/}
+                {/*    /!*                style={{*!/*/}
+                {/*    /!*                    width: `${totalProtein ? Math.min(100, (consumedProtein / totalProtein) * 100) : 0}%`,*!/*/}
+                {/*    /!*                }}*!/*/}
+                {/*    /!*            />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*    </div>*!/*/}
+                {/*    /!*    <div className={styles.macroSummaryItem}>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryIcon} ${styles.macroCarbs}`}>*!/*/}
+                {/*    /!*            <Banana size={16} />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={styles.macroSummaryInfo}>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryValue}>*!/*/}
+                {/*    /!*              {toPersianNum(consumedCarbs)}/{toPersianNum(totalCarbs)}g*!/*/}
+                {/*    /!*            </span>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryLabel}>کربوهیدرات</span>*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryBar} ${styles.barCarbs}`}>*!/*/}
+                {/*    /!*            <div*!/*/}
+                {/*    /!*                className={`${styles.macroSummaryBarFill} ${styles.fillCarbs}`}*!/*/}
+                {/*    /!*                style={{*!/*/}
+                {/*    /!*                    width: `${totalCarbs ? Math.min(100, (consumedCarbs / totalCarbs) * 100) : 0}%`,*!/*/}
+                {/*    /!*                }}*!/*/}
+                {/*    /!*            />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*    </div>*!/*/}
+                {/*    /!*    <div className={styles.macroSummaryItem}>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryIcon} ${styles.macroFat}`}>*!/*/}
+                {/*    /!*            <Droplets size={16} />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={styles.macroSummaryInfo}>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryValue}>*!/*/}
+                {/*    /!*              {toPersianNum(consumedFat)}/{toPersianNum(totalFat)}g*!/*/}
+                {/*    /!*            </span>*!/*/}
+                {/*    /!*            <span className={styles.macroSummaryLabel}>چربی</span>*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*        <div className={`${styles.macroSummaryBar} ${styles.barFat}`}>*!/*/}
+                {/*    /!*            <div*!/*/}
+                {/*    /!*                className={`${styles.macroSummaryBarFill} ${styles.fillFat}`}*!/*/}
+                {/*    /!*                style={{*!/*/}
+                {/*    /!*                    width: `${totalFat ? Math.min(100, (consumedFat / totalFat) * 100) : 0}%`,*!/*/}
+                {/*    /!*                }}*!/*/}
+                {/*    /!*            />*!/*/}
+                {/*    /!*        </div>*!/*/}
+                {/*    /!*    </div>*!/*/}
+                {/*    /!*</div>*!/*/}
+                {/*</section>*/}
 
                 {/* ─── Meals ─── */}
                 <section className={styles.mealsSection}>
                     <div className={styles.mealsHeader}>
                         <div className={styles.mealsHeaderRight}>
                             <h2 className={styles.mealsTitle}>وعده‌های امروز</h2>
-                            <span className={styles.mealsCount}>
-                {toPersianNum(dayMeals.length)} وعده
-              </span>
                         </div>
                         {consumedCount > 0 && (
                             <div className={styles.mealsHeaderBadge}>

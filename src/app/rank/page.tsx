@@ -79,11 +79,6 @@ export default function RankPage() {
             <div className={styles.content}>
                 <div className={styles.statsBar}>
                     <div className={styles.statItem}>
-                        <Heart size={16} />
-                        <span>بر اساس تعداد تمرینات هوازی انجام‌شده</span>
-                    </div>
-                    <div className={styles.statDivider} />
-                    <div className={styles.statItem}>
                         <Zap size={16} />
                         <span>{toPersianNum(data.length)} کاربر در رقابت</span>
                     </div>

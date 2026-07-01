@@ -194,8 +194,6 @@ export default function HomePage() {
             <Header />
 
             <section className={styles.hero}>
-                <div className={styles.heroGlowOne} />
-                <div className={styles.heroGlowTwo} />
                 <div className={styles.heroInner}>
                     <div className={styles.heroContent}>
                         <div className={styles.heroBadge}>
@@ -216,14 +214,14 @@ export default function HomePage() {
                                 ساخت برنامه
                                 <ArrowLeft size={18} />
                             </button>
-                            <a href="#features" className={styles.secondaryBtn}>
-                                امکانات
-                            </a>
+                            {/*<a href="#features" className={styles.secondaryBtn}>*/}
+                            {/*    امکانات*/}
+                            {/*</a>*/}
                         </div>
                         <div className={styles.heroTrust}>
                             <div className={styles.trustItem}>
                                 <CheckCircle2 size={16} />
-                                <span>بدون نیاز به دانش تخصصی</span>
+                                <span>ساخت برنامه در ۲ دقیقه</span>
                             </div>
                             <div className={styles.trustItem}>
                                 <CheckCircle2 size={16} />
@@ -243,23 +241,28 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className={styles.statsSection}>
-                <div className={styles.statsGrid}>
-                    {stats.map((item, idx) => {
-                        const Icon = item.icon;
-                        return (
-                            <div key={idx} className={styles.statCard}>
-                                <div className={styles.statIcon}><Icon size={18} /></div>
-                                <strong>{item.value}</strong>
-                                <span>{item.label}</span>
+            <section className={styles.howSection}>
+                <div className={styles.sectionHead}>
+                    {/*<span className={styles.sectionEyebrow}>مراحل کار</span>*/}
+                    <h2 className={styles.sectionTitle}>اینجوری برات
+                        <br/>
+                        برنامتو میسازیم</h2>
+                </div>
+                <div className={styles.stepsGrid}>
+                    {steps.map((step, idx) => (
+                        <div key={idx} className={styles.stepCard}>
+                            <div className={styles.stepNumWrap}>
+                                <span className={styles.stepNo}>{step.no}</span>
+                                {idx < steps.length - 1 && <div className={styles.stepLine} />}
                             </div>
-                        );
-                    })}
+                            <h3>{step.title}</h3>
+                            <p>{step.desc}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
 
             <section className={styles.featuresSection} id="features">
-                <div className={styles.featuresBgGlow} />
                 <div className={styles.sectionHead}>
                     <span className={styles.sectionEyebrow}>امکانات اصلی</span>
                     <h2 className={styles.sectionTitle}>همه‌چیز برای یک شروع حرفه‌ای</h2>
@@ -281,30 +284,26 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className={styles.howSection}>
-                <div className={styles.sectionHead}>
-                    <span className={styles.sectionEyebrow}>مراحل کار</span>
-                    <h2 className={styles.sectionTitle}>سه قدم ساده تا برنامه‌ی اختصاصی</h2>
-                </div>
-                <div className={styles.stepsGrid}>
-                    {steps.map((step, idx) => (
-                        <div key={idx} className={styles.stepCard}>
-                            <div className={styles.stepNumWrap}>
-                                <span className={styles.stepNo}>{step.no}</span>
-                                {idx < steps.length - 1 && <div className={styles.stepLine} />}
+            <section className={styles.statsSection}>
+                <div className={styles.statsGrid}>
+                    {stats.map((item, idx) => {
+                        const Icon = item.icon;
+                        return (
+                            <div key={idx} className={styles.statCard}>
+                                <div className={styles.statIcon}><Icon size={18} /></div>
+                                <strong>{item.value}</strong>
+                                <span>{item.label}</span>
                             </div>
-                            <h3>{step.title}</h3>
-                            <p>{step.desc}</p>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
+
 
             <TestimonialsCarousel />
 
             <section className={styles.finalCtaSection}>
                 <div className={styles.finalCtaCard}>
-                    <div className={styles.finalGlow} />
                     <span className={styles.finalTag}>آماده‌ای؟</span>
                     <h2>برنامه‌ی اختصاصی‌ات را بساز</h2>
                     <p>۳۰ سوال، یک برنامه‌ی کاملاً شخصی</p>

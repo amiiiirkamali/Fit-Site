@@ -1,6 +1,6 @@
 .page {
     min-height: 100vh;
-    background: var(--color-bg);
+    background: #ffffff;
     overflow-x: hidden;
 }
 
@@ -29,29 +29,6 @@
     position: relative;
     overflow: hidden;
     padding: 40px 24px 80px;
-}
-
-.heroGlowOne, .heroGlowTwo {
-    position: absolute;
-    border-radius: 999px;
-    pointer-events: none;
-    filter: blur(74px);
-}
-
-.heroGlowOne {
-    top: 10px;
-    right: 4%;
-    width: 280px;
-    height: 280px;
-    background: rgba(242, 139, 160, 0.12);
-}
-
-.heroGlowTwo {
-    bottom: -40px;
-    left: 6%;
-    width: 240px;
-    height: 240px;
-    background: rgba(242, 139, 160, 0.05);
 }
 
 .heroInner {
@@ -131,7 +108,7 @@
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, box-shadow 0.3s ease;
 }
 
-.primaryBtn:hover { transform: translateY(-3px) scale(1.02); background: var(--color-accent-hover); box-shadow: 0 24px 48px rgba(242, 139, 160, 0.26); }
+.primaryBtn:hover { transform: translateY(-3px) scale(1.02); background: var(--color-accent-hover); }
 .primaryBtn:active { transform: translateY(-1px) scale(0.98); }
 
 .secondaryBtn {
@@ -332,41 +309,12 @@
     isolation: isolate;
 }
 
-.statCard::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 28px;
-    background: linear-gradient(160deg, transparent 40%, rgba(242, 139, 160, 0.02) 100%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.statCard::after {
-    content: "";
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(242, 139, 160, 0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 .statCard:hover {
     transform: translateY(-6px);
-    border-color: rgba(242, 139, 160, 0.12);
     box-shadow:
-        0 12px 40px rgba(242, 139, 160, 0.06),
+        0 12px 40px rgba(21, 18, 26, 0.04),
         0 4px 20px rgba(21, 18, 26, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.statCard:hover::after {
-    transform: scale(1.8);
 }
 
 .statIcon {
@@ -379,9 +327,6 @@
     align-items: center;
     justify-content: center;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow:
-        0 4px 16px rgba(242, 139, 160, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     position: relative;
     z-index: 1;
     flex-shrink: 0;
@@ -389,9 +334,6 @@
 
 .statCard:hover .statIcon {
     transform: scale(1.1) rotate(-4deg);
-    box-shadow:
-        0 8px 28px rgba(242, 139, 160, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .statCard strong {
@@ -460,18 +402,6 @@
     position: relative;
 }
 
-.featuresBgGlow {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(242, 139, 160, 0.03), transparent 70%);
-    pointer-events: none;
-}
-
 .featuresGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -497,43 +427,11 @@
     flex-direction: column;
 }
 
-.featureCard::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(242, 139, 160, 0.03) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.featureCard::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent 10%, rgba(242, 139, 160, 0.06) 50%, transparent 90%);
-    pointer-events: none;
-    z-index: 0;
-}
-
 .featureCard:hover {
     transform: translateY(-6px);
     box-shadow:
-        0 12px 40px rgba(242, 139, 160, 0.06),
         0 4px 20px rgba(21, 18, 26, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-color: rgba(242, 139, 160, 0.12);
-}
-
-.featureCard:hover::before {
-    transform: scale(2);
 }
 
 .featureIcon {
@@ -547,9 +445,6 @@
     justify-content: center;
     margin-bottom: 20px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow:
-        0 4px 16px rgba(242, 139, 160, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     position: relative;
     z-index: 1;
     flex-shrink: 0;
@@ -557,9 +452,6 @@
 
 .featureCard:hover .featureIcon {
     transform: scale(1.1) rotate(-4deg);
-    box-shadow:
-        0 8px 28px rgba(242, 139, 160, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .featureCard h3 {
@@ -584,7 +476,7 @@
 /* ---------- steps ---------- */
 .howSection {
     padding: 80px 24px;
-    background: var(--color-bg-subtle);
+    background: #ffffff;
 }
 
 .stepsGrid {
@@ -607,7 +499,7 @@
 
 .stepCard:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 48px rgba(242, 139, 160, 0.08);
+    box-shadow: 0 20px 48px rgba(21, 18, 26, 0.04);
 }
 
 .stepNumWrap {
@@ -629,15 +521,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 24px rgba(242, 139, 160, 0.2);
     position: relative;
     z-index: 1;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .stepCard:hover .stepNo {
     transform: scale(1.08);
-    box-shadow: 0 12px 32px rgba(242, 139, 160, 0.28);
 }
 
 .stepLine {
@@ -678,18 +568,6 @@
     padding: 54px 28px;
     text-align: center;
     box-shadow: 0 30px 60px rgba(21, 18, 26, 0.12);
-}
-
-.finalGlow {
-    position: absolute;
-    top: -80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 340px;
-    height: 340px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(242, 139, 160, 0.26), transparent 70%);
-    pointer-events: none;
 }
 
 .finalTag {
@@ -734,11 +612,10 @@
     color: #fff;
     font-size: 15px;
     font-weight: 800;
-    box-shadow: 0 18px 36px rgba(242, 139, 160, 0.3);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease;
 }
 
-.finalBtn:hover { transform: translateY(-3px) scale(1.02); background: var(--color-accent-hover); box-shadow: 0 24px 48px rgba(242, 139, 160, 0.34); }
+.finalBtn:hover { transform: translateY(-3px) scale(1.02); background: var(--color-accent-hover); }
 .finalBtn:active { transform: translateY(-1px) scale(0.98); }
 
 /* ---------- responsive ---------- */
