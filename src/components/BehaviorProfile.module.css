@@ -25,8 +25,8 @@
 }
 
 .nextBox {
-    background: rgba(242, 139, 160, 0.06);
-    border: 1.5px solid rgba(242, 139, 160, 0.12);
+    background: rgba(253, 61, 181, 0.06);
+    border: 1.5px solid rgba(253, 61, 181, 0.12);
     border-radius: 16px;
     padding: 18px 16px;
     width: 100%;
@@ -37,7 +37,7 @@
 .nextLabel {
     font-size: 13px;
     font-weight: 700;
-    color: #f28ba0;
+    color: #FD3DB5;
     margin: 0 0 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;

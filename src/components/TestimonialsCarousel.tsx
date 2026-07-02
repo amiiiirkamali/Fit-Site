@@ -183,16 +183,8 @@ export default function TestimonialsCarousel() {
                                 <blockquote className={styles.text}>«{current.text}»</blockquote>
                             </div>
                         </div>
-                    </div>
 
-                    <div className={styles.controls}>
-                        <button className={styles.controlBtn} onClick={() => handleNav("prev")} aria-label="قبلی">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </button>
-
-                        <div className={styles.dots}>
+                        <div className={styles.dotsWrap}>
                             {testimonials.map((_, index) => (
                                 <button
                                     key={index}
@@ -202,12 +194,6 @@ export default function TestimonialsCarousel() {
                                 />
                             ))}
                         </div>
-
-                        <button className={styles.controlBtn} onClick={() => handleNav("next")} aria-label="بعدی">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </div>

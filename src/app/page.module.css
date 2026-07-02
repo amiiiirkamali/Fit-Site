@@ -60,7 +60,7 @@
     font-weight: 800;
     color: var(--color-accent-hover);
     background: var(--color-accent-soft);
-    border: 1px solid rgba(242, 139, 160, 0.14);
+    border: 1px solid rgba(253, 61, 181, 0.14);
 }
 
 .title {
@@ -97,10 +97,11 @@
 .primaryBtn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: var(--color-accent);
     color: #fff;
-    padding: 16px 26px;
+    padding: 16px 72px;
     border-radius: 18px;
     font-size: 15px;
     font-weight: 800;
@@ -167,111 +168,299 @@
 }
 
 .calWidget {
-    background: linear-gradient(180deg, #181519 0%, #100e11 100%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 32px;
-    padding: 36px 32px 30px;
-    color: #fff;
-    box-shadow: 0 40px 80px rgba(21, 18, 26, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    background: linear-gradient(165deg, #f5f3f6 0%, #eae7ed 40%, #f0edf3 100%);
+    border: 1px solid rgba(200, 190, 210, 0.35);
+    border-radius: 36px;
+    padding: 40px 34px 34px;
+    color: #3a3340;
+    box-shadow:
+        0 20px 60px rgba(120, 100, 140, 0.08),
+        0 8px 24px rgba(120, 100, 140, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(180, 170, 195, 0.12);
+    position: relative;
+    overflow: hidden;
 }
 
-.calHeader { text-align: center; margin-bottom: 24px; }
+.calWidget::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(253, 61, 181, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
 
-.calLabel { display: block; font-size: 15px; color: #a39ba1; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
+.calWidget::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 140, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
 
-.calValue { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+.calHeader {
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.calLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #8a8094;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 0.4px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    border: 1px solid rgba(200, 190, 210, 0.25);
+}
+
+.calValue {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+}
 
 .calNum {
     font-family: var(--font-heading);
-    font-size: 64px;
-    font-weight: 800;
-    background: linear-gradient(180deg, #FFB6C1 0%, var(--color-accent) 100%);
+    font-size: 68px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #e84aa5 0%, #FD3DB5 50%, #d42d95 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
     line-height: 1;
+    filter: drop-shadow(0 2px 8px rgba(253, 61, 181, 0.15));
 }
 
-.calUnit { font-size: 18px; color: #6f6770; font-weight: 700; }
+.calUnit {
+    font-size: 17px;
+    color: #a89db0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
 
-.calControls { display: flex; flex-direction: column; gap: 18px; }
+.calDivider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(180, 170, 195, 0.3) 50%, transparent 100%);
+    margin: 0 0 22px;
+}
 
-.calRow { display: flex; flex-direction: column; gap: 10px; }
+.calControls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
 
-.calRowInner { display: flex; align-items: center; justify-content: space-between; }
+.calRow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(200, 190, 210, 0.2);
+    border-radius: 20px;
+    padding: 16px 18px 14px;
+    transition: all 0.3s ease;
+}
 
-.calRowLabel { font-size: 14px; color: #a39ba1; font-weight: 700; }
+.calRow:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(200, 190, 210, 0.35);
+}
 
-.calStepper { display: flex; align-items: center; gap: 12px; }
+.calRowInner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calRowLabel {
+    font-size: 14px;
+    color: #7a6f88;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.calRowIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.08) 0%, rgba(253, 61, 181, 0.04) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+}
+
+.calStepper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
 .stepperBtn {
-    width: 38px; height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(200, 190, 210, 0.3);
+    color: #6a5f78;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 6px rgba(120, 100, 140, 0.06);
 }
 
-.stepperBtn:hover { background: rgba(242, 139, 160, 0.25); transform: scale(1.05); }
-.stepperBtn:active { transform: scale(0.93); }
+.stepperBtn:hover {
+    background: rgba(253, 61, 181, 0.08);
+    border-color: rgba(253, 61, 181, 0.2);
+    color: var(--color-accent);
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(253, 61, 181, 0.1);
+}
 
-.stepperValue { font-size: 18px; font-weight: 800; color: #fff; min-width: 60px; text-align: center; font-variant-numeric: tabular-nums; }
+.stepperBtn:active {
+    transform: scale(0.92);
+}
+
+.stepperValue {
+    font-size: 17px;
+    font-weight: 800;
+    color: #3a3340;
+    min-width: 62px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
 
 .calSlider {
-    -webkit-appearance: none; appearance: none;
-    width: 100%; height: 5px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(200, 190, 210, 0.25) 0%, rgba(200, 190, 210, 0.35) 100%);
     outline: none;
+    transition: background 0.3s ease;
+}
+
+.calSlider:hover {
+    background: linear-gradient(90deg, rgba(200, 190, 210, 0.35) 0%, rgba(200, 190, 210, 0.45) 100%);
 }
 
 .calSlider::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 20px; height: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, #FD3DB5 0%, #e84aa5 100%);
     cursor: pointer;
-    box-shadow: 0 0 16px rgba(242, 139, 160, 0.4);
-    transition: transform 0.15s ease;
+    box-shadow:
+        0 2px 10px rgba(253, 61, 181, 0.3),
+        0 0 0 4px rgba(253, 61, 181, 0.08);
+    transition: all 0.2s ease;
+    border: 3px solid #fff;
 }
 
-.calSlider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.calSlider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow:
+        0 4px 16px rgba(253, 61, 181, 0.35),
+        0 0 0 6px rgba(253, 61, 181, 0.1);
+}
 
 .calSlider::-moz-range-thumb {
-    width: 20px; height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, #FD3DB5 0%, #e84aa5 100%);
     cursor: pointer;
-    border: none;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 10px rgba(253, 61, 181, 0.3);
 }
 
-.goalRow { display: flex; gap: 10px; margin-top: 6px; }
+.goalRow {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
 
 .goalChip {
     flex: 1;
-    padding: 12px 10px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #a39ba1;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 13px 10px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #8a8094;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1.5px solid rgba(200, 190, 210, 0.25);
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.goalChip:hover { border-color: rgba(242, 139, 160, 0.3); color: #fff; }
+.goalChip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.04) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.goalChip:hover {
+    border-color: rgba(253, 61, 181, 0.2);
+    color: #5a4f68;
+    background: rgba(255, 255, 255, 0.75);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(120, 100, 140, 0.06);
+}
+
+.goalChip:hover::before {
+    opacity: 1;
+}
 
 .goalChipActive {
-    background: rgba(242, 139, 160, 0.18);
-    border-color: var(--color-accent);
-    color: #fff;
-    box-shadow: 0 0 24px rgba(242, 139, 160, 0.15);
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.1) 0%, rgba(253, 61, 181, 0.06) 100%);
+    border-color: rgba(253, 61, 181, 0.35);
+    color: var(--color-accent-hover);
+    box-shadow:
+        0 4px 16px rgba(253, 61, 181, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.goalChipActive::before {
+    opacity: 1;
+}
+
+.goalChipActive:hover {
+    border-color: rgba(253, 61, 181, 0.45);
+    color: var(--color-accent-hover);
 }
 
 /* ---------- stats ---------- */
@@ -292,7 +481,7 @@
 .statCard {
     position: relative;
     background: linear-gradient(160deg, #ffffff 0%, #f7f4f6 100%);
-    border: 1px solid rgba(242, 139, 160, 0.06);
+    border: 1px solid rgba(253, 61, 181, 0.06);
     border-radius: 28px;
     padding: 32px 16px 28px;
     display: flex;
@@ -302,7 +491,7 @@
     text-align: center;
     box-shadow:
         0 2px 16px rgba(21, 18, 26, 0.02),
-        0 8px 32px rgba(242, 139, 160, 0.02),
+        0 8px 32px rgba(253, 61, 181, 0.02),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
@@ -376,7 +565,7 @@
     color: var(--color-accent-hover);
     font-size: 12px;
     font-weight: 800;
-    border: 1px solid rgba(242, 139, 160, 0.12);
+    border: 1px solid rgba(253, 61, 181, 0.12);
     margin-bottom: 16px;
 }
 
@@ -413,13 +602,13 @@
 .featureCard {
     position: relative;
     background: linear-gradient(160deg, #ffffff 0%, #f8f5f7 100%);
-    border: 1px solid rgba(242, 139, 160, 0.06);
+    border: 1px solid rgba(253, 61, 181, 0.06);
     border-radius: 28px;
     padding: 32px 26px 30px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow:
         0 2px 16px rgba(21, 18, 26, 0.02),
-        0 8px 32px rgba(242, 139, 160, 0.02),
+        0 8px 32px rgba(253, 61, 181, 0.02),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
     overflow: hidden;
     isolation: isolate;
@@ -579,8 +768,8 @@
     color: #f3b2ca;
     padding: 7px 14px;
     border-radius: 999px;
-    background: rgba(242, 139, 160, 0.14);
-    border: 1px solid rgba(242, 139, 160, 0.2);
+    background: rgba(253, 61, 181, 0.14);
+    border: 1px solid rgba(253, 61, 181, 0.2);
     margin-bottom: 16px;
 }
 
@@ -605,8 +794,9 @@
     z-index: 1;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    padding: 16px 26px;
+    padding: 16px 72px;
     border-radius: 18px;
     background: var(--color-accent);
     color: #fff;
@@ -630,22 +820,75 @@
 
 @media (max-width: 768px) {
     .hero { padding: 24px 20px 60px; }
-    .statsSection, .featuresSection, .testimonialSection, .finalCtaSection { padding-left: 20px; padding-right: 20px; }
-    .howSection { padding: 60px 20px; }
-    .statsSection { padding-bottom: 40px; }
-    .heroContent { text-align: center; align-items: center; }
+    .featuresSection, .testimonialSection, .finalCtaSection { padding-left: 20px; padding-right: 20px; }
+    .howSection { padding: 40px 20px 20px; }
+    .statsSection { padding: 0 20px 32px; }
+    .heroContent { text-align: center; align-items: center; gap: 32px; }
     .heroBadge { margin: 0 auto; }
     .subtitle { max-width: 100%; }
-    .heroActions { justify-content: center; }
-    .heroTrust { justify-content: center; }
-    .heroVisual { min-height: auto; }
+    .heroActions { justify-content: center; margin-top: 12px; }
+    .heroTrust { margin-top: 8px;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+    }
+    .trustItem {
+        background: none;
+        border: none;
+        padding: 4px 0;
+        border-radius: 0;
+        font-size: 14px;
+        gap: 0;
+    }
+    .trustItem svg { display: none; }
+    .trustItem::before {
+        content: '—';
+        margin-left: 8px;
+    }
+    .heroVisual { min-height: auto; margin-top: 140px; }
     .calWidgetCenter { max-width: 100%; }
-    .featuresGrid, .statsGrid, .stepsGrid { grid-template-columns: 1fr; }
-
+    .calWidget { padding: 24px 18px 20px; border-radius: 28px; }
+    .calHeader { margin-bottom: 16px; }
+    .calLabel { font-size: 11px; padding: 4px 12px; margin-bottom: 10px; }
+    .calNum { font-size: 44px; }
+    .calUnit { font-size: 14px; }
+    .calDivider { margin: 0 0 14px; }
+    .calControls { gap: 10px; }
+    .calRow { padding: 10px 12px 10px; border-radius: 16px; gap: 8px; }
+    .calRowLabel { font-size: 12px; }
+    .calRowIcon { width: 22px; height: 22px; border-radius: 6px; }
+    .calRowIcon svg { width: 11px; height: 11px; }
+    .calStepper { gap: 6px; }
+    .stepperBtn { width: 28px; height: 28px; border-radius: 10px; }
+    .stepperBtn svg { width: 11px; height: 11px; }
+    .stepperValue { font-size: 14px; min-width: 44px; }
+    .calSlider { height: 4px; }
+    .calSlider::-webkit-slider-thumb { width: 16px; height: 16px; border-width: 2px; box-shadow: 0 1px 6px rgba(253,61,181,0.25), 0 0 0 3px rgba(253,61,181,0.06); }
+    .calSlider::-moz-range-thumb { width: 16px; height: 16px; border-width: 2px; }
+    .goalRow { gap: 6px; }
+    .goalChip { padding: 10px 6px; border-radius: 12px; font-size: 12px; }
+    .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .statCard { padding: 20px 12px 16px; aspect-ratio: 1 / 1; justify-content: center; gap: 8px; border-radius: 22px; }
+    .statCard strong { font-size: clamp(22px, 5vw, 28px); }
+    .statCard span { font-size: 11px; margin-top: -2px; }
+    .statIcon { width: 40px; height: 40px; border-radius: 14px; }
+    .statIcon svg { width: 16px; height: 16px; }
+    .featuresGrid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .featureCard { padding: 20px 16px 18px; border-radius: 22px; }
+    .featureIcon { width: 40px; height: 40px; border-radius: 14px; margin-bottom: 12px; }
+    .featureIcon svg { width: 16px; height: 16px; }
+    .featureCard h3 { font-size: 14px; margin-bottom: 6px; }
+    .featureCard p { font-size: 12px; line-height: 1.7; }
+    .stepsGrid { grid-template-columns: 1fr; gap: 12px; }
+    .stepCard { padding: 20px 16px 16px; border-radius: 22px; }
+    .stepNumWrap { margin-bottom: 10px; }
+    .stepNo { width: 36px; height: 36px; font-size: 16px; }
+    .stepCard h3 { font-size: 15px; margin-bottom: 6px; }
+    .stepCard p { font-size: 12px; line-height: 1.7; max-width: 100%; }
 
     .finalCtaSection { padding-bottom: 40px; padding-left: 20px; padding-right: 20px; }
     .finalCtaCard { padding: 36px 20px; }
-    .stepCard p { max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

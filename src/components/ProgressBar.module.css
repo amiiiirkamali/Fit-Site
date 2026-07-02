@@ -15,7 +15,7 @@
 
 .fill {
     height: 100%;
-    background: linear-gradient(90deg, #FFB6C1, #f28ba0);
+    background: linear-gradient(90deg, #FFB6C1, #FD3DB5);
     border-radius: 3px;
     transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Check, Shield, Sparkles, Minus, Plus } from "lucide-react";
+import { ArrowRight, Check, Shield, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 
 const BASE_PRICE = 499000;
@@ -22,8 +22,6 @@ export default function CheckoutPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState("");
-    const [programsCount, setProgramsCount] = useState(1);
-
     useEffect(() => {
         const t = localStorage.getItem("token");
         if (!t) {
@@ -33,7 +31,7 @@ export default function CheckoutPage() {
         setToken(t);
     }, [router]);
 
-    const totalPrice = BASE_PRICE * programsCount;
+    const totalPrice = BASE_PRICE;
     const totalLabel = toPersianNum(totalPrice);
 
     const handlePayment = async () => {
@@ -51,7 +49,6 @@ export default function CheckoutPage() {
                 body: JSON.stringify({
                     amount: totalPrice,
                     planType: "monthly",
-                    programsCount,
                 }),
             });
 
@@ -87,7 +84,7 @@ export default function CheckoutPage() {
                     </div>
                     <h1 className={styles.title}>برنامه‌هایت آماده‌ست!</h1>
                     <p className={styles.subtitle}>
-                        تعداد برنامه‌هایی که می‌خوای رو انتخاب کن و بعد پرداخت رو انجام بده
+                        برای دریافت برنامه‌ات پرداخت رو انجام بده
                     </p>
                 </div>
 
@@ -107,38 +104,10 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
-                    {/* ─── Quantity Selector ─── */}
-                    <div className={styles.quantitySection}>
-                        <span className={styles.quantityLabel}>تعداد برنامه</span>
-                        <div className={styles.quantityControls}>
-                            <button
-                                className={styles.quantityBtn}
-                                onClick={() => setProgramsCount(Math.max(1, programsCount - 1))}
-                                disabled={programsCount <= 1}
-                            >
-                                <Minus size={16} />
-                            </button>
-                            <span className={styles.quantityValue}>{toPersianNum(programsCount)}</span>
-                            <button
-                                className={styles.quantityBtn}
-                                onClick={() => setProgramsCount(Math.min(50, programsCount + 1))}
-                                disabled={programsCount >= 50}
-                            >
-                                <Plus size={16} />
-                            </button>
-                        </div>
-                    </div>
-
                     <div className={styles.priceSection}>
                         <span className={styles.priceAmount}>{totalLabel}</span>
                         <span className={styles.priceCurrency}>تومان</span>
                     </div>
-
-                    {programsCount > 1 && (
-                        <div className={styles.priceBreakdown}>
-                            {toPersianNum(BASE_PRICE)} تومان × {toPersianNum(programsCount)} برنامه
-                        </div>
-                    )}
 
                     <div className={styles.divider} />
 
@@ -151,12 +120,6 @@ export default function CheckoutPage() {
                                 {f}
                             </li>
                         ))}
-                        <li>
-                            <span className={styles.checkWrap}>
-                                <Check size={14} />
-                            </span>
-                            {programsCount} برنامه مجزا با شماره
-                        </li>
                     </ul>
                 </div>
 

@@ -34,7 +34,7 @@ const stats = [
 const features = [
     {
         icon: Sparkles,
-        title: "تحلیل هوشمند بدن و هدف",
+        title: "تحلیل هوشمند",
         desc: "با چند سوال ساده، وضعیت بدنی، هدف و سبک زندگیت تحلیل میشه.",
     },
     {
@@ -59,7 +59,7 @@ const features = [
     },
     {
         icon: HeartPulse,
-        title: "طراحی شده برای خانم‌ها",
+        title: "برای خانم‌ها",
         desc: "همه چیز از زبان طراحی تا ساختار برنامه برای خانم‌ها بهینه شده.",
     },
 ];
@@ -124,38 +124,94 @@ function CalorieWidget() {
     return (
         <div className={styles.calWidget}>
             <div className={styles.calHeader}>
-                <span className={styles.calLabel}>هدف کالری روزانه</span>
+                <span className={styles.calLabel}>
+                    <Sparkles size={13} />
+                    هدف کالری روزانه
+                </span>
                 <div className={styles.calValue}>
                     <span className={styles.calNum}>{displayCal}</span>
                     <span className={styles.calUnit}>kcal</span>
                 </div>
             </div>
+
+            <div className={styles.calDivider} />
+
             <div className={styles.calControls}>
                 <div className={styles.calRow}>
                     <div className={styles.calRowInner}>
-                        <span className={styles.calRowLabel}>وزن</span>
+                        <span className={styles.calRowLabel}>
+                            <span className={styles.calRowIcon}>
+                                <Activity size={14} />
+                            </span>
+                            وزن
+                        </span>
                         <div className={styles.calStepper}>
-                            <button onClick={() => setWeight(w => Math.max(30, w - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
+                            <button
+                                onClick={() => setWeight(w => Math.max(30, w - 1))}
+                                className={styles.stepperBtn}
+                            >
+                                <Minus size={14} />
+                            </button>
                             <span className={styles.stepperValue}>{weight} kg</span>
-                            <button onClick={() => setWeight(w => Math.min(230, w + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
+                            <button
+                                onClick={() => setWeight(w => Math.min(230, w + 1))}
+                                className={styles.stepperBtn}
+                            >
+                                <Plus size={14} />
+                            </button>
                         </div>
                     </div>
-                    <input type="range" min={30} max={230} value={weight} onChange={e => setWeight(Number(e.target.value))} className={styles.calSlider} />
+                    <input
+                        type="range"
+                        min={30}
+                        max={230}
+                        value={weight}
+                        onChange={e => setWeight(Number(e.target.value))}
+                        className={styles.calSlider}
+                    />
                 </div>
+
                 <div className={styles.calRow}>
                     <div className={styles.calRowInner}>
-                        <span className={styles.calRowLabel}>قد</span>
+                        <span className={styles.calRowLabel}>
+                            <span className={styles.calRowIcon}>
+                                <HeartPulse size={14} />
+                            </span>
+                            قد
+                        </span>
                         <div className={styles.calStepper}>
-                            <button onClick={() => setHeight(h => Math.max(100, h - 1))} className={styles.stepperBtn}><Minus size={14} /></button>
+                            <button
+                                onClick={() => setHeight(h => Math.max(100, h - 1))}
+                                className={styles.stepperBtn}
+                            >
+                                <Minus size={14} />
+                            </button>
                             <span className={styles.stepperValue}>{height} cm</span>
-                            <button onClick={() => setHeight(h => Math.min(230, h + 1))} className={styles.stepperBtn}><Plus size={14} /></button>
+                            <button
+                                onClick={() => setHeight(h => Math.min(230, h + 1))}
+                                className={styles.stepperBtn}
+                            >
+                                <Plus size={14} />
+                            </button>
                         </div>
                     </div>
-                    <input type="range" min={100} max={230} value={height} onChange={e => setHeight(Number(e.target.value))} className={styles.calSlider} />
+                    <input
+                        type="range"
+                        min={100}
+                        max={230}
+                        value={height}
+                        onChange={e => setHeight(Number(e.target.value))}
+                        className={styles.calSlider}
+                    />
                 </div>
+
                 <div className={styles.goalRow}>
                     {(["lose", "maintain", "gain"] as Goal[]).map(g => (
-                        <button key={g} className={`${styles.goalChip} ${goal === g ? styles.goalChipActive : ""}`} onClick={() => setGoal(g)}>
+                        <button
+                            key={g}
+                            className={`${styles.goalChip} ${goal === g ? styles.goalChipActive : ""}`}
+                            onClick={() => setGoal(g)}
+                        >
                             {g === "lose" ? "کاهش وزن" : g === "maintain" ? "حفظ" : "افزایش وزن"}
                         </button>
                     ))}
@@ -264,11 +320,7 @@ export default function HomePage() {
 
             <section className={styles.featuresSection} id="features">
                 <div className={styles.sectionHead}>
-                    <span className={styles.sectionEyebrow}>امکانات اصلی</span>
                     <h2 className={styles.sectionTitle}>همه‌چیز برای یک شروع حرفه‌ای</h2>
-                    <p className={styles.sectionDesc}>
-                        از تحلیل هوشمند تا برنامه‌ی اختصاصی — هر چیزی که برای شروع نیاز داری.
-                    </p>
                 </div>
                 <div className={styles.featuresGrid}>
                     {features.map((feature, idx) => {
@@ -301,18 +353,6 @@ export default function HomePage() {
 
 
             <TestimonialsCarousel />
-
-            <section className={styles.finalCtaSection}>
-                <div className={styles.finalCtaCard}>
-                    <span className={styles.finalTag}>آماده‌ای؟</span>
-                    <h2>برنامه‌ی اختصاصی‌ات را بساز</h2>
-                    <p>۳۰ سوال، یک برنامه‌ی کاملاً شخصی</p>
-                    <button className={styles.finalBtn} onClick={() => router.push("/quiz")}>
-                        شروع کن
-                        <ArrowLeft size={18} />
-                    </button>
-                </div>
-            </section>
 
             <Footer />
         </main>

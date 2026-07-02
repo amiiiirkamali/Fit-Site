@@ -6,7 +6,7 @@
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    background: #fafafa;
+    background: #ffffff;
     position: relative;
     overflow-x: hidden;
     font-family: inherit;
@@ -21,7 +21,7 @@
     background:
             radial-gradient(ellipse 80% 60% at 50% -20%, rgba(255, 182, 193, 0.06) 0%, transparent 60%),
             radial-gradient(ellipse 60% 50% at 0% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-            radial-gradient(ellipse 60% 50% at 100% 80%, rgba(242, 139, 160, 0.03) 0%, transparent 50%);
+            radial-gradient(ellipse 60% 50% at 100% 80%, rgba(253, 61, 181, 0.03) 0%, transparent 50%);
 }
 
 .bgOrb1,
@@ -93,7 +93,7 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: rgba(242, 139, 160, 0.15);
+    background: rgba(253, 61, 181, 0.15);
     bottom: -10px;
     animation: floatParticle 8s ease-in-out infinite;
 }
@@ -138,8 +138,8 @@
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    border: 3px solid rgba(242, 139, 160, 0.1);
-    border-top-color: #f28ba0;
+    border: 3px solid rgba(253, 61, 181, 0.1);
+    border-top-color: #FD3DB5;
     animation: spin 0.9s cubic-bezier(0.6, 0.15, 0.35, 0.85) infinite;
     position: relative;
 }
@@ -202,12 +202,12 @@
     width: 38px;
     height: 38px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #f28ba0 0%, #FFB6C1 100%);
+    background: linear-gradient(135deg, #FD3DB5 0%, #FFB6C1 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow:
-            0 4px 12px rgba(242, 139, 160, 0.25),
+            0 4px 12px rgba(253, 61, 181, 0.25),
             inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease;
 }
@@ -273,9 +273,9 @@
 }
 
 .profileBtn:hover {
-    background: rgba(242, 139, 160, 0.06);
-    color: #f28ba0;
-    border-color: rgba(242, 139, 160, 0.2);
+    background: rgba(253, 61, 181, 0.06);
+    color: #FD3DB5;
+    border-color: rgba(253, 61, 181, 0.2);
     transform: translateY(-1px);
 }
 
@@ -324,9 +324,9 @@
     border-radius: 12px;
     font-size: 13px;
     font-weight: 800;
-    color: #f28ba0;
-    background: linear-gradient(135deg, rgba(242, 139, 160, 0.08) 0%, rgba(255, 182, 193, 0.06) 100%);
-    border: 1.5px solid rgba(242, 139, 160, 0.15);
+    color: #FD3DB5;
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.08) 0%, rgba(255, 182, 193, 0.06) 100%);
+    border: 1.5px solid rgba(253, 61, 181, 0.15);
     cursor: pointer;
     transition: all 0.25s ease;
     font-family: inherit;
@@ -334,8 +334,8 @@
 }
 
 .programTrigger:hover {
-    background: linear-gradient(135deg, rgba(242, 139, 160, 0.14) 0%, rgba(255, 182, 193, 0.1) 100%);
-    border-color: rgba(242, 139, 160, 0.3);
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.14) 0%, rgba(255, 182, 193, 0.1) 100%);
+    border-color: rgba(253, 61, 181, 0.3);
     transform: translateY(-1px);
 }
 
@@ -379,13 +379,13 @@
 }
 
 .programOption:hover {
-    background: rgba(242, 139, 160, 0.06);
-    color: #f28ba0;
+    background: rgba(253, 61, 181, 0.06);
+    color: #FD3DB5;
 }
 
 .programOptionActive {
-    background: rgba(242, 139, 160, 0.08);
-    color: #f28ba0;
+    background: rgba(253, 61, 181, 0.08);
+    color: #FD3DB5;
     font-weight: 800;
 }
 
@@ -421,9 +421,9 @@
     gap: 8px;
     padding: 7px 16px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(242, 139, 160, 0.08) 0%, rgba(255, 182, 193, 0.06) 100%);
-    border: 1px solid rgba(242, 139, 160, 0.12);
-    color: #e0748b;
+    background: linear-gradient(135deg, rgba(253, 61, 181, 0.08) 0%, rgba(255, 182, 193, 0.06) 100%);
+    border: 1px solid rgba(253, 61, 181, 0.12);
+    color: #c92e8a;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.2px;
@@ -433,8 +433,8 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #f28ba0;
-    box-shadow: 0 0 10px rgba(242, 139, 160, 0.6);
+    background: #FD3DB5;
+    box-shadow: 0 0 10px rgba(253, 61, 181, 0.6);
     animation: pulseDot 1.8s ease-in-out infinite;
 }
 
@@ -457,7 +457,7 @@
 }
 
 .titleAccent {
-    background: linear-gradient(135deg, #f28ba0 0%, #FFB6C1 50%, #f28ba0 100%);
+    background: linear-gradient(135deg, #FD3DB5 0%, #FFB6C1 50%, #FD3DB5 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -654,10 +654,10 @@
 }
 
 .cardWorkout:hover {
-    border-color: rgba(242, 139, 160, 0.3);
+    border-color: rgba(253, 61, 181, 0.3);
     box-shadow:
-            0 32px 64px rgba(242, 139, 160, 0.14),
-            0 16px 32px rgba(242, 139, 160, 0.07),
+            0 32px 64px rgba(253, 61, 181, 0.14),
+            0 16px 32px rgba(253, 61, 181, 0.07),
             inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -700,7 +700,7 @@
 }
 
 .cardOrbTwoPink {
-    background: radial-gradient(circle, rgba(242, 139, 160, 0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(253, 61, 181, 0.25) 0%, transparent 70%);
 }
 
 .card:hover .cardOrb {
@@ -728,7 +728,7 @@
 }
 
 .patternCirclePink {
-    border-color: rgba(242, 139, 160, 0.08);
+    border-color: rgba(253, 61, 181, 0.08);
 }
 
 @keyframes pulsePattern {
@@ -776,10 +776,10 @@
 }
 
 .cardIconWorkout {
-    background: linear-gradient(145deg, #FFB6C1 0%, #f28ba0 100%);
+    background: linear-gradient(145deg, #FFB6C1 0%, #FD3DB5 100%);
     box-shadow:
-            0 10px 28px rgba(242, 139, 160, 0.3),
-            0 4px 8px rgba(242, 139, 160, 0.15),
+            0 10px 28px rgba(253, 61, 181, 0.3),
+            0 4px 8px rgba(253, 61, 181, 0.15),
             inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
@@ -796,8 +796,8 @@
 
 .cardWorkout:hover .cardIcon {
     box-shadow:
-            0 14px 36px rgba(242, 139, 160, 0.4),
-            0 6px 12px rgba(242, 139, 160, 0.2),
+            0 14px 36px rgba(253, 61, 181, 0.4),
+            0 6px 12px rgba(253, 61, 181, 0.2),
             inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
@@ -819,7 +819,7 @@
 }
 
 .iconRingPink {
-    border-color: rgba(242, 139, 160, 0.2);
+    border-color: rgba(253, 61, 181, 0.2);
 }
 
 .card:hover .iconRing {
@@ -883,9 +883,9 @@
 }
 
 .cardBadgeWorkout {
-    background: rgba(242, 139, 160, 0.08);
-    color: #e0748b;
-    border: 1px solid rgba(242, 139, 160, 0.18);
+    background: rgba(253, 61, 181, 0.08);
+    color: #c92e8a;
+    border: 1px solid rgba(253, 61, 181, 0.18);
 }
 
 .card:hover .cardBadgeDiet {
@@ -894,8 +894,8 @@
 }
 
 .card:hover .cardBadgeWorkout {
-    background: rgba(242, 139, 160, 0.12);
-    border-color: rgba(242, 139, 160, 0.28);
+    background: rgba(253, 61, 181, 0.12);
+    border-color: rgba(253, 61, 181, 0.28);
 }
 
 .badgeDot {
@@ -949,7 +949,7 @@
 }
 
 .cardTitleLinePink {
-    background: linear-gradient(90deg, #f28ba0, #FFB6C1);
+    background: linear-gradient(90deg, #FD3DB5, #FFB6C1);
 }
 
 .card:hover .cardTitleLine {
@@ -987,7 +987,7 @@
 }
 
 .cardStatsWorkout {
-    border: 1px solid rgba(242, 139, 160, 0.08);
+    border: 1px solid rgba(253, 61, 181, 0.08);
 }
 
 .card:hover .cardStatsDiet {
@@ -996,8 +996,8 @@
 }
 
 .card:hover .cardStatsWorkout {
-    border-color: rgba(242, 139, 160, 0.15);
-    background: rgba(242, 139, 160, 0.03);
+    border-color: rgba(253, 61, 181, 0.15);
+    background: rgba(253, 61, 181, 0.03);
 }
 
 .statItem {
@@ -1024,8 +1024,8 @@
 }
 
 .statIconPink {
-    background: rgba(242, 139, 160, 0.08);
-    color: #f28ba0;
+    background: rgba(253, 61, 181, 0.08);
+    color: #FD3DB5;
 }
 
 .statText {
@@ -1085,9 +1085,9 @@
 }
 
 .cardActionWorkout {
-    background: linear-gradient(135deg, #FFB6C1 0%, #f28ba0 100%);
+    background: linear-gradient(135deg, #FFB6C1 0%, #FD3DB5 100%);
     box-shadow:
-            0 6px 20px rgba(242, 139, 160, 0.25),
+            0 6px 20px rgba(253, 61, 181, 0.25),
             inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
@@ -1100,7 +1100,7 @@
 
 .cardWorkout:hover .cardAction {
     box-shadow:
-            0 12px 28px rgba(242, 139, 160, 0.4),
+            0 12px 28px rgba(253, 61, 181, 0.4),
             inset 0 1px 0 rgba(255, 255, 255, 0.15);
     transform: scale(1.02);
 }
@@ -1567,12 +1567,12 @@
 
 /* ─── FOCUS STYLES ─── */
 .card:focus-visible {
-    outline: 3px solid rgba(242, 139, 160, 0.5);
+    outline: 3px solid rgba(253, 61, 181, 0.5);
     outline-offset: 3px;
 }
 
 .logoutBtn:focus-visible {
-    outline: 2px solid rgba(242, 139, 160, 0.4);
+    outline: 2px solid rgba(253, 61, 181, 0.4);
     outline-offset: 2px;
 }
 

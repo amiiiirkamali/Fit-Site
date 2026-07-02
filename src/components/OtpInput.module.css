@@ -22,7 +22,7 @@
 
 .box:focus {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(242, 139, 160, 0.08);
+  box-shadow: 0 0 0 4px rgba(253, 61, 181, 0.08);
   transform: translateY(-2px);
 }
 
